@@ -1,9 +1,11 @@
-package com.mygdx.game;
+package com.mygdx.game.States;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.RogueMonster;
 
 public class MainMenu implements Screen{
     final RogueMonster game;
@@ -30,8 +32,10 @@ public class MainMenu implements Screen{
         game.font.draw(game.batch,"MAIN MENU", 500, 500);
         game.batch.end();
         
-        //TODO add function to change state to the Game state and dispose when change state
-        
+        //change to Game state logic
+        if(Gdx.input.isTouched()){
+            game.setScreen(new GameState(game));
+        }
         
     }
 
