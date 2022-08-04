@@ -1,54 +1,34 @@
 package com.mygdx.game.Characters;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 
-public class Character extends Sprite{
+public class Character extends Rectangle{
     //attributes
 
     private int speed;
-    private int posX;
-    private int posY;
+    TextureRegion region;
+    
+
     
 
 
     //methods
     
     public Character(int x, int y){
-        this.speed = 10;
+        this.speed = 5;
         this.setPosition(x, y);
-        this.setSize(32, 32);
-        this.setTexture(new Texture(Gdx.files.internal("Brendan.png")));
-        this.setScale(3.5f);
-
+        this.setSize(64, 64);
         
-
-    
+        
     };
 
-    //to use this method we need to insert 1/-1/0 values 
+    //to use this method we need to insert 1/-1/0 values
+    // this method change the position of the character: up 0,1 down 0,-1 left -1,0 right 1,0 
     void move(int x, int y){
-        this.posX += (x * speed);
-        this.posY += (y * speed);
-        this.setPosition(posX, posY);
+        float posX = this.getX();
+        float posY = this.getY();
+        this.setPosition(posX + x*speed, posY + y*speed);
     }
-
-    //getters and setters
-    public int getPosX() {
-        return posX;
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
-    
 }
+
