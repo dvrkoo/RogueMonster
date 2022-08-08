@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class PlayerAnimation {
+public class CharacterAnimation {
     Texture img;
     TextureRegion[] animationFramesNorth;
     TextureRegion[] animationFramesSouth;
@@ -15,8 +15,8 @@ public class PlayerAnimation {
     Animation<TextureRegion> animationWest;
     Animation<TextureRegion> animationSouth;
 
-    public PlayerAnimation(){
-        img = new Texture("PokemonPG.png");
+    public CharacterAnimation(Texture texture){
+        img = texture;
 
         TextureRegion[][] tmpFrames = TextureRegion.split(img, 64, 64);
         animationFramesSouth = new TextureRegion[4];

@@ -3,17 +3,20 @@ package com.mygdx.game.States;
 
 
 
+
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
-
+import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Player;
+import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Utils.CharacterState;
 
 public class GameState implements Screen {
@@ -24,6 +27,17 @@ public class GameState implements Screen {
     Viewport viewport;
     OrthographicCamera camera;
     float enlapsedTime;
+    PokemonFactory pkmFactory;
+    Array<Character> pokemon;
+
+    void spawnEnemy(){
+        pokemon.add(pkmFactory.getPokemon("Mudkip", 0, 0));
+        pokemon.add(pkmFactory.getPokemon("Charmander", 0, 64));
+        pokemon.add(pkmFactory.getPokemon("Mew", 0, 128));
+        pokemon.add(pkmFactory.getPokemon("Bulbasaur", 0, 192));
+        pokemon.add(pkmFactory.getPokemon("Pikachu", 0, 256));
+
+    }
 
     // game methods
     public GameState(final RogueMonster game) {
@@ -34,12 +48,16 @@ public class GameState implements Screen {
         camera.setToOrtho(false, 1000, 1000);
         viewport = new FitViewport(1000, 1000, camera);
 
+        pkmFactory = new PokemonFactory();
+        pokemon = new Array<Character>(); 
+        spawnEnemy();
     }
+
+    
 
     @Override
     public void show() {
-        // TODO Auto-generated method stub
-
+        
     }
 
     @Override
@@ -55,6 +73,9 @@ public class GameState implements Screen {
        game.batch.begin();
        //player.draw(game.batch);
        game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
+       for(Character iter: pokemon){
+            game.batch.draw(iter.getAnimation().getKeyFrame(enlapsedTime, true), iter.getX(), iter.getY());
+       }
        game.batch.end();
 
 
