@@ -90,8 +90,15 @@ public class GameState implements Screen {
             player.movement(0,1,CharacterState.NORTH);
        }else{
             player.movement(0,0, CharacterState.STANDING);
+        }
+
+        //update pokemon movement
+        for (Character iter : pokemon) {
+            iter.update();
+
             
-       }
+        }
+       
         
     }
 
