@@ -1,11 +1,10 @@
 package com.mygdx.game;
 
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Maps.Media;
 import com.mygdx.game.States.MainMenu;
-
 
 public class RogueMonster extends Game {
 	public SpriteBatch batch;
@@ -13,19 +12,20 @@ public class RogueMonster extends Game {
 
 	@Override
 	public void create() {
+		Media.load_assets();
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		this.setScreen(new MainMenu(this));
-		
+
 	}
 
-	public void render(){
+	public void render() {
 		super.render();
 	}
-	
-	public void dispose(){
+
+	public void dispose() {
 		batch.dispose();
 		font.dispose();
 	}
-	
+
 }
