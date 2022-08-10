@@ -18,7 +18,6 @@ import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
 import com.mygdx.game.Utils.Enums.CharacterState;
 
-
 public class GameState implements Screen {
     // game attributes
     final RogueMonster game;
@@ -71,7 +70,27 @@ public class GameState implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        // map draw
+
+        drawMap();
+
+        drawPokemons();
+
+        game.batch.end();
+
+        playerMovement();
+
+    }
+
+    public void drawPokemons() {
+        game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
+        for (Character iter : pokemon) {
+            game.batch.draw(iter.getAnimation().getKeyFrame(enlapsedTime, true), iter.getX(), iter.getY());
+            iter.update();
+        }
+
+    }
+
+    public void drawMap() {
         for (ArrayList<Tile> row : island.chunk.tiles) {
             for (Tile tile : row) {
                 game.batch.draw(tile.texture, tile.pos.x, tile.pos.y, tile.size, tile.size);
@@ -79,14 +98,11 @@ public class GameState implements Screen {
                     game.batch.draw(tile.secondary_texture, tile.pos.x, tile.pos.y, tile.size, tile.size);
             }
         }
-        // player.draw(game.batch);
-        game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
-        for (Character iter : pokemon) {
-            game.batch.draw(iter.getAnimation().getKeyFrame(enlapsedTime, true), iter.getX(), iter.getY());
-        }
-        game.batch.end();
+    }
 
-        // player movement system
+    public void playerMovement() {
+        int direction_x;
+        int direction_y;
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
             player.movement(0, -1, CharacterState.SOUTH);
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {// left
@@ -98,15 +114,17 @@ public class GameState implements Screen {
         } else {
             player.movement(0, 0, CharacterState.STANDING);
         }
-
-        // update pokemon movement
-        for (Character iter : pokemon) {
-            iter.update();
-
-        }
-
     }
 
+    /*
+     * public float get_camera_x() {
+     * return player.x + 1000 / 2;
+     * }
+     * 
+     * public float get_camera_y() {
+     * return player.y + 1000 / 2;
+     * }
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
