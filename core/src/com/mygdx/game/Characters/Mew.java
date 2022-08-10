@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Utils.CharacterAnimation;
-import com.mygdx.game.Utils.CharacterState;
-import com.mygdx.game.Utils.PokemonType;
+import com.mygdx.game.Utils.Enums.CharacterState;
+import com.mygdx.game.Utils.Enums.PokemonType;
 
 public class Mew extends Character{
     PokemonType type;

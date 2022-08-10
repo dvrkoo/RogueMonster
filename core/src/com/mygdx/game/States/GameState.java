@@ -16,7 +16,8 @@ import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
-import com.mygdx.game.Utils.CharacterState;
+import com.mygdx.game.Utils.Enums.CharacterState;
+
 
 public class GameState implements Screen {
     // game attributes

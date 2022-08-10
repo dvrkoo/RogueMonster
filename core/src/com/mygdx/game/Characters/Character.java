@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Utils.CharacterAnimation;
-import com.mygdx.game.Utils.CharacterState;
+import com.mygdx.game.Utils.Enums.CharacterState;
 
 public class Character extends Rectangle{
     //attributes

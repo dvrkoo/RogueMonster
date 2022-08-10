@@ -2,12 +2,10 @@ package com.mygdx.game.Maps;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.badlogic.gdx.Gdx;
-import com.mygdx.game.Maps.Media;
+import com.mygdx.game.Utils.Enums.TILETYPE;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
-import com.mygdx.game.Maps.Enums.TILETYPE;
-import com.mygdx.game.Maps.Entity;
+
 
 public class Island {
 

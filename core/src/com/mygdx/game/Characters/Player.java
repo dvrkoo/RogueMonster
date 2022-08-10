@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Utils.CharacterState;
+import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Utils.CharacterAnimation;
 
 public class Player extends Character {
