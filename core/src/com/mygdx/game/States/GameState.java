@@ -3,6 +3,7 @@ package com.mygdx.game.States;
 import java.util.ArrayList;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -13,7 +14,6 @@ import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
-
 
 public class GameState implements Screen {
     // game attributes
@@ -75,7 +75,15 @@ public class GameState implements Screen {
         game.batch.end();
 
         player.commandMovement();
+        moveCamera();
 
+    }
+
+    public void moveCamera() {
+        Vector3 pos3 = new Vector3();
+        pos3.x = player.x;
+        pos3.y = player.y;
+        camera.position.lerp(pos3, .1f);
     }
 
     public void drawPokemons() {
@@ -91,12 +99,11 @@ public class GameState implements Screen {
         for (ArrayList<Tile> row : island.chunk.tiles) {
             for (Tile tile : row) {
                 game.batch.draw(tile.texture, tile.pos.x, tile.pos.y, tile.size, tile.size);
-                if (tile.secondary_texture != null)
-                    game.batch.draw(tile.secondary_texture, tile.pos.x, tile.pos.y, tile.size, tile.size);
+                if (tile.secondaryTexture != null)
+                    game.batch.draw(tile.secondaryTexture, tile.pos.x, tile.pos.y, tile.size, tile.size);
             }
         }
     }
-
 
     /*
      * public float get_camera_x() {

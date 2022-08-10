@@ -8,7 +8,7 @@ public class Tile extends Entity {
     public int row;
     public int col;
     public String code;
-    public Texture secondary_texture;
+    public Texture secondaryTexture;
     public Texture texture;
     public TILETYPE type;
 
@@ -29,23 +29,23 @@ public class Tile extends Entity {
                 + type.toString();
     }
 
-    public boolean is_grass() {
+    public boolean isGrass() {
         return type == TILETYPE.GRASS;
     }
 
-    public boolean is_water() {
+    public boolean isWater() {
         return type == TILETYPE.WATER;
     }
 
-    public boolean is_cliff() {
+    public boolean isCliff() {
         return type == TILETYPE.CLIFF;
     }
 
-    public boolean is_passable() {
-        return !is_water() && !is_cliff();
+    public boolean isPassable() {
+        return !isWater() && !isCliff();
     }
 
-    public boolean is_not_passable() {
-        return !is_passable();
+    public boolean isNotPassable() {
+        return !isPassable();
     }
 }

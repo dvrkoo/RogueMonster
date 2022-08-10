@@ -2,10 +2,10 @@ package com.mygdx.game.Maps;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class Entity {
-    public Vector2 pos;
+    public Vector3 pos;
     public Texture texture;
     public float width;
     public float height;
@@ -14,7 +14,7 @@ public class Entity {
     float dir_y = 0;
 
     public Entity() {
-        pos = new Vector2();
+        pos = new Vector3();
     }
 
     public void draw(SpriteBatch batch) {
