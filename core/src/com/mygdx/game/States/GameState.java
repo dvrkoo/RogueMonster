@@ -1,9 +1,6 @@
 package com.mygdx.game.States;
 
 import java.util.ArrayList;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.Array;
@@ -16,7 +13,7 @@ import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
-import com.mygdx.game.Utils.Enums.CharacterState;
+
 
 public class GameState implements Screen {
     // game attributes
@@ -77,7 +74,7 @@ public class GameState implements Screen {
 
         game.batch.end();
 
-        playerMovement();
+        player.commandMovement();
 
     }
 
@@ -100,21 +97,6 @@ public class GameState implements Screen {
         }
     }
 
-    public void playerMovement() {
-        int direction_x;
-        int direction_y;
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
-            player.movement(0, -1, CharacterState.SOUTH);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {// left
-            player.movement(-1, 0, CharacterState.WEST);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {// right
-            player.movement(1, 0, CharacterState.EAST);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {// up
-            player.movement(0, 1, CharacterState.NORTH);
-        } else {
-            player.movement(0, 0, CharacterState.STANDING);
-        }
-    }
 
     /*
      * public float get_camera_x() {
