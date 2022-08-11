@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Utils.Enums.TILETYPE;
 
 public class Tile extends Entity {
+
     public int size;
     public int row;
     public int col;
@@ -48,4 +49,13 @@ public class Tile extends Entity {
     public boolean isNotPassable() {
         return !isPassable();
     }
+
+    public boolean isAllWater() {
+        return code.equals("000000000");
+    }
+
+    public boolean notIsAllWater() {
+        return !isAllWater();
+    }
+
 }

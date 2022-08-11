@@ -3,6 +3,7 @@ package com.mygdx.game.States;
 import java.util.ArrayList;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -12,6 +13,7 @@ import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
+import com.mygdx.game.Maps.Collision;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
 
@@ -40,9 +42,9 @@ public class GameState implements Screen {
     public GameState(final RogueMonster game) {
         this.game = game;
         player = new Player(500, 500);
+        player.addObserver(new Collision());
 
         island = new Island();
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
         viewport = new FitViewport(1000, 1000, camera);
@@ -105,15 +107,6 @@ public class GameState implements Screen {
         }
     }
 
-    /*
-     * public float get_camera_x() {
-     * return player.x + 1000 / 2;
-     * }
-     * 
-     * public float get_camera_y() {
-     * return player.y + 1000 / 2;
-     * }
-     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);

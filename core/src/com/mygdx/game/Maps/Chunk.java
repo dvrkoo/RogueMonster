@@ -2,8 +2,6 @@ package com.mygdx.game.Maps;
 
 import java.util.ArrayList;
 
-import java.util.ArrayList;
-
 public class Chunk {
     int numberRows;
     int numberCols;
@@ -43,7 +41,7 @@ public class Chunk {
                 return tile.isGrass() ? "1" : "0";
             }
         }
-        return null;
+        return "0";
     }
 
 }

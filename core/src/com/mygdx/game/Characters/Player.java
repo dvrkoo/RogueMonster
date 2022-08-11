@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Utils.Enums.CharacterState;
+import com.mygdx.game.Maps.Collision;
 import com.mygdx.game.Utils.CharacterAnimation;
 
 public class Player extends Character {
@@ -25,20 +26,18 @@ public class Player extends Character {
         // TODO Auto-generated constructor stub
     }
 
-    public void commandMovement(){
-        
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
-                this.movement(0, -1, CharacterState.SOUTH);
-            } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {// left
-                this.movement(-1, 0, CharacterState.WEST);
-            } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {// right
-                this.movement(1, 0, CharacterState.EAST);
-            } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {// up
-                this.movement(0, 1, CharacterState.NORTH);
-            } else {
-                this.movement(0, 0, CharacterState.STANDING);
-            }
-        
-    
+    public void commandMovement() {
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
+            this.movement(0, -1, CharacterState.SOUTH);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {// left
+            this.movement(-1, 0, CharacterState.WEST);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {// right
+            this.movement(1, 0, CharacterState.EAST);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {// up
+            this.movement(0, 1, CharacterState.NORTH);
+        } else {
+            this.movement(0, 0, CharacterState.STANDING);
+        }
+
     }
 }

@@ -2,14 +2,22 @@ package com.mygdx.game.Maps;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import com.mygdx.game.Utils.Enums.TILETYPE;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 public class Island {
+
+    private static final Boolean Boolean = null;
+
     public Tile centreTile;
 
-    // CHUNKS TODO: Add multiple chunks
     // public Map<Integer, ArrayList<Chunk> chunks = new Map<Integer,
     // ArrayList<Chunk>();
 
@@ -22,8 +30,11 @@ public class Island {
     int currentCol;
     int currentRow;
 
+    public static Array<Vector2> collisions = new Array<Vector2>();
+
     // Arrays for mapping code to texture
-    String[] aGrassLeft = { "001001001", "001001001", "001001000", "000001001" };
+    String[] aGrassLeft = {
+            "001001001", "001001001", "001001000", "000001001" };
     String[] aGrassRight = { "100100100", "100100000", "000100100" };
     String[] aGrassREnd = { "100000000" };
     String[] aGrassLEnd = { "001000000" };
@@ -34,6 +45,27 @@ public class Island {
     public Island() {
         setupTiles();
         codeTiles();
+        getCollisions();
+    }
+
+    public Array<Vector2> getCollisions() {
+        for (
+
+        ArrayList<Tile> row : chunk.tiles) {
+            for (Tile tile : row) {
+                if (tile.isNotPassable() && tile.notIsAllWater()) {
+                    System.out.println(tile.details());
+
+                    collisions.add(tile.pos);
+
+                    // debugging
+                    tile.texture = Media.grassTopRight;
+
+                }
+            }
+        }
+        System.out.println(collisions);
+        return collisions;
     }
 
     private void setupTiles() {
