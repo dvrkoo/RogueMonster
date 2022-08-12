@@ -1,7 +1,4 @@
 package com.mygdx.game.Characters;
-
-import com.mygdx.game.Utils.Enums;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Maps.Collision;
-import com.mygdx.game.Maps.CollisionObserver;
 import com.mygdx.game.Maps.Island;
-import com.mygdx.game.Maps.Tile;
+import com.mygdx.game.Observer.Collision;
 import com.mygdx.game.Utils.CharacterAnimation;
 import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Utils.Enums.TILETYPE;

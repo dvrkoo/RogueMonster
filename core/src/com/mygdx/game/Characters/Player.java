@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Utils.Enums.CharacterState;
-import com.mygdx.game.Maps.Collision;
 import com.mygdx.game.Utils.CharacterAnimation;
 
 public class Player extends Character {

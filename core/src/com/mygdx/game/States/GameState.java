@@ -3,7 +3,6 @@ package com.mygdx.game.States;
 import java.util.ArrayList;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -13,9 +12,9 @@ import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
-import com.mygdx.game.Maps.Collision;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
+import com.mygdx.game.Observer.Collision;
 
 public class GameState implements Screen {
     // game attributes
