@@ -7,15 +7,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Maps.Island;
-import com.mygdx.game.Observer.Collision;
 import com.mygdx.game.Utils.CharacterAnimation;
+import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Utils.Enums.TILETYPE;
 
 public class Character extends Rectangle {
     // attributes
-    Boolean collision;
+    //Boolean collision;
     List<Collision> observers = new ArrayList<>();
 
     int speed;
@@ -27,53 +26,25 @@ public class Character extends Rectangle {
     CharacterState state;
     int counter = 0;
     TILETYPE type = TILETYPE.WATER;
+    Collision collision = new Collision();
 
     // to use this method we need to insert 1/-1/0 values
     // this method change the position of the character: up 0,1 down 0,-1 left -1,0
     // right 1,0
     void move(float x, float y) {
         Vector2 pos = new Vector2();
-        float posX = this.getX();
-        float posY = this.getY();
-        pos.x = posX;
-        pos.y = posY;
-        this.setPosition(posX + x * speed, posY + y * speed);
-        for (Vector2 element : Island.collisions) {
-            if (getX() >= element.x - 40 && getX() <= element.x + 40 && getY() >= element.y - 40
-                    && getY() <= element.y + 40) {
-                if (pos.x > element.x) {
-                    this.setPosition(pos.x, pos.y);
-                    notifyObservers();
-                }else if (pos.x < element.x) {
-                    this.setPosition(pos.x , pos.y);
-                    notifyObservers();
-                }else if (pos.y > element.y) {
-                    this.setPosition(pos.x, pos.y );
-                    notifyObservers();
-                }else if (pos.y < element.y) {
-                    this.setPosition(pos.x, pos.y );
-                    notifyObservers();
-                }
-
-            }
-            
+        Vector2 posMov = new Vector2();
+        pos.x = this.getX();
+        pos.y = this.getY();
+        posMov.x = pos.x + x * speed;
+        posMov.y = pos.y + y * speed;
+        this.setPosition(posMov);
+        if(collision.getCollision(posMov)){
+            this.setPosition(pos);
         }
-        /*
-         * if (this.getX() < 0) {
-         * notifyObservers();
-         * this.setPosition(0, posY + y * speed);
-         * } else if (this.getX() > 1000 - 64) {
-         * this.setPosition(1000 - 64, posY + y * speed);
-         * } else if (this.getY() < 0) {
-         * this.setPosition(posX + x * speed, 0);
-         * 
-         * } else if (this.getY() > 1000 - 64) {
-         * this.setPosition(posX + x * speed, 1000 - 64);
-         * }
-         */
 
     }
-
+/* 
     public void addObserver(Collision obs) {
         observers.add(obs);
     }
@@ -87,7 +58,7 @@ public class Character extends Rectangle {
             obs.update(true);
         }
     }
-
+*/
     public void movement(float x, float y, CharacterState state) {
 
         move(x, y);
