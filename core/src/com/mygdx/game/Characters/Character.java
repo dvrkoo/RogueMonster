@@ -45,26 +45,24 @@ public class Character extends Rectangle {
         pos.y = posY;
         this.setPosition(posX + x * speed, posY + y * speed);
         for (Vector2 element : Island.collisions) {
-            if (pos.x >= element.x - 40 && pos.x <= element.x + 40 && pos.y >= element.y - 40
-                    && pos.y <= element.y + 40) {
+            if (getX() >= element.x - 40 && getX() <= element.x + 40 && getY() >= element.y - 40
+                    && getY() <= element.y + 40) {
                 if (pos.x > element.x) {
-                    this.setPosition(pos.x + 20, pos.y);
+                    this.setPosition(pos.x, pos.y);
                     notifyObservers();
-                }
-                if (pos.x < element.x) {
-                    this.setPosition(pos.x - 20, pos.y);
+                }else if (pos.x < element.x) {
+                    this.setPosition(pos.x , pos.y);
                     notifyObservers();
-                }
-                if (pos.y > element.y) {
-                    this.setPosition(pos.x, pos.y + 20);
+                }else if (pos.y > element.y) {
+                    this.setPosition(pos.x, pos.y );
                     notifyObservers();
-                }
-                if (pos.y < element.y) {
-                    this.setPosition(pos.x, pos.y - 20);
+                }else if (pos.y < element.y) {
+                    this.setPosition(pos.x, pos.y );
                     notifyObservers();
                 }
 
             }
+            
         }
         /*
          * if (this.getX() < 0) {
