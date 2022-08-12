@@ -14,7 +14,7 @@ import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
-import com.mygdx.game.Observer.Collision;
+
 
 public class GameState implements Screen {
     // game attributes
@@ -41,7 +41,7 @@ public class GameState implements Screen {
     public GameState(final RogueMonster game) {
         this.game = game;
         player = new Player(500, 500);
-        player.addObserver(new Collision());
+        //player.addObserver(new Collision());
 
         island = new Island();
         camera = new OrthographicCamera();
