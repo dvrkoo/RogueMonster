@@ -13,7 +13,7 @@ public class Bulbasaur extends Character{
     PokemonType type;
     
 
-    public Bulbasaur(int x, int y){
+    public Bulbasaur(float x, float y){
         this.setPosition( x, y);
         this.setSize(64, 64);
         this.speed = 2;

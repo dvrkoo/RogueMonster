@@ -12,7 +12,7 @@ public class Charmander extends Character{
     PokemonType type;
     
 
-    public Charmander(int x, int y){
+    public Charmander(float x, float y){
         this.setPosition( x, y);
         this.setSize(64, 64);
         this.speed = 2;

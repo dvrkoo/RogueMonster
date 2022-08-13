@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class Island {
 
-    private static final Boolean Boolean = null;
+    //private static final Boolean Boolean = null;
 
     public Tile centreTile;
 
@@ -26,6 +26,11 @@ public class Island {
     int currentTileNo;
     int currentCol;
     int currentRow;
+
+    // ISLAND MAX-MIN DIMENSION X-Y
+    public Vector2 minMaxX = new Vector2();
+    public Vector2 minMaxY = new Vector2();
+
 
     public static Array<Vector2> collisions = new Array<Vector2>();
 
@@ -46,13 +51,18 @@ public class Island {
     }
 
     public Array<Vector2> getCollisions() {
+        minMaxX.x = 100000000;
+        minMaxX.y = 0;
+        minMaxY.x = 100000000;
+        minMaxY.y = 0;
         for (
 
         ArrayList<Tile> row : chunk.tiles) {
             for (Tile tile : row) {
                 if (tile.isNotPassable() && tile.notIsAllWater()) {
                     System.out.println(tile.details());
-
+                    setMinMax(tile);
+                    
                     collisions.add(tile.pos);
 
                     // debugging
@@ -226,5 +236,16 @@ public class Island {
                 }
             }
         }
+    }
+
+    private void setMinMax(Tile tile){
+        if(tile.pos.x < minMaxX.x)
+            minMaxX.x = tile.pos.x;
+        else if(tile.pos.x > minMaxX.y)
+            minMaxX.y = tile.pos.x;
+        if(tile.pos.y < minMaxY.x)
+            minMaxY.x = tile.pos.y;
+        else if(tile.pos.y > minMaxY.y)
+            minMaxY.y = tile.pos.y;
     }
 }

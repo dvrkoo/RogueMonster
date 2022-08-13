@@ -41,6 +41,9 @@ public class Character extends Rectangle {
         this.setPosition(posMov);
         if(collision.getCollision(posMov)){
             this.setPosition(pos);
+            this.stateBefore = state;
+            this.state = CharacterState.STANDING;
+            
         }
 
     }

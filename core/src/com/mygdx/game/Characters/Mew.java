@@ -12,7 +12,7 @@ public class Mew extends Character{
     PokemonType type;
     
 
-    public Mew(int x, int y){
+    public Mew(float x, float y){
         this.setPosition( x, y);
         this.setSize(64, 64);
         this.speed = 2;

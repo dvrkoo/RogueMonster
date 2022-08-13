@@ -1,8 +1,11 @@
 package com.mygdx.game.States;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -14,6 +17,8 @@ import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
+import com.mygdx.game.Utils.Collision;
+import com.mygdx.game.Utils.Enums.Pokemon;
 
 
 public class GameState implements Screen {
@@ -29,11 +34,25 @@ public class GameState implements Screen {
     Array<Character> pokemon;
 
     void spawnEnemy() {
-        pokemon.add(pkmFactory.getPokemon("Mudkip", 0, 0));
-        pokemon.add(pkmFactory.getPokemon("Charmander", 0, 64));
-        pokemon.add(pkmFactory.getPokemon("Mew", 0, 128));
-        pokemon.add(pkmFactory.getPokemon("Bulbasaur", 0, 192));
-        pokemon.add(pkmFactory.getPokemon("Pikachu", 0, 256));
+
+        Random rand = new Random();
+        
+        Vector2 position = new Vector2();
+        
+        for (int i = 0; i < 10; i++) {
+            Collision collision = new Collision();
+            position.x = island.minMaxX.x + rand.nextFloat() * (island.minMaxX.y - island.minMaxX.x);
+            position.y = island.minMaxY.x + rand.nextFloat() * (island.minMaxY.y - island.minMaxY.x);
+            while(collision.getCollision(position)){
+                position.x = island.minMaxX.x + rand.nextFloat() * (island.minMaxX.y - island.minMaxX.x);
+                position.y = island.minMaxY.x + rand.nextFloat() * (island.minMaxY.y - island.minMaxY.x);
+            }
+            pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon(), position.x, position.y));
+            System.out.println(island.minMaxX + " " + island.minMaxY);
+            System.out.println("pokemon x: " + position.x + " y: " + position.y);
+        }
+       
+        
 
     }
 

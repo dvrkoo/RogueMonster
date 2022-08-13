@@ -6,30 +6,35 @@ import com.mygdx.game.Characters.Charmander;
 import com.mygdx.game.Characters.Mew;
 import com.mygdx.game.Characters.Mudkip;
 import com.mygdx.game.Characters.Pikachu;
+import com.mygdx.game.Utils.Enums.Pokemon;
 
 public class PokemonFactory {
     Character p;
 
-    public Character getPokemon(String pokemon, int posX, int posY){
-        if(pokemon == null)
-            return null;
+    public Character getPokemon(Pokemon pokemon, float x, float y){
 
-        if(pokemon.equalsIgnoreCase("Bulbasaur")){
-            p = new Bulbasaur( posX, posY);
+        switch(pokemon){
+            case BULBASAUR:{
+                p = new Bulbasaur( x, y);
+                return p;
+            }
+            case CHARMANDER:{
+                p = new Charmander(x, y);
             return p;
-        } else if(pokemon.equalsIgnoreCase("Mudkip")){
-            Character p = new Mudkip(posX, posY);
-            return p;
-        }else if(pokemon.equalsIgnoreCase("Pikachu")){
-            Character p= new Pikachu(posX, posY);
-            return p;
-        }else if(pokemon.equalsIgnoreCase("Charmander")){
-            Character p = new Charmander(posX, posY);
-            return p;
-        }else if(pokemon.equalsIgnoreCase("Mew")){
-            Character p = new Mew(posX, posY);
-            return p;
-        }        
+            }
+            case PIKACHU:{
+                p = new Pikachu( x, y);
+                return p;
+            }
+            case MUDKIP:{
+                p = new Mudkip( x, y);
+                return p;
+            }
+            case MEW:{
+                p = new Mew( x, y);
+                return p;
+            }
+        }
         return null;
     }
     
