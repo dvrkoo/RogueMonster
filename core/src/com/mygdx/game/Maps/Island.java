@@ -27,7 +27,7 @@ public class Island {
     int currentCol;
     int currentRow;
 
-    // ISLAND MAX-MIN DIMENSION X-Y
+    // ISLAND MIN-MAX DIMENSION X-Y
     public Vector2 minMaxX = new Vector2();
     public Vector2 minMaxY = new Vector2();
 
