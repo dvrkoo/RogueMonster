@@ -64,10 +64,6 @@ public class Island {
                     setMinMax(tile);
                     
                     collisions.add(tile.pos);
-
-                    // debugging
-                    tile.texture = Media.grassTopRight;
-
                 }
             }
         }
