@@ -1,6 +1,4 @@
 package com.mygdx.game.Characters;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,8 +12,6 @@ import com.mygdx.game.Utils.Enums.TILETYPE;
 
 public class Character extends Rectangle {
     // attributes
-    //Boolean collision;
-    List<Collision> observers = new ArrayList<>();
 
     int speed;
     TextureRegion region;
@@ -41,52 +37,33 @@ public class Character extends Rectangle {
         this.setPosition(posMov);
         if(collision.getCollision(posMov)){
             this.setPosition(pos);
-            this.stateBefore = state;
             this.state = CharacterState.STANDING;
             
         }
 
     }
-/* 
-    public void addObserver(Collision obs) {
-        observers.add(obs);
-    }
-
-    public void removeObserver(Collision obs) {
-        observers.remove(obs);
-    }
-
-    private void notifyObservers() {
-        for (Collision obs : observers) {
-            obs.update(true);
-        }
-    }
-*/
     public void movement(float x, float y, CharacterState state) {
 
+        this.stateBefore = state;
         move(x, y);
         switch (state) {
             case NORTH: {
                 animation = anim.getNorthAnimation();
-                this.stateBefore = state;
                 break;
 
             }
             case WEST: {
                 animation = anim.getWestAnimation();
-                this.stateBefore = state;
                 break;
 
             }
             case SOUTH: {
                 animation = anim.getSouthAnimation();
-                this.stateBefore = state;
                 break;
 
             }
             case EAST: {
                 animation = anim.getEastAnimation();
-                this.stateBefore = state;
                 break;
 
             }
