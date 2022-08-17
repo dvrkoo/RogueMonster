@@ -10,10 +10,13 @@ import com.mygdx.game.Utils.CharacterAnimation;
 
 public class Player extends Character {
 
+    private Character[] team;
+
     public Player(int x, int y) {
+        //init player
         this.setPosition(x, y);
         this.setSize(64, 64);
-        this.speed = 5;
+        this.movSpeed = 5;
         stateBefore = CharacterState.SOUTH;
 
         texture = new Texture(Gdx.files.internal("PokemonPG.png"));
@@ -22,7 +25,8 @@ public class Player extends Character {
 
         anim = new CharacterAnimation(texture);
 
-        // TODO Auto-generated constructor stub
+        //init team
+        team = new Character[6];
     }
 
     public void commandMovement() {
@@ -38,5 +42,14 @@ public class Player extends Character {
             this.movement(0, 0, CharacterState.STANDING);
         }
 
+    }
+
+    public void addPokemon(final Character pokemon){
+        for(int i = 0; i < team.length; i++){
+            if(team[i] == null){
+                team[i] = pokemon;
+            }
+        }
+        
     }
 }

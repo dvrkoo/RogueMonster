@@ -13,10 +13,11 @@ public class Bulbasaur extends Character{
     PokemonType type;
     
 
-    public Bulbasaur(float x, float y){
-        this.setPosition( x, y);
+    public Bulbasaur(){
+        //init pokemon
+        
         this.setSize(64, 64);
-        this.speed = 2;
+        this.movSpeed = 2;
         type = PokemonType.GRASS;
         
         texture = new Texture(Gdx.files.internal("bulbasaur.png"));
@@ -25,6 +26,12 @@ public class Bulbasaur extends Character{
         stateBefore = CharacterState.SOUTH;
 
         anim = new CharacterAnimation(texture);
+
+        //init stat
+        this.hp = 13;
+        this.attack = 13;
+        this.defense = 12;
+        this.speed = 12;
     }
     
 }

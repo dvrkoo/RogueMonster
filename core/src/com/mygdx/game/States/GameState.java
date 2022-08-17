@@ -1,7 +1,7 @@
 package com.mygdx.game.States;
 
 import java.util.ArrayList;
-import java.util.Random;
+
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,8 +18,10 @@ import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
 import com.mygdx.game.Utils.Collision;
+import com.mygdx.game.Utils.RandomUtils;
 import com.mygdx.game.Utils.Enums.Pokemon;
 import com.mygdx.game.entity.Entity;
+
 
 
 public class GameState implements Screen {
@@ -32,25 +34,25 @@ public class GameState implements Screen {
     OrthographicCamera camera;
     float enlapsedTime;
     PokemonFactory pkmFactory;
+    RandomUtils random = new RandomUtils();
     Array<Character> pokemon;
 
     void spawnEnemy() {
 
-        Random rand = new Random();
         
         Vector2 position = new Vector2();
         
         for (int i = 0; i < 10; i++) {
+            pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon()));
+        }
+        for (Character iter : pokemon) {
             Collision collision = new Collision();
-            position.x = island.minMaxX.x + rand.nextFloat() * (island.minMaxX.y - island.minMaxX.x);
-            position.y = island.minMaxY.x + rand.nextFloat() * (island.minMaxY.y - island.minMaxY.x);
+            position = random.getRandomPos(island.minMaxX, island.minMaxY);
             while(collision.getCollision(position)){
-                position.x = island.minMaxX.x + rand.nextFloat() * (island.minMaxX.y - island.minMaxX.x);
-                position.y = island.minMaxY.x + rand.nextFloat() * (island.minMaxY.y - island.minMaxY.x);
+                position = random.getRandomPos(island.minMaxX, island.minMaxY); 
             }
-            pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon(), position.x, position.y));
-            System.out.println(island.minMaxX + " " + island.minMaxY);
-            System.out.println("pokemon x: " + position.x + " y: " + position.y);
+            iter.setPosition(position);
+            
         }
     }
     
@@ -64,7 +66,7 @@ public class GameState implements Screen {
     public GameState(final RogueMonster game) {
         this.game = game;
         player = new Player(500, 500);
-        //player.addObserver(new Collision());
+        
 
         island = new Island();
         camera = new OrthographicCamera();
@@ -73,12 +75,14 @@ public class GameState implements Screen {
 
         pkmFactory = new PokemonFactory();
         pokemon = new Array<Character>();
-        spawnEnemy();
+
+        player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
+        
     }
 
     @Override
     public void show() {
-
+        spawnEnemy();
     }
    
     @Override
@@ -94,7 +98,9 @@ public class GameState implements Screen {
 
         drawMap();
 
-        drawPokemons();
+        
+
+        drawCharacters();
       
         drawEntities();
         game.batch.end();
@@ -114,7 +120,7 @@ public class GameState implements Screen {
         camera.position.lerp(pos3, .1f);
     }
 
-    public void drawPokemons() {
+    public void drawCharacters() {
         game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
         for (Character iter : pokemon) {
             game.batch.draw(iter.getAnimation().getKeyFrame(enlapsedTime, true), iter.getX(), iter.getY());

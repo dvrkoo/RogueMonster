@@ -13,10 +13,10 @@ public class Pikachu extends Character
     PokemonType type;
     
 
-    public Pikachu(float x, float y){
-        this.setPosition( x, y);
+    public Pikachu(){
+        
         this.setSize(64, 64);
-        this.speed = 2;
+        this.movSpeed = 2;
         type = PokemonType.ELECTRIC;
         
         texture = new Texture(Gdx.files.internal("pikachu.png"));
@@ -25,6 +25,12 @@ public class Pikachu extends Character
         stateBefore = CharacterState.SOUTH;
 
         anim = new CharacterAnimation(texture);
+
+        //init stat
+        this.hp = 12;
+        this.attack = 12;
+        this.defense = 10;
+        this.speed = 16;
     }
     
 }

@@ -11,27 +11,27 @@ import com.mygdx.game.Utils.Enums.Pokemon;
 public class PokemonFactory {
     Character p;
 
-    public Character getPokemon(Pokemon pokemon, float x, float y){
+    public Character getPokemon(Pokemon pokemon){
 
         switch(pokemon){
             case BULBASAUR:{
-                p = new Bulbasaur( x, y);
+                p = new Bulbasaur();
                 return p;
             }
             case CHARMANDER:{
-                p = new Charmander(x, y);
+                p = new Charmander();
             return p;
             }
             case PIKACHU:{
-                p = new Pikachu( x, y);
+                p = new Pikachu();
                 return p;
             }
             case MUDKIP:{
-                p = new Mudkip( x, y);
+                p = new Mudkip();
                 return p;
             }
             case MEW:{
-                p = new Mew( x, y);
+                p = new Mew();
                 return p;
             }
         }

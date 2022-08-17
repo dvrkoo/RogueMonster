@@ -8,12 +8,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Utils.CharacterAnimation;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.CharacterState;
-import com.mygdx.game.Utils.Enums.TILETYPE;
+//import com.mygdx.game.Utils.Enums.TILETYPE;
 
 public class Character extends Rectangle {
     // attributes
 
+    int movSpeed;
+    int attack;
     int speed;
+    int defense;
+    int hp;
     TextureRegion region;
     Texture texture;
     CharacterAnimation anim;
@@ -21,7 +25,7 @@ public class Character extends Rectangle {
     CharacterState stateBefore;
     CharacterState state;
     int counter = 0;
-    TILETYPE type = TILETYPE.WATER;
+    //TILETYPE type = TILETYPE.WATER;
     Collision collision = new Collision();
 
     // to use this method we need to insert 1/-1/0 values
@@ -32,8 +36,8 @@ public class Character extends Rectangle {
         Vector2 posMov = new Vector2();
         pos.x = this.getX();
         pos.y = this.getY();
-        posMov.x = pos.x + x * speed;
-        posMov.y = pos.y + y * speed;
+        posMov.x = pos.x + x * movSpeed;
+        posMov.y = pos.y + y * movSpeed;
         this.setPosition(posMov);
         if(collision.getCollision(posMov)){
             this.setPosition(pos);
@@ -43,31 +47,38 @@ public class Character extends Rectangle {
 
     }
     public void movement(float x, float y, CharacterState state) {
+        
 
-        this.stateBefore = state;
+        
+        
         move(x, y);
         switch (state) {
             case NORTH: {
+                this.stateBefore = state;
                 animation = anim.getNorthAnimation();
                 break;
 
             }
             case WEST: {
+                this.stateBefore = state;
                 animation = anim.getWestAnimation();
                 break;
 
             }
             case SOUTH: {
+                this.stateBefore = state;
                 animation = anim.getSouthAnimation();
                 break;
 
             }
             case EAST: {
+                this.stateBefore = state;
                 animation = anim.getEastAnimation();
                 break;
 
             }
             case STANDING: {
+                
                 switch (stateBefore) {
 
                     case NORTH: {
@@ -76,7 +87,7 @@ public class Character extends Rectangle {
                         break;
 
                     }
-                    case WEST: {
+                    case WEST: {                      
                         region.setRegion(0, 64, 64, 64);
                         animation = new Animation<TextureRegion>(1f / 60f, region);
                         break;

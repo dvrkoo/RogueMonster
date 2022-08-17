@@ -12,10 +12,10 @@ public class Mew extends Character{
     PokemonType type;
     
 
-    public Mew(float x, float y){
-        this.setPosition( x, y);
+    public Mew(){
+    
         this.setSize(64, 64);
-        this.speed = 2;
+        this.movSpeed = 2;
         type = PokemonType.PSYCHIC;
         
         texture = new Texture(Gdx.files.internal("mew.png"));
@@ -24,6 +24,12 @@ public class Mew extends Character{
         stateBefore = CharacterState.SOUTH;
 
         anim = new CharacterAnimation(texture);
+
+        //init stat
+        this.hp = 13;
+        this.attack = 12;
+        this.defense = 12;
+        this.speed = 12;
     }
     
 }

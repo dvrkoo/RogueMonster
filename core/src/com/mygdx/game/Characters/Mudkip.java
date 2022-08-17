@@ -12,10 +12,10 @@ public class Mudkip extends Character{
     PokemonType type;
     
 
-    public Mudkip(float x, float y){
-        this.setPosition( x, y);
+    public Mudkip(){
+        
         this.setSize(64, 64);
-        this.speed = 2;
+        this.movSpeed = 2;
         type = PokemonType.WATER;
         
         texture = new Texture(Gdx.files.internal("mudkip.png"));
@@ -24,6 +24,12 @@ public class Mudkip extends Character{
         stateBefore = CharacterState.SOUTH;
 
         anim = new CharacterAnimation(texture);
+
+        //init stat
+        this.hp = 14;
+        this.attack = 12;
+        this.defense = 13;
+        this.speed = 11;
     }
     
 }
