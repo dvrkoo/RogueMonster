@@ -11,8 +11,8 @@ public class Media {
     public static Texture grassTop, grassTopRight, grassTopLeft;
     public static Texture water01, water02, water03, water04;
     public static Texture cliff, water;
-
-    // HERO
+   // Entity
+   public static Texture tree;
 
     public static void load_assets() {
         // HERO
@@ -41,6 +41,7 @@ public class Media {
         water04 = new Texture("8x8/water/water_04.png");
         cliff = new Texture(Gdx.files.internal("8x8/cliff.png"));
 
+        tree    = new Texture("entities/tree.png");
     }
 
     public void dispose() {
@@ -60,5 +61,6 @@ public class Media {
         water03.dispose();
         water04.dispose();
         cliff.dispose();
+        tree.dispose();
     }
 }

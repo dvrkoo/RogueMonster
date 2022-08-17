@@ -19,6 +19,7 @@ import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.Pokemon;
+import com.mygdx.game.entity.Entity;
 
 
 public class GameState implements Screen {
@@ -51,9 +52,12 @@ public class GameState implements Screen {
             System.out.println(island.minMaxX + " " + island.minMaxY);
             System.out.println("pokemon x: " + position.x + " y: " + position.y);
         }
-       
-        
-
+    }
+    
+    public void drawEntities() {
+        for(Entity e: island.entities){
+            e.draw(game.batch);
+        }
     }
 
     // game methods
@@ -76,7 +80,7 @@ public class GameState implements Screen {
     public void show() {
 
     }
-
+   
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0.2f, 0, 0.2f, 1);
@@ -91,13 +95,17 @@ public class GameState implements Screen {
         drawMap();
 
         drawPokemons();
-
+      
+        drawEntities();
         game.batch.end();
 
         player.commandMovement();
         moveCamera();
 
     }
+
+
+ 
 
     public void moveCamera() {
         Vector3 pos3 = new Vector3();

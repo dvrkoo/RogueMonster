@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.mygdx.game.Utils.Enums.TILETYPE;
+import com.mygdx.game.entity.Entity;
+import com.mygdx.game.entity.Tree;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -11,16 +13,11 @@ import com.badlogic.gdx.utils.Array;
 
 public class Island {
 
-    //private static final Boolean Boolean = null;
-
     public Tile centreTile;
-
-    // public Map<Integer, ArrayList<Chunk> chunks = new Map<Integer,
-    // ArrayList<Chunk>();
 
     // ONE CHUNK
     public Chunk chunk;
-    ArrayList<Entity> entities = new ArrayList<Entity>();
+    public ArrayList<Entity> entities = new ArrayList<Entity>();
 
     // TRACK CLICK
     int currentTileNo;
@@ -45,8 +42,10 @@ public class Island {
     String[] aGrassTopLeft = { "000000001" };
 
     public Island() {
+        entities.clear();
         setupTiles();
         codeTiles();
+        addEntities();
         getCollisions();
     }
 
@@ -62,9 +61,9 @@ public class Island {
                 if (tile.isNotPassable() && tile.notIsAllWater()) {
                     System.out.println(tile.details());
                     setMinMax(tile);
-                    
                     collisions.add(tile.pos);
                 }
+               // else if (tile.pos)
             }
         }
         System.out.println(collisions);
@@ -229,6 +228,18 @@ public class Island {
                         tile.code += chunk.getTileCode(tile.row + r, tile.col + c);
                         updateImage(tile);
                     }
+                }
+            }
+        }
+    }
+    private void addEntities() {
+        // Loop all tiles and add random trees
+        for(ArrayList<Tile> row : chunk.tiles){
+            for(Tile tile : row){ 
+                if (tile.isGrass()){
+                    if(MathUtils.random(100) > 90){
+                        entities.add(new Tree(tile.pos));
+                    }    
                 }
             }
         }
