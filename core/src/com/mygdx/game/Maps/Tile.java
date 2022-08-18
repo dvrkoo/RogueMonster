@@ -2,7 +2,6 @@ package com.mygdx.game.Maps;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Utils.Enums.TILETYPE;
-import com.mygdx.game.entity.Entity;
 
 public class Tile extends Entity {
 
