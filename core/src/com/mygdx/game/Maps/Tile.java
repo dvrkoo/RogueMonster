@@ -42,9 +42,12 @@ public class Tile extends Entity {
     public boolean isCliff() {
         return type == TILETYPE.CLIFF;
     }
+    public boolean isTree() {
+        return type == TILETYPE.TREE;
+    }
 
     public boolean isPassable() {
-        return !isWater() && !isCliff();
+        return !isWater() && !isCliff() && !isTree();
     }
 
     public boolean isNotPassable() {

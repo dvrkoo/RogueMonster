@@ -4,15 +4,13 @@ import java.util.Random;
 
 public class Enums {
 
-    public enum EntityType {
 
-        TREE
-       }
        
     public enum TILETYPE {
         GRASS,
         WATER,
-        CLIFF
+        CLIFF,
+        TREE
     }
 
     public enum CharacterState{

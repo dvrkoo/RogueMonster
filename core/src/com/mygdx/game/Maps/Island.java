@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import com.mygdx.game.Utils.Enums.TILETYPE;
 import com.mygdx.game.entity.Entity;
-import com.mygdx.game.entity.Tree;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -58,7 +57,7 @@ public class Island {
 
         ArrayList<Tile> row : chunk.tiles) {
             for (Tile tile : row) {
-                if (tile.isNotPassable() && tile.notIsAllWater()) {
+                if (tile.isNotPassable() && tile.notIsAllWater() ) {
                     System.out.println(tile.details());
                     setMinMax(tile);
                     collisions.add(tile.pos);
@@ -101,6 +100,7 @@ public class Island {
                 if (row > minRow && row < maxRow && col > minCol && col < maxCol) {
                     tile.texture = randomGrass();
                     tile.type = TILETYPE.GRASS;
+      
 
                     if (row == firstTileRow + 1) {
                         tile.texture = Media.cliff;
@@ -238,11 +238,37 @@ public class Island {
             for(Tile tile : row){ 
                 if (tile.isGrass()){
                     if(MathUtils.random(100) > 90){
-                        entities.add(new Tree(tile.pos));
+                        tile.texture = Media.tree;
+                        tile.size = 40;
+                        tile.type = TILETYPE.TREE;
                     }    
                 }
             }
         }
+    }
+    private Texture randomTree() {
+        Texture grass;
+
+        int tile = MathUtils.random(20);
+        switch (tile) {
+            case 1:
+                grass = Media.tree;
+                break;
+            case 2:
+                grass = Media.tree;
+                break;
+            case 3:
+                grass = Media.tree;
+                break;
+            case 4:
+                grass = Media.tree;
+                break;
+            default:
+                grass = Media.tree;
+                break;
+        }
+
+        return grass;
     }
 
     private void setMinMax(Tile tile){
