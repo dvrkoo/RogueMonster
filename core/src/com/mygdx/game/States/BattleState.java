@@ -24,8 +24,8 @@ public class BattleState implements Screen{
     Rectangle switchButton = new Rectangle();
     Texture attackTexture = new Texture("Buttons/button_attack.png");
     Texture runTexture = new Texture("Buttons/button_run.png");
-    //Texture switchTexture = new Texture("Buttons/button_switch.png");
-    //Texture bagTexture = new Texture("Buttons/button_bag.png");
+    Texture switchTexture = new Texture("Buttons/button_switch.png");
+    Texture bagTexture = new Texture("Buttons/button_bag.png");
     Vector3 touchPoint = new Vector3();
 
     public BattleState(final RogueMonster game, final GameState oldState){
@@ -67,8 +67,8 @@ public class BattleState implements Screen{
 
         game.batch.begin();
         game.batch.draw(attackTexture, attackButton.x, attackButton.y, attackButton.width, attackButton.height);
-        //game.batch.draw(switchTexture, switchButton.x, switchButton.y, switchButton.width, switchButton.width);
-        //game.batch.draw(bagTexture, bagButton.x, bagButton.y, bagButton.width, bagButton.width);
+        game.batch.draw(switchTexture, switchButton.x, switchButton.y, switchButton.width, switchButton.height);
+        game.batch.draw(bagTexture, bagButton.x, bagButton.y, bagButton.width, bagButton.height);
         game.batch.draw(runTexture, runButton.x, runButton.y, runButton.width, runButton.height);
         game.batch.end();
 
@@ -128,6 +128,14 @@ public class BattleState implements Screen{
             game.setScreen(oldState);
             dispose();
 
+        }
+        else if(bagButton.contains(x, y)){
+            System.out.println(" ha usato bag");
+            //bag function to use items
+
+        }else if(switchButton.contains(x, y)){
+            System.out.println(" hai switchato");
+            //aswitch pokemon function
         }
 
     }
