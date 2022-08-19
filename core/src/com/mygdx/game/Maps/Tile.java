@@ -2,7 +2,6 @@ package com.mygdx.game.Maps;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Utils.Enums.TILETYPE;
-import com.mygdx.game.entity.Entity;
 
 public class Tile extends Entity {
 
@@ -42,9 +41,12 @@ public class Tile extends Entity {
     public boolean isCliff() {
         return type == TILETYPE.CLIFF;
     }
+    public boolean isTree() {
+        return type == TILETYPE.TREE;
+    }
 
     public boolean isPassable() {
-        return !isWater() && !isCliff();
+        return !isWater() && !isCliff() && !isTree();
     }
 
     public boolean isNotPassable() {

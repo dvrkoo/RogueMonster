@@ -16,12 +16,12 @@ import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
+import com.mygdx.game.Maps.Entity;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.RandomUtils;
 import com.mygdx.game.Utils.Enums.Pokemon;
-import com.mygdx.game.entity.Entity;
 
 
 
