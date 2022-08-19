@@ -9,7 +9,6 @@ import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Utils.Enums.PokemonType;
 
 public class Charmander extends Character{
-    PokemonType type;
     
 
     public Charmander(){

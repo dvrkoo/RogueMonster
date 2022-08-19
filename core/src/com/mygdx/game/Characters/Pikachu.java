@@ -10,8 +10,6 @@ import com.mygdx.game.Utils.Enums.PokemonType;
 
 public class Pikachu extends Character 
 {
-    PokemonType type;
-    
 
     public Pikachu(){
         

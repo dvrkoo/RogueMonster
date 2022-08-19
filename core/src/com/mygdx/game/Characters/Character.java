@@ -9,6 +9,7 @@ import com.mygdx.game.Utils.CharacterAnimation;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.CharacterState;
 //import com.mygdx.game.Utils.Enums.TILETYPE;
+import com.mygdx.game.Utils.Enums.PokemonType;
 
 public class Character extends Rectangle {
     // attributes
@@ -18,6 +19,8 @@ public class Character extends Rectangle {
     int speed;
     int defense;
     int hp;
+    PokemonType type;
+    
     TextureRegion region;
     Texture texture;
     CharacterAnimation anim;
@@ -161,5 +164,34 @@ public class Character extends Rectangle {
         pos = getDirection(state);
         this.movement(pos.x, pos.y, state);
 
+    }
+
+    //getter setter
+    public int getDefense() {
+        return defense;
+    }
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+    public int getAttack() {
+        return attack;
+    }
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+    public int getSpeed() {
+        return speed;
+    }
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+    public int getHp() {
+        return hp;
+    }
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+    public PokemonType getType() {
+        return type;
     }
 }

@@ -1,8 +1,9 @@
 package com.mygdx.game.Utils;
 
+import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Utils.Enums.PokemonType;
 
-public class DamageModifier {
+public class Damage {
 
     float getModifier( PokemonType type, PokemonType attackType ){
         float modifier = 1;
@@ -145,5 +146,11 @@ public class DamageModifier {
 
         return modifier;
     }
-    
+
+    public int getDamage(Character attacker, Character defender){
+
+        final int damage = (int) (((( attacker.getAttack() / defender.getDefense() ) / 50)) * getModifier(defender.getType(), attacker.getType()));
+        return damage;
+    }
+
 }

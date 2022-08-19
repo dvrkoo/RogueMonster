@@ -2,7 +2,8 @@ package com.mygdx.game.States;
 
 import java.util.ArrayList;
 
-
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
@@ -27,7 +28,16 @@ import com.mygdx.game.entity.Entity;
 public class GameState implements Screen {
     // game attributes
     final RogueMonster game;
+
+    public static final int GAME_RUNNING = 1;
+    public static final int GAME_PAUSED = 0;
+
+    private int gamestatus = GAME_RUNNING;
+
+    //attributes
     Player player;
+    
+
     Island island;
 
     Viewport viewport;
@@ -77,12 +87,13 @@ public class GameState implements Screen {
         pokemon = new Array<Character>();
 
         player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
-        
+        spawnEnemy();
     }
 
     @Override
     public void show() {
-        spawnEnemy();
+        
+        gamestatus = GAME_RUNNING;
     }
    
     @Override
@@ -108,10 +119,20 @@ public class GameState implements Screen {
         player.commandMovement();
         moveCamera();
 
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+			pauseGame();
+		}
+
+		if (gamestatus == GAME_PAUSED) {
+			// draw pause screenù
+			pause();
+			
+		}
+
     }
-
-
- 
+    public void pauseGame() {
+        gamestatus = GAME_PAUSED;
+    }
 
     public void moveCamera() {
         Vector3 pos3 = new Vector3();
@@ -148,6 +169,7 @@ public class GameState implements Screen {
     @Override
     public void pause() {
         // TODO Auto-generated method stub
+        game.setScreen(new BattleState(game, this));
 
     }
 
@@ -166,6 +188,11 @@ public class GameState implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    //getter setter
+    public Player getPlayer() {
+        return player;
     }
 
 }

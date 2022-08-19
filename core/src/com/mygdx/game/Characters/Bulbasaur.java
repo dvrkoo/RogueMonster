@@ -10,7 +10,6 @@ import com.mygdx.game.Utils.Enums.PokemonType;
 
 public class Bulbasaur extends Character{
     
-    PokemonType type;
     
 
     public Bulbasaur(){
