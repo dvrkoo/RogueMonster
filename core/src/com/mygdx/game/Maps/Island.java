@@ -57,14 +57,14 @@ public class Island {
         ArrayList<Tile> row : chunk.tiles) {
             for (Tile tile : row) {
                 if (tile.isNotPassable() && tile.notIsAllWater() ) {
-                    System.out.println(tile.details());
+                    //System.out.println(tile.details());
                     setMinMax(tile);
                     collisions.add(tile.pos);
                 }
                // else if (tile.pos)
             }
         }
-        System.out.println(collisions);
+        //System.out.println(collisions);
         return collisions;
     }
 
