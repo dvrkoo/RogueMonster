@@ -166,6 +166,11 @@ public class Character extends Rectangle {
 
     }
 
+    public void takeDamage(int damage){
+
+        this.hp -= damage;
+    }
+
     //getter setter
     public int getDefense() {
         return defense;

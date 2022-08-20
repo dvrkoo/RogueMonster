@@ -86,7 +86,7 @@ public class GameState implements Screen {
         pkmFactory = new PokemonFactory();
         pokemon = new Array<Character>();
 
-        player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
+        player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
         spawnEnemy();
     }
 

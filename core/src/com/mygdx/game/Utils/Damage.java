@@ -149,7 +149,7 @@ public class Damage {
 
     public int getDamage(Character attacker, Character defender){
 
-        final int damage = (int) (((( attacker.getAttack() / defender.getDefense() ) / 50)) * getModifier(defender.getType(), attacker.getType()));
+        final int damage = (int) (((( attacker.getAttack() / defender.getDefense() ) / 50)+2) * getModifier(defender.getType(), attacker.getType()));
         return damage;
     }
 

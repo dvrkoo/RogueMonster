@@ -52,4 +52,8 @@ public class Player extends Character {
         }
         
     }
+    public Character getFirst(){
+        return team[1];
+        
+    }
 }
