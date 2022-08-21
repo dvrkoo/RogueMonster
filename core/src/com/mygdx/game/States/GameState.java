@@ -9,8 +9,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Character;
@@ -23,8 +27,6 @@ import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.RandomUtils;
 import com.mygdx.game.Utils.Enums.Pokemon;
 
-
-
 public class GameState implements Screen {
     // game attributes
     final RogueMonster game;
@@ -34,9 +36,8 @@ public class GameState implements Screen {
 
     private int gamestatus = GAME_RUNNING;
 
-    //attributes
+    // attributes
     Player player;
-    
 
     Island island;
 
@@ -49,25 +50,24 @@ public class GameState implements Screen {
 
     void spawnEnemy() {
 
-        
         Vector2 position = new Vector2();
-        
+
         for (int i = 0; i < 10; i++) {
             pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon()));
         }
         for (Character iter : pokemon) {
             Collision collision = new Collision();
             position = random.getRandomPos(island.minMaxX, island.minMaxY);
-            while(collision.getCollision(position)){
-                position = random.getRandomPos(island.minMaxX, island.minMaxY); 
+            while (collision.getCollision(iter)) {
+                position = random.getRandomPos(island.minMaxX, island.minMaxY);
             }
             iter.setPosition(position);
-            
+
         }
     }
-    
+
     public void drawEntities() {
-        for(Entity e: island.entities){
+        for (Entity e : island.entities) {
             e.draw(game.batch);
         }
     }
@@ -76,7 +76,6 @@ public class GameState implements Screen {
     public GameState(final RogueMonster game) {
         this.game = game;
         player = new Player(500, 500);
-        
 
         island = new Island();
         camera = new OrthographicCamera();
@@ -92,12 +91,13 @@ public class GameState implements Screen {
 
     @Override
     public void show() {
-        
+
         gamestatus = GAME_RUNNING;
     }
-   
+
     @Override
     public void render(float delta) {
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
         ScreenUtils.clear(0.2f, 0, 0.2f, 1);
         enlapsedTime += delta;
 
@@ -109,27 +109,39 @@ public class GameState implements Screen {
 
         drawMap();
 
-        
-
         drawCharacters();
-      
+
         drawEntities();
         game.batch.end();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.setColor(Color.BLUE);
+        shapeRenderer.begin(ShapeType.Line);
+
+        for (Rectangle collision : island.collisionRectangle) {
+            shapeRenderer.rect(collision.getX(), collision.getY(), collision.getWidth(), collision.getHeight());
+        }
+        for (Character pkmn : pokemon) {
+            shapeRenderer.rect(pkmn.getX(), pkmn.getY(), pkmn.getWidth(), pkmn.getHeight());
+        }
+        shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+
+        shapeRenderer.end();
 
         player.commandMovement();
         moveCamera();
 
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-			pauseGame();
-		}
+            pauseGame();
+        }
 
-		if (gamestatus == GAME_PAUSED) {
-			// draw pause screenù
-			pause();
-			
-		}
+        if (gamestatus == GAME_PAUSED) {
+            // draw pause screenù
+            pause();
+
+        }
 
     }
+
     public void pauseGame() {
         gamestatus = GAME_PAUSED;
     }
@@ -190,7 +202,7 @@ public class GameState implements Screen {
 
     }
 
-    //getter setter
+    // getter setter
     public Player getPlayer() {
         return player;
     }

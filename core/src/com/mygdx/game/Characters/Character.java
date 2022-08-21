@@ -20,7 +20,7 @@ public class Character extends Rectangle {
     int defense;
     int hp;
     PokemonType type;
-    
+
     TextureRegion region;
     Texture texture;
     CharacterAnimation anim;
@@ -28,7 +28,7 @@ public class Character extends Rectangle {
     CharacterState stateBefore;
     CharacterState state;
     int counter = 0;
-    //TILETYPE type = TILETYPE.WATER;
+    // TILETYPE type = TILETYPE.WATER;
     Collision collision = new Collision();
 
     // to use this method we need to insert 1/-1/0 values
@@ -42,18 +42,16 @@ public class Character extends Rectangle {
         posMov.x = pos.x + x * movSpeed;
         posMov.y = pos.y + y * movSpeed;
         this.setPosition(posMov);
-        if(collision.getCollision(posMov)){
+        if (collision.getCollision(this)) {
             this.setPosition(pos);
             this.state = CharacterState.STANDING;
-            
+
         }
 
     }
-    public void movement(float x, float y, CharacterState state) {
-        
 
-        
-        
+    public void movement(float x, float y, CharacterState state) {
+
         move(x, y);
         switch (state) {
             case NORTH: {
@@ -81,7 +79,7 @@ public class Character extends Rectangle {
 
             }
             case STANDING: {
-                
+
                 switch (stateBefore) {
 
                     case NORTH: {
@@ -90,7 +88,7 @@ public class Character extends Rectangle {
                         break;
 
                     }
-                    case WEST: {                      
+                    case WEST: {
                         region.setRegion(0, 64, 64, 64);
                         animation = new Animation<TextureRegion>(1f / 60f, region);
                         break;
@@ -166,36 +164,44 @@ public class Character extends Rectangle {
 
     }
 
-    public void takeDamage(int damage){
+    public void takeDamage(int damage) {
 
         this.hp -= damage;
     }
 
-    //getter setter
+    // getter setter
     public int getDefense() {
         return defense;
     }
+
     public void setDefense(int defense) {
         this.defense = defense;
     }
+
     public int getAttack() {
         return attack;
     }
+
     public void setAttack(int attack) {
         this.attack = attack;
     }
+
     public int getSpeed() {
         return speed;
     }
+
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
     public int getHp() {
         return hp;
     }
+
     public void setHp(int hp) {
         this.hp = hp;
     }
+
     public PokemonType getType() {
         return type;
     }

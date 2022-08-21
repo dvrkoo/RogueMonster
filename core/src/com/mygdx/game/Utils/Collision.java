@@ -1,38 +1,41 @@
 package com.mygdx.game.Utils;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Maps.Island;
+import com.mygdx.game.States.GameState;
 
-public class Collision  {
-    public boolean getCollision(Vector2 pos){
+public class Collision {
+    public boolean getCollision(Rectangle pos) {
         boolean collision = false;
-        for (Vector2 element : Island.collisions) {
-            if (pos.x >= element.x - 40 && pos.x <= element.x + 40 && pos.y >= element.y - 40
-                    && pos.y <= element.y + 40) {
-                if (pos.x > element.x) {
-                    collision = true;
-                    //notifyObservers();
-                }else if (pos.x < element.x) {
-                    collision = true;
-                    //notifyObservers();
-                }else if (pos.y > element.y) {
-                    collision = true;
-                    //notifyObservers();
-                }else if (pos.y < element.y) {
-                    collision = true;
-                    //notifyObservers();
-                }
-
+        for (Rectangle element : Island.collisionRectangle) {
+            if (pos.overlaps(element)) {
+                collision = true;
+                // notifyObservers();
             }
-            
         }
 
         return collision;
     }
 
-   /*  @Override
-    public void update(Object o) {
-        //System.out.println(collision);
-    }*/
+    /*
+     * public boolean getPkmnCollision(Rectangle pos) {
+     * boolean collision = false;
+     * for (Rectangle pkmn : GameState.pokemon) {
+     * if (pos.overlaps(pkmn)) {
+     * collision = true;
+     * // notifyObservers();
+     * }
+     * }
+     * return collision;
+     * }
+     */
+
+    /*
+     * @Override
+     * public void update(Object o) {
+     * //System.out.println(collision);
+     * }
+     */
 
 }

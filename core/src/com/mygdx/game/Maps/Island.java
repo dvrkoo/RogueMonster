@@ -6,6 +6,7 @@ import java.util.Arrays;
 import com.mygdx.game.Utils.Enums.TILETYPE;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -26,8 +27,7 @@ public class Island {
     public Vector2 minMaxX = new Vector2();
     public Vector2 minMaxY = new Vector2();
 
-
-    public static Array<Vector2> collisions = new Array<Vector2>();
+    public static Array<Rectangle> collisionRectangle = new Array<Rectangle>();
 
     // Arrays for mapping code to texture
     String[] aGrassLeft = {
@@ -47,7 +47,7 @@ public class Island {
         getCollisions();
     }
 
-    public Array<Vector2> getCollisions() {
+    public void getCollisions() {
         minMaxX.x = 100000000;
         minMaxX.y = 0;
         minMaxY.x = 100000000;
@@ -56,16 +56,20 @@ public class Island {
 
         ArrayList<Tile> row : chunk.tiles) {
             for (Tile tile : row) {
-                if (tile.isNotPassable() && tile.notIsAllWater() ) {
-                    //System.out.println(tile.details());
+                if (tile.isNotPassable() && tile.notIsAllWater()) {
+                    // System.out.println(tile.details());
                     setMinMax(tile);
-                    collisions.add(tile.pos);
+                    Rectangle rec = new Rectangle();
+                    rec.x = tile.pos.x;
+                    rec.y = tile.pos.y;
+                    rec.height = tile.size;
+                    rec.width = tile.size;
+                    collisionRectangle.add(rec);
                 }
-               // else if (tile.pos)
+                // else if (tile.pos)
             }
         }
-        //System.out.println(collisions);
-        return collisions;
+        // System.out.println(collisions);
     }
 
     private void setupTiles() {
@@ -99,7 +103,6 @@ public class Island {
                 if (row > minRow && row < maxRow && col > minCol && col < maxCol) {
                     tile.texture = randomGrass();
                     tile.type = TILETYPE.GRASS;
-      
 
                     if (row == firstTileRow + 1) {
                         tile.texture = Media.cliff;
@@ -231,53 +234,30 @@ public class Island {
             }
         }
     }
+
     private void addEntities() {
         // Loop all tiles and add random trees
-        for(ArrayList<Tile> row : chunk.tiles){
-            for(Tile tile : row){ 
-                if (tile.isGrass()){
-                    if(MathUtils.random(100) > 90){
+        for (ArrayList<Tile> row : chunk.tiles) {
+            for (Tile tile : row) {
+                if (tile.isGrass()) {
+                    if (MathUtils.random(100) > 90) {
                         tile.texture = Media.tree;
                         tile.size = 40;
                         tile.type = TILETYPE.TREE;
-                    }    
+                    }
                 }
             }
         }
     }
-    private Texture randomTree() {
-        Texture grass;
 
-        int tile = MathUtils.random(20);
-        switch (tile) {
-            case 1:
-                grass = Media.tree;
-                break;
-            case 2:
-                grass = Media.tree;
-                break;
-            case 3:
-                grass = Media.tree;
-                break;
-            case 4:
-                grass = Media.tree;
-                break;
-            default:
-                grass = Media.tree;
-                break;
-        }
-
-        return grass;
-    }
-
-    private void setMinMax(Tile tile){
-        if(tile.pos.x < minMaxX.x)
+    private void setMinMax(Tile tile) {
+        if (tile.pos.x < minMaxX.x)
             minMaxX.x = tile.pos.x;
-        else if(tile.pos.x > minMaxX.y)
+        else if (tile.pos.x > minMaxX.y)
             minMaxX.y = tile.pos.x;
-        if(tile.pos.y < minMaxY.x)
+        if (tile.pos.y < minMaxY.x)
             minMaxY.x = tile.pos.y;
-        else if(tile.pos.y > minMaxY.y)
+        else if (tile.pos.y > minMaxY.y)
             minMaxY.y = tile.pos.y;
     }
 }
