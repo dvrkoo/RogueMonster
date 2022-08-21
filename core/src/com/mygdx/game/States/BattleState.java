@@ -30,7 +30,7 @@ public class BattleState implements Screen{
     Texture bagTexture = new Texture("Buttons/button_bag.png");
     Vector3 touchPoint = new Vector3();
 
-    Charmander opponent = new Charmander();
+    Bulbasaur opponent = new Bulbasaur();
 
     public BattleState(final RogueMonster game, final GameState oldState){
         this.game = game;
@@ -50,6 +50,8 @@ public class BattleState implements Screen{
         bagButton.setHeight(65);
         runButton.setWidth(175);
         runButton.setHeight(65);
+
+
 
     }
 
@@ -130,10 +132,13 @@ public class BattleState implements Screen{
         }
         else if(bagButton.contains(x, y)){
             System.out.println(" ha usato bag");
+            
             //bag function to use items
 
         }else if(switchButton.contains(x, y)){
-            System.out.println(" hai switchato");
+            
+            player.swapPokemon(0, 1);
+            
             //aswitch pokemon function
         }
 

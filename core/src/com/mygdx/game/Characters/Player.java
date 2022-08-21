@@ -48,12 +48,21 @@ public class Player extends Character {
         for(int i = 0; i < team.length; i++){
             if(team[i] == null){
                 team[i] = pokemon;
+                break;
             }
         }
         
     }
     public Character getFirst(){
-        return team[1];
+        return team[0];
         
+    }
+
+    public void swapPokemon(final int one, final int two){
+        System.out.println(" hp prima " + getFirst().getHp());
+        final Character tmp = this.team[one];
+        this.team[one] = this.team[two];
+        this.team[two] = tmp;
+        System.out.println(" hp dopo " + getFirst().getHp());
     }
 }
