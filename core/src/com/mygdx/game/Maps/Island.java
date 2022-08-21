@@ -76,8 +76,8 @@ public class Island {
         chunk = new Chunk(33, 33, 40);
 
         int currentRow = 0;
-        int rngW = MathUtils.random(5, 10);
-        int rngH = MathUtils.random(5, 10);
+        int rngW = MathUtils.random(5, 33);
+        int rngH = MathUtils.random(5, 33);
 
         int centreTileRow = chunk.numberRows / 2;
         int centreTileCol = chunk.numberCols / 2;

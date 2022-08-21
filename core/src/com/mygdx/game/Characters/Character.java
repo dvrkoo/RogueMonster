@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.States.GameState;
 import com.mygdx.game.Utils.CharacterAnimation;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.CharacterState;
@@ -45,7 +47,6 @@ public class Character extends Rectangle {
         if (collision.getCollision(this)) {
             this.setPosition(pos);
             this.state = CharacterState.STANDING;
-
         }
 
     }
@@ -152,6 +153,18 @@ public class Character extends Rectangle {
     public Vector2 pos;
 
     public void update() {
+        Vector2 poss = new Vector2();
+        poss.x = this.getX();
+        poss.y = this.getY();
+        if (collision.getPkmnCollision(this)) {
+            this.setPosition(poss);
+            this.state = CharacterState.STANDING;
+        }
+
+        if (collision.getPlayerCollision(GameState.player)) {
+            this.setPosition(poss);
+            this.state = CharacterState.STANDING;
+        }
 
         if (counter == 0) {
             this.state = CharacterState.randomDirection();

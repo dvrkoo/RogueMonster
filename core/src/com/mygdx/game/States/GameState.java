@@ -37,7 +37,7 @@ public class GameState implements Screen {
     private int gamestatus = GAME_RUNNING;
 
     // attributes
-    Player player;
+    public static Player player;
 
     Island island;
 
@@ -46,7 +46,7 @@ public class GameState implements Screen {
     float enlapsedTime;
     PokemonFactory pkmFactory;
     RandomUtils random = new RandomUtils();
-    Array<Character> pokemon;
+    public static ArrayList<Character> pokemon;
 
     void spawnEnemy() {
 
@@ -58,10 +58,11 @@ public class GameState implements Screen {
         for (Character iter : pokemon) {
             Collision collision = new Collision();
             position = random.getRandomPos(island.minMaxX, island.minMaxY);
+            iter.setPosition(position);
             while (collision.getCollision(iter)) {
+                iter.setPosition(position);
                 position = random.getRandomPos(island.minMaxX, island.minMaxY);
             }
-            iter.setPosition(position);
 
         }
     }
@@ -83,7 +84,7 @@ public class GameState implements Screen {
         viewport = new FitViewport(1000, 1000, camera);
 
         pkmFactory = new PokemonFactory();
-        pokemon = new Array<Character>();
+        pokemon = new ArrayList<Character>();
 
         player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
         spawnEnemy();
