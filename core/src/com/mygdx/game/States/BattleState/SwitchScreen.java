@@ -27,7 +27,7 @@ public class SwitchScreen extends Rectangle{
         for (int i = 0; i < pokemonIcon.length; i++) {
             if(player.getPokemon(i) != null){
                 final String nameString = player.getPokemon(i).getName() + ".png";
-                Texture texture = new Texture(nameString); 
+                final Texture texture = new Texture(nameString); 
                 pokemonIcon[i] = new TextureRegion(texture, 0, 0, 64, 64);
             }
             
