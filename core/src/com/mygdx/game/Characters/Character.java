@@ -4,9 +4,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.States.GameState;
 import com.mygdx.game.Utils.CharacterAnimation;
 import com.mygdx.game.Utils.Collision;
+import com.mygdx.game.Utils.Enums;
 import com.mygdx.game.Utils.Enums.CharacterState;
 //import com.mygdx.game.Utils.Enums.TILETYPE;
 import com.mygdx.game.Utils.Enums.PokemonType;
@@ -45,7 +48,6 @@ public class Character extends Rectangle {
         if (collision.getCollision(this)) {
             this.setPosition(pos);
             this.state = CharacterState.STANDING;
-
         }
 
     }
@@ -152,6 +154,9 @@ public class Character extends Rectangle {
     public Vector2 pos;
 
     public void update() {
+        Vector2 poss = new Vector2();
+        poss.x = this.getX();
+        poss.y = this.getY();
 
         if (counter == 0) {
             this.state = CharacterState.randomDirection();
@@ -159,8 +164,18 @@ public class Character extends Rectangle {
         } else if (counter != 0) {
             counter--;
         }
-        pos = getDirection(state);
+
+        pos = getDirection(this.state);
         this.movement(pos.x, pos.y, state);
+        if (collision.getPkmnCollision(this)) {
+            this.setPosition(poss);
+            this.state = CharacterState.STANDING;
+        } else if (collision.getPlayerCollision(GameState.player)) {
+
+            this.setPosition(poss);
+
+            this.state = CharacterState.STANDING;
+        }
 
     }
 

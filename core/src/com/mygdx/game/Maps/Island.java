@@ -73,11 +73,11 @@ public class Island {
     }
 
     private void setupTiles() {
-        chunk = new Chunk(33, 33, 40);
+        chunk = new Chunk(50, 50, 40);
 
         int currentRow = 0;
-        int rngW = MathUtils.random(5, 10);
-        int rngH = MathUtils.random(5, 10);
+        int rngW = MathUtils.random(5, 25);
+        int rngH = MathUtils.random(5, 25);
 
         int centreTileRow = chunk.numberRows / 2;
         int centreTileCol = chunk.numberCols / 2;

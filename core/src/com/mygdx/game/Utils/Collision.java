@@ -18,18 +18,27 @@ public class Collision {
         return collision;
     }
 
-    /*
-     * public boolean getPkmnCollision(Rectangle pos) {
-     * boolean collision = false;
-     * for (Rectangle pkmn : GameState.pokemon) {
-     * if (pos.overlaps(pkmn)) {
-     * collision = true;
-     * // notifyObservers();
-     * }
-     * }
-     * return collision;
-     * }
-     */
+    public boolean getPkmnCollision(Rectangle pos) {
+        boolean collision = false;
+        for (Rectangle pkmn : GameState.pokemon) {
+            if (pos.overlaps(pkmn) && pos != pkmn) {
+                collision = true;
+                // notifyObservers();
+            }
+        }
+        return collision;
+    }
+
+    public boolean getPlayerCollision(Rectangle pos) {
+        boolean collision = false;
+        for (Rectangle pkmn : GameState.pokemon) {
+            if (pos.overlaps(pkmn)) {
+                collision = true;
+                // notifyObservers();
+            }
+        }
+        return collision;
+    }
 
     /*
      * @Override

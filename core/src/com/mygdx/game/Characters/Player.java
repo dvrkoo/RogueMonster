@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Utils.CharacterAnimation;
 
@@ -13,7 +14,7 @@ public class Player extends Character {
     private Character[] team;
 
     public Player(int x, int y) {
-        //init player
+        // init player
         this.setPosition(x, y);
         this.setSize(64, 64);
         this.movSpeed = 5;
@@ -25,34 +26,58 @@ public class Player extends Character {
 
         anim = new CharacterAnimation(texture);
 
-        //init team
+        // init team
         team = new Character[6];
     }
 
     public void commandMovement() {
+        Vector2 pos = new Vector2();
+        pos.x = this.getX();
+        pos.y = this.getY();
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
             this.movement(0, -1, CharacterState.SOUTH);
+            if (collision.getPkmnCollision(this)) {
+                this.setPosition(pos);
+                this.state = CharacterState.STANDING;
+            }
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {// left
             this.movement(-1, 0, CharacterState.WEST);
+            if (collision.getPkmnCollision(this)) {
+                this.setPosition(pos);
+                this.state = CharacterState.STANDING;
+            }
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {// right
             this.movement(1, 0, CharacterState.EAST);
+            if (collision.getPkmnCollision(this)) {
+                this.setPosition(pos);
+                this.state = CharacterState.STANDING;
+            }
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {// up
             this.movement(0, 1, CharacterState.NORTH);
+            if (collision.getPkmnCollision(this)) {
+                this.setPosition(pos);
+                this.state = CharacterState.STANDING;
+            }
         } else {
             this.movement(0, 0, CharacterState.STANDING);
+            if (collision.getPkmnCollision(this)) {
+                this.setPosition(pos);
+                this.state = CharacterState.STANDING;
+            }
         }
 
     }
 
-    public void addPokemon(final Character pokemon){
-        for(int i = 0; i < team.length; i++){
-            if(team[i] == null){
+    public void addPokemon(final Character pokemon) {
+        for (int i = 0; i < team.length; i++) {
+            if (team[i] == null) {
                 team[i] = pokemon;
                 break;
             }
         }
-        
+
     }
+
     public Character getFirst(){
         return team[0];
         
