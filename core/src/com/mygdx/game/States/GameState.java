@@ -77,7 +77,7 @@ public class GameState implements Screen {
     // game methods
     public GameState(final RogueMonster game) {
         this.game = game;
-        player = new Player(700, 700);
+        player = new Player(500, 500);
 
         island = new Island();
         camera = new OrthographicCamera();

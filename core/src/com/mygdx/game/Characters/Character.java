@@ -23,6 +23,8 @@ public class Character extends Rectangle {
     int defense;
     int hp;
     PokemonType type;
+    String name;
+
 
     TextureRegion region;
     Texture texture;
@@ -220,4 +222,8 @@ public class Character extends Rectangle {
     public PokemonType getType() {
         return type;
     }
+    public String getName() {
+        return name;
+    }
+    
 }

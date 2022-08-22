@@ -29,6 +29,7 @@ public class Mudkip extends Character{
         this.attack = 12;
         this.defense = 13;
         this.speed = 11;
+        this.name = "mudkip";
     }
     
 }

@@ -29,6 +29,7 @@ public class Mew extends Character{
         this.attack = 12;
         this.defense = 12;
         this.speed = 12;
+        this.name = "mew";
     }
     
 }

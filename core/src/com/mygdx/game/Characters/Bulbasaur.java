@@ -31,6 +31,7 @@ public class Bulbasaur extends Character{
         this.attack = 13;
         this.defense = 12;
         this.speed = 12;
+        this.name = "bulbasaur";
     }
     
 }

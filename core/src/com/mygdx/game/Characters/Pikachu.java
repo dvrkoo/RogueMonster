@@ -29,6 +29,7 @@ public class Pikachu extends Character
         this.attack = 12;
         this.defense = 10;
         this.speed = 16;
+        this.name = "pikachu";
     }
     
 }

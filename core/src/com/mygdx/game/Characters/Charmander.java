@@ -29,6 +29,7 @@ public class Charmander extends Character{
         this.attack = 15;
         this.defense = 10;
         this.speed = 13;
+        this.name = "charmander";
     }
     
 }
