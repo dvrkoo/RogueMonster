@@ -1,4 +1,4 @@
-package com.mygdx.game.States;
+package com.mygdx.game.States.BattleState;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,6 +12,7 @@ import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Bulbasaur;
 import com.mygdx.game.Characters.Charmander;
 import com.mygdx.game.Characters.Player;
+import com.mygdx.game.States.GameState;
 import com.mygdx.game.Utils.Damage;
 
 public class BattleState implements Screen{
