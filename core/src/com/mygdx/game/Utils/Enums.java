@@ -1,5 +1,9 @@
 package com.mygdx.game.Utils;
 
+import com.mygdx.game.Characters.Character;
+
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Enums {
@@ -19,8 +23,9 @@ public class Enums {
         private static final CharacterState[] state = values();
 
         public static CharacterState randomDirection() {
-
             return state[PRNG.nextInt(state.length)];
+
+            // return state[PRNG.nextInt(state.length)];
         }
     }
 

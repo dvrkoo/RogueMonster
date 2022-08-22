@@ -32,7 +32,7 @@ public class Collision {
     public boolean getPlayerCollision(Rectangle pos) {
         boolean collision = false;
         for (Rectangle pkmn : GameState.pokemon) {
-            if (pos.overlaps(pkmn) && pos != pkmn) {
+            if (pos.overlaps(pkmn)) {
                 collision = true;
                 // notifyObservers();
             }

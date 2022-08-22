@@ -59,7 +59,7 @@ public class GameState implements Screen {
             Collision collision = new Collision();
             position = random.getRandomPos(island.minMaxX, island.minMaxY);
             iter.setPosition(position);
-            while (collision.getCollision(iter)) {
+            while (collision.getCollision(iter) || collision.getPkmnCollision(iter)) {
                 iter.setPosition(position);
                 position = random.getRandomPos(island.minMaxX, island.minMaxY);
             }
@@ -76,7 +76,7 @@ public class GameState implements Screen {
     // game methods
     public GameState(final RogueMonster game) {
         this.game = game;
-        player = new Player(500, 500);
+        player = new Player(700, 700);
 
         island = new Island();
         camera = new OrthographicCamera();
