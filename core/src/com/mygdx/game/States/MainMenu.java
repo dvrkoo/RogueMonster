@@ -1,5 +1,6 @@
 package com.mygdx.game.States;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -39,7 +40,8 @@ public class MainMenu implements Screen {
 
         // change to Game state logic
         if (Gdx.input.isTouched()) {
-            game.setScreen(new GameState(game));
+            // game.setScreen(new GameState(game));
+            game.setScreen(new StartingState(game));
         }
 
     }
