@@ -8,17 +8,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
-import com.mygdx.game.Characters.Bulbasaur;
-import com.mygdx.game.Characters.Charmander;
 import com.mygdx.game.Characters.Player;
 import com.mygdx.game.States.GameState;
 import com.mygdx.game.Utils.Damage;
+import com.mygdx.game.Utils.Enums.CharacterState;
+import com.mygdx.game.Characters.Character;
 
 public class BattleState implements Screen{
     final RogueMonster game;
     final Screen oldState;
-    OrthographicCamera camera = new OrthographicCamera();
+    OrthographicCamera camera;
+    Viewport viewport;
     Damage damage = new Damage();
     Player player;
     Rectangle attackButton = new Rectangle();
@@ -31,14 +33,30 @@ public class BattleState implements Screen{
     Texture bagTexture = new Texture("Buttons/button_bag.png");
     Vector3 touchPoint = new Vector3();
     SwitchScreen switchScreen;
+    float enlapsedTime;
 
-    Bulbasaur opponent = new Bulbasaur();
+    Character opponent ;
+
+    //status
+    int BATTLE_RUNNING = 0;
+    int BATTLE_FINISH = 1;
+
+    int gamestatus;
 
     public BattleState(final RogueMonster game, final GameState oldState){
+        gamestatus = 0;
+
         this.game = game;
         this.oldState = oldState;
         this.player = oldState.getPlayer();
         this.switchScreen = new SwitchScreen(player);
+        for (Character iter : GameState.pokemon) {
+            if(iter.isCollided){
+                opponent = iter;
+                GameState.pokemon.remove(iter);
+                break;
+            }
+        }
 
         //button setup
         attackButton.setPosition(10, 10);
@@ -54,7 +72,18 @@ public class BattleState implements Screen{
         runButton.setWidth(175);
         runButton.setHeight(65);
 
-
+        //camera settings
+        this.camera = new OrthographicCamera();
+        this.camera.setToOrtho(false, 1000, 1000);
+        
+        //battle setting battle scene
+        player.setState(CharacterState.NORTH); 
+        player.setPosition(400,400);
+        teamSetPosition();
+        opponent.setState(CharacterState.SOUTH);
+        opponent.setPosition(470, 600);
+        
+        
 
     }
 
@@ -68,29 +97,29 @@ public class BattleState implements Screen{
     public void render(float delta) {
         // TODO Auto-generated method stub
         ScreenUtils.clear(Color.FOREST);
+        enlapsedTime += delta;
+        
         camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-
+        
+        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.batch.draw(attackTexture, attackButton.x, attackButton.y, attackButton.width, attackButton.height);
-        game.batch.draw(switchTexture, switchButton.x, switchButton.y, switchButton.width, switchButton.height);
-        game.batch.draw(bagTexture, bagButton.x, bagButton.y, bagButton.width, bagButton.height);
-        game.batch.draw(runTexture, runButton.x, runButton.y, runButton.width, runButton.height);
+        drawScene();
+        drawButtons();
         renderScreen();
+        drawScene();
         game.batch.end();
 
-
-
-
-
+        standCharacter();
         //exit condition
         if(Gdx.input.justTouched() && !switchScreen.isVisible){
             isButtonTouched(Gdx.input.getX(), Gdx.input.getY());   
         }else if(Gdx.input.justTouched()){
             changePokemon(Gdx.input.getX(), Gdx.input.getY());
-        }
-
-
-        
+        } 
+        if(gamestatus == BATTLE_FINISH){
+            game.setScreen(oldState);
+            dispose();
+        } 
     }
 
     @Override
@@ -128,23 +157,18 @@ public class BattleState implements Screen{
         System.out.println(x + " " + y);
 
         if(attackButton.contains(x, y)){
-            Batte();
-            
-           
-        }else if(runButton.contains(x, y)){
-            game.setScreen(oldState);
-            dispose();
+            Battle();
 
-        }
-        else if(bagButton.contains(x, y)){
+        }else if(runButton.contains(x, y)){
+            endBattle();
+
+        }else if(bagButton.contains(x, y)){
             System.out.println(" ha usato bag");
             
             //bag function to use items
 
         }else if(switchButton.contains(x, y)){
             switchScreen.isVisible = true;
-            player.swapPokemon(0, 1);
-            
             //aswitch pokemon function
         }
 
@@ -164,7 +188,7 @@ public class BattleState implements Screen{
     }
 
 
-    void Batte(){
+    void Battle(){
         if(opponent.getSpeed() > player.getPokemon(0).getSpeed()){
             int dmg = damage.getDamage(opponent, player.getPokemon(0));
 
@@ -179,6 +203,8 @@ public class BattleState implements Screen{
             if(player.getPokemon(0).getHp() <= 0){
                 //logica di morte e switch di pokemon
                 System.out.println("è morto il mio");
+                player.removePokemon(0); 
+                switchScreen.isVisible = true;
             }else{
                 opponent.takeDamage(damage.getDamage(player.getPokemon(0), opponent));
                 System.out.println("P attacca O hp rimanenti:" + opponent.getHp());
@@ -187,8 +213,7 @@ public class BattleState implements Screen{
             if(opponent.getHp() <= 0){
                 //logica di fine battaglia e switch al GameState
                 System.out.print("è morto il suo");
-                game.setScreen(oldState);
-                dispose();
+                endBattle();
             }
         }else{
             opponent.takeDamage(damage.getDamage(player.getPokemon(0), opponent));
@@ -197,8 +222,7 @@ public class BattleState implements Screen{
             if(opponent.getHp() <= 0){
                 //logica di fine battaglia e switch al GameState
                 System.out.print("è morto il suo");
-                game.setScreen(oldState);
-                dispose();
+                endBattle();
             }else{
                 player.getPokemon(0).takeDamage(damage.getDamage(opponent, player.getPokemon(0)));
                 System.out.println("O attacca P hp rimanenti:" + player.getPokemon(0).getHp());
@@ -206,9 +230,25 @@ public class BattleState implements Screen{
              if(player.getPokemon(0).getHp() <= 0){
                 //logica di morte e switch di pokemon
                 System.out.println("è morto il mio");
+                player.removePokemon(0); 
+                switchScreen.isVisible = true;
             }
         }
+        checkLoose();
     
+    }
+    void teamSetPosition(){
+        for (int i = 0; i < 6; i++) {
+            if(player.getPokemon(i) != null){
+                player.getPokemon(i).setPosition(470, 400);
+                player.getPokemon(i).setState(CharacterState.NORTH);
+
+            }    
+        }
+    }
+
+    void endBattle(){
+        gamestatus = BATTLE_FINISH;
     }
 
     void renderScreen(){
@@ -220,8 +260,41 @@ public class BattleState implements Screen{
                 if(player.getPokemon(i) != null){
                     game.batch.draw(switchScreen.pokemonIcon[i], switchScreen.buttons[i].x - 70, switchScreen.buttons[i].y);
                 }
+            }        
+        }
+    }
+
+    void drawButtons(){
+        game.batch.draw(attackTexture, attackButton.x, attackButton.y, attackButton.width, attackButton.height);
+        game.batch.draw(switchTexture, switchButton.x, switchButton.y, switchButton.width, switchButton.height);
+        game.batch.draw(bagTexture, bagButton.x, bagButton.y, bagButton.width, bagButton.height);
+        game.batch.draw(runTexture, runButton.x, runButton.y, runButton.width, runButton.height);
+    }
+    void standCharacter(){
+        player.movement(0, 0, CharacterState.STANDING);
+        player.getPokemon(0).movement(0, 0, CharacterState.STANDING);
+        opponent.movement(0, 0, CharacterState.STANDING);
+    }
+    void drawScene(){
+        game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
+        game.batch.draw(opponent.getAnimation().getKeyFrame(enlapsedTime, true), opponent.getX(), opponent.getY());
+        if(player.getPokemon(0) != null){
+            game.batch.draw(player.getPokemon(0).getAnimation().getKeyFrame(enlapsedTime, true), player.getPokemon(0).getX(), player.getPokemon(0).getY());
+        }
+        
+        
+    }
+
+    void checkLoose(){
+        boolean found = false;
+        for (int i = 0; i < 6; i++) {
+            if(player.getPokemon(i) != null){
+                found = true;
             }
-            
+            if(!found){
+                //game end loose, for now just return game state
+                endBattle();
+            }
         }
     }
 }

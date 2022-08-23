@@ -18,6 +18,7 @@ public class Player extends Character {
         this.setPosition(x, y);
         this.setSize(64, 64);
         this.movSpeed = 5;
+        state = CharacterState.SOUTH;
         stateBefore = CharacterState.SOUTH;
 
         texture = new Texture(Gdx.files.internal("PokemonPG.png"));
@@ -76,6 +77,10 @@ public class Player extends Character {
             }
         }
 
+    }
+
+    public void removePokemon( int i){
+        team[i] = null;
     }
 
     public Character getPokemon(int i){

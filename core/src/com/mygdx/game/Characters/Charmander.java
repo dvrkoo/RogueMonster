@@ -21,6 +21,7 @@ public class Charmander extends Character{
         region = new TextureRegion(texture,0,0,64,64);
         animation = new Animation<TextureRegion>(1f/60f,region);
         stateBefore = CharacterState.SOUTH;
+        state = CharacterState.SOUTH;
 
         anim = new CharacterAnimation(texture);
 

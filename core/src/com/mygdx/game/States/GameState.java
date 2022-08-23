@@ -2,13 +2,10 @@ package com.mygdx.game.States;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -32,8 +29,9 @@ public class GameState implements Screen {
     // game attributes
     final RogueMonster game;
 
-    public static final int GAME_RUNNING = 1;
-    public static final int GAME_PAUSED = 0;
+    public static final int GAME_RUNNING = 0;
+    public static final int GAME_BATTLE = 1;
+    
 
     private int gamestatus = GAME_RUNNING;
 
@@ -132,21 +130,21 @@ public class GameState implements Screen {
 
         player.commandMovement();
         moveCamera();
+        checkBattle();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            pauseGame();
-        }
 
-        if (gamestatus == GAME_PAUSED) {
-            // draw pause screenù
-            pause();
-
+        switch (gamestatus) {
+            case GAME_BATTLE:{
+                // draw pause screenù
+                pause();
+            }
+            //add cases, example bag state ecc
         }
 
     }
 
-    public void pauseGame() {
-        gamestatus = GAME_PAUSED;
+    void battle() {
+        gamestatus = GAME_BATTLE;
     }
 
     public void moveCamera() {
@@ -171,6 +169,15 @@ public class GameState implements Screen {
                 game.batch.draw(tile.texture, tile.pos.x, tile.pos.y, tile.size, tile.size);
                 if (tile.secondaryTexture != null)
                     game.batch.draw(tile.secondaryTexture, tile.pos.x, tile.pos.y, tile.size, tile.size);
+            }
+        }
+    }
+
+    public void checkBattle(){
+        for (Character character : pokemon) {
+            
+            if (character.isCollided){
+                battle();
             }
         }
     }

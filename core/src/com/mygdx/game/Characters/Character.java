@@ -4,12 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.States.GameState;
 import com.mygdx.game.Utils.CharacterAnimation;
 import com.mygdx.game.Utils.Collision;
-import com.mygdx.game.Utils.Enums;
 import com.mygdx.game.Utils.Enums.CharacterState;
 //import com.mygdx.game.Utils.Enums.TILETYPE;
 import com.mygdx.game.Utils.Enums.PokemonType;
@@ -31,10 +29,17 @@ public class Character extends Rectangle {
     CharacterAnimation anim;
     Animation<TextureRegion> animation;
     CharacterState stateBefore;
+    
+
     CharacterState state;
+
+    public Vector2 pos;
+    
+
     int counter = 0;
     // TILETYPE type = TILETYPE.WATER;
     Collision collision = new Collision();
+    public boolean isCollided = false;
 
     // to use this method we need to insert 1/-1/0 values
     // this method change the position of the character: up 0,1 down 0,-1 left -1,0
@@ -55,36 +60,38 @@ public class Character extends Rectangle {
     }
 
     public void movement(float x, float y, CharacterState state) {
-
+        this.stateBefore = this.state;
+        this.state = state;
         move(x, y);
-        switch (state) {
+        switch (this.state) {
             case NORTH: {
-                this.stateBefore = state;
+                //this.stateBefore = state;
                 animation = anim.getNorthAnimation();
                 break;
 
             }
             case WEST: {
-                this.stateBefore = state;
+                //this.stateBefore = state;
                 animation = anim.getWestAnimation();
                 break;
 
             }
             case SOUTH: {
-                this.stateBefore = state;
+                //this.stateBefore = state;
                 animation = anim.getSouthAnimation();
                 break;
 
             }
             case EAST: {
-                this.stateBefore = state;
+                //this.stateBefore = state;
                 animation = anim.getEastAnimation();
                 break;
 
             }
             case STANDING: {
-
-                switch (stateBefore) {
+                //this.stateBefore = this.state;
+                //this.state = CharacterState.STANDING;
+                switch (this.stateBefore) {
 
                     case NORTH: {
                         region.setRegion(0, 64 * 3, 64, 64);
@@ -101,7 +108,6 @@ public class Character extends Rectangle {
                         region.setRegion(0, 64 * 2, 64, 64);
                         animation = new Animation<TextureRegion>(1f / 60f, region);
                         break;
-
                     }
                     case SOUTH: {
                         region.setRegion(0, 64 * 0, 64, 64);
@@ -153,8 +159,6 @@ public class Character extends Rectangle {
 
     }
 
-    public Vector2 pos;
-
     public void update() {
         Vector2 poss = new Vector2();
         poss.x = this.getX();
@@ -169,13 +173,11 @@ public class Character extends Rectangle {
 
         pos = getDirection(this.state);
         this.movement(pos.x, pos.y, state);
-        if (collision.getPkmnCollision(this)) {
+        if (collision.getPlayerCollision(GameState.player)) {
             this.setPosition(poss);
             this.state = CharacterState.STANDING;
-        } else if (collision.getPlayerCollision(GameState.player)) {
-
+        }else if (collision.getPkmnCollision(this)) {
             this.setPosition(poss);
-
             this.state = CharacterState.STANDING;
         }
 
@@ -224,6 +226,15 @@ public class Character extends Rectangle {
     }
     public String getName() {
         return name;
+    }
+    public CharacterState getState() {
+        return state;
+    }
+    public void setState(CharacterState state) {
+        this.state = state;
+    }
+    public void setStateBefore(CharacterState stateBefore) {
+        this.stateBefore = stateBefore;
     }
     
 }

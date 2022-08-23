@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.States.GameState;
+import com.mygdx.game.Characters.Character;
+
 
 public class Collision {
     public boolean getCollision(Rectangle pos) {
@@ -31,10 +33,10 @@ public class Collision {
 
     public boolean getPlayerCollision(Rectangle pos) {
         boolean collision = false;
-        for (Rectangle pkmn : GameState.pokemon) {
+        for ( Character pkmn : GameState.pokemon) {
             if (pos.overlaps(pkmn)) {
                 collision = true;
-                // notifyObservers();
+                pkmn.isCollided = true;
             }
         }
         return collision;
