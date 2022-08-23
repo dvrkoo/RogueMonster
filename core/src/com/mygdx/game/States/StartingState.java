@@ -3,6 +3,7 @@ package com.mygdx.game.States;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -99,6 +100,10 @@ public class StartingState implements Screen {
         shapeRenderer.end();
 
         moveCamera();
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+            game.setScreen(new GameState(game));
+        }
 
     }
 
