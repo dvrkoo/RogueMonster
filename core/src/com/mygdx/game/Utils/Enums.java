@@ -1,9 +1,5 @@
 package com.mygdx.game.Utils;
 
-import com.mygdx.game.Characters.Character;
-
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 public class Enums {

@@ -32,7 +32,6 @@ public class GameState implements Screen {
 
     public static final int GAME_RUNNING = 0;
     public static final int GAME_BATTLE = 1;
-    
 
     private int gamestatus = GAME_RUNNING;
 
@@ -76,7 +75,7 @@ public class GameState implements Screen {
     // game methods
     public GameState(final RogueMonster game) {
         this.game = game;
-        player = new Player(500, 500);
+        player = new Player(800, 800);
 
         island = new Island();
         camera = new OrthographicCamera();
@@ -133,13 +132,12 @@ public class GameState implements Screen {
         moveCamera();
         checkBattle();
 
-
         switch (gamestatus) {
-            case GAME_BATTLE:{
+            case GAME_BATTLE: {
                 // draw pause screenù
                 pause();
             }
-            //add cases, example bag state ecc
+            // add cases, example bag state ecc
         }
 
     }
@@ -174,10 +172,10 @@ public class GameState implements Screen {
         }
     }
 
-    public void checkBattle(){
+    public void checkBattle() {
         for (Character character : pokemon) {
-            
-            if (character.isCollided){
+
+            if (character.isCollided) {
                 battle();
             }
         }

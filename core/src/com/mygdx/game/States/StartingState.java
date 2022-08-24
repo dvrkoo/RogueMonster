@@ -10,13 +10,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -31,7 +30,6 @@ public class StartingState implements Screen {
     public static final int GAME_RUNNING = 1;
     public static final int GAME_PAUSED = 0;
 
-    private int gamestatus = GAME_RUNNING;
     final RogueMonster game;
     public static TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -42,6 +40,7 @@ public class StartingState implements Screen {
     float enlapsedTime;
     PokemonFactory pkmFactory;
     Collision collisions = new Collision();
+    public static ArrayList<Rectangle> rectangleArray = new ArrayList<Rectangle>();
 
     public StartingState(final RogueMonster game) {
         this.game = game;
@@ -57,16 +56,13 @@ public class StartingState implements Screen {
 
     @Override
     public void show() {
-        gamestatus = GAME_RUNNING;
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load("Maps/lab2.tmx");
 
         TiledMapTileLayer collisionObjectLayer = (TiledMapTileLayer) map.getLayers().get("Collisions");
-        System.out.print(map.getLayers().size());
-        System.out.print(collisionObjectLayer.getObjects().getCount());
-        MapObjects objects = collisionObjectLayer.getObjects();
-        System.out.print(objects.getCount());
-
+        TiledMapTileLayer secondCollisionObjectLayer = (TiledMapTileLayer) map.getLayers().get("Collisions2");
+        getCollisionArray(collisionObjectLayer);
+        getCollisionArray(secondCollisionObjectLayer);
         renderer = new OrthogonalTiledMapRenderer(map, 2);
 
         camera = new OrthographicCamera();
@@ -96,12 +92,14 @@ public class StartingState implements Screen {
         shapeRenderer.begin(ShapeType.Line);
 
         shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-
+        for (Rectangle rec : rectangleArray) {
+            shapeRenderer.rect(rec.getX(), rec.getY(), 35, 35);
+        }
         shapeRenderer.end();
 
         moveCamera();
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             game.setScreen(new GameState(game));
         }
 
@@ -158,9 +156,19 @@ public class StartingState implements Screen {
         camera.position.lerp(pos3, .1f);
     }
 
-    public void getMapCollisions() {
-        MapLayer CollisionLayer = map.getLayers().get("Collisions");
-
+    public void getCollisionArray(TiledMapTileLayer collisionObjectLayer) {
+        for (int x = 0; x < collisionObjectLayer.getWidth(); x++) {
+            for (int y = 0; y < collisionObjectLayer.getHeight(); y++) {
+                Cell cell = collisionObjectLayer.getCell(x, y);
+                if (cell != null) {
+                    System.out.print("test");
+                    Rectangle rectangle = new Rectangle();
+                    rectangle.x = x * 32;
+                    rectangle.y = y * 32;
+                    rectangleArray.add(rectangle);
+                }
+            }
+        }
     }
 
 }

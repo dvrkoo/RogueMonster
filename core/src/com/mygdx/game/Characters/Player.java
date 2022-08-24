@@ -7,8 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Utils.Enums.CharacterState;
-import com.mygdx.game.Utils.Enums.Pokemon;
-import com.mygdx.game.Maps.Island;
+
 import com.mygdx.game.Utils.CharacterAnimation;
 
 public class Player extends Character {
@@ -39,41 +38,36 @@ public class Player extends Character {
         pos.y = this.getY();
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
             this.movement(0, -1, CharacterState.SOUTH);
-            collision.getMapCollisions(this);
 
-            if (collision.getPkmnCollision(this)) {
+            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
             }
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {// left
             this.movement(-1, 0, CharacterState.WEST);
-            collision.getMapCollisions(this);
 
-            if (collision.getPkmnCollision(this)) {
+            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
             }
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {// right
             this.movement(1, 0, CharacterState.EAST);
-            collision.getMapCollisions(this);
 
-            if (collision.getPkmnCollision(this)) {
+            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
             }
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {// up
             this.movement(0, 1, CharacterState.NORTH);
-            collision.getMapCollisions(this);
 
-            if (collision.getPkmnCollision(this)) {
+            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
             }
         } else {
             this.movement(0, 0, CharacterState.STANDING);
-            collision.getMapCollisions(this);
 
-            if (collision.getPkmnCollision(this)) {
+            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
             }
@@ -91,13 +85,13 @@ public class Player extends Character {
 
     }
 
-    public void removePokemon( int i){
+    public void removePokemon(int i) {
         team[i] = null;
     }
 
-    public Character getPokemon(int i){
+    public Character getPokemon(int i) {
         return team[i];
-        
+
     }
 
     public void swapPokemon(final int one, final int two) {
