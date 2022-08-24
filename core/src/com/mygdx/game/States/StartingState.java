@@ -2,6 +2,8 @@ package com.mygdx.game.States;
 
 import java.util.ArrayList;
 
+import javax.sound.sampled.Line;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -17,15 +19,30 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
+import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Player;
+import com.mygdx.game.Characters.oak;
+import com.mygdx.game.Controller.DialogueController;
+import com.mygdx.game.Dialogue.Dialogue;
+import com.mygdx.game.Dialogue.DialogueNode;
+import com.mygdx.game.Dialogue.LinearDialogueNode;
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.Pokemon;
+import com.mygdx.game.ui.DialogueBox;
+import com.mygdx.game.ui.OptionBox;
 
 public class StartingState implements Screen {
+
+    private DialogueController dialogueController;
+    private Dialogue dialogue;
+    private DialogueBox dialogueBox;
+    private OptionBox optionBox;
 
     public static final int GAME_RUNNING = 1;
     public static final int GAME_PAUSED = 0;
@@ -36,21 +53,21 @@ public class StartingState implements Screen {
     private OrthographicCamera camera;
     Viewport viewport;
     public static Player player;
-    public static ArrayList<Character> pokemon;
+    public static ArrayList<Character> characters;
     float enlapsedTime;
     PokemonFactory pkmFactory;
     Collision collisions = new Collision();
     public static ArrayList<Rectangle> rectangleArray = new ArrayList<Rectangle>();
+    oak oak = new oak();
 
     public StartingState(final RogueMonster game) {
         this.game = game;
-        player = new Player(200, 200);
+        player = new Player(200, 180);
 
         pkmFactory = new PokemonFactory();
-        pokemon = new ArrayList<Character>();
+        characters = new ArrayList<Character>();
 
-        player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
-        player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
+        characters.add(oak);
 
     }
 
@@ -68,7 +85,15 @@ public class StartingState implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
         viewport = new FitViewport(1000, 1000, camera);
-        // TODO Auto-generated method stub
+
+        dialogueController = new DialogueController(dialogueBox, optionBox);
+
+        dialogue = new Dialogue();
+        // dialogueBox = new DialogueBox(RogueMonster.getSkin());
+        LinearDialogueNode node1 = new LinearDialogueNode("Hey nice to meet you !", 0);
+        dialogue.addNode(node1);
+
+        // dialogueController.startDialogue(dialogue);
 
     }
 
@@ -95,6 +120,7 @@ public class StartingState implements Screen {
         for (Rectangle rec : rectangleArray) {
             shapeRenderer.rect(rec.getX(), rec.getY(), 35, 35);
         }
+        shapeRenderer.rect(oak.getX(), oak.getY(), oak.getWidth(), oak.getHeight());
         shapeRenderer.end();
 
         moveCamera();
@@ -143,6 +169,7 @@ public class StartingState implements Screen {
 
     public void drawCharacters() {
         game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
+        game.batch.draw(oak.getAnimation().getKeyFrame(enlapsedTime, true), oak.getX(), oak.getY());
     }
 
     public Player getPlayer() {
@@ -169,6 +196,8 @@ public class StartingState implements Screen {
                 }
             }
         }
+        rectangleArray.add(oak);
+
     }
 
 }
