@@ -149,12 +149,16 @@ public class BattleState implements Screen{
     @Override
     public void dispose() {
         // TODO Auto-generated method stub
+        bagTexture.dispose();
+        attackTexture.dispose();
+        switchTexture.dispose();
+        runTexture.dispose();
+
         
     }
 
     void isButtonTouched(float x, float y){
         y = Math.abs(y - 1000);
-        System.out.println(x + " " + y);
 
         if(attackButton.contains(x, y)){
             Battle();
@@ -272,7 +276,8 @@ public class BattleState implements Screen{
     }
     void standCharacter(){
         player.movement(0, 0, CharacterState.STANDING);
-        player.getPokemon(0).movement(0, 0, CharacterState.STANDING);
+        if(player.getPokemon(0) != null)
+            player.getPokemon(0).movement(0, 0, CharacterState.STANDING);
         opponent.movement(0, 0, CharacterState.STANDING);
     }
     void drawScene(){
@@ -280,9 +285,7 @@ public class BattleState implements Screen{
         game.batch.draw(opponent.getAnimation().getKeyFrame(enlapsedTime, true), opponent.getX(), opponent.getY());
         if(player.getPokemon(0) != null){
             game.batch.draw(player.getPokemon(0).getAnimation().getKeyFrame(enlapsedTime, true), player.getPokemon(0).getX(), player.getPokemon(0).getY());
-        }
-        
-        
+        }   
     }
 
     void checkLoose(){
@@ -291,10 +294,10 @@ public class BattleState implements Screen{
             if(player.getPokemon(i) != null){
                 found = true;
             }
-            if(!found){
-                //game end loose, for now just return game state
-                endBattle();
-            }
+        }
+        if(!found){
+            //game end loose, for now just return game state
+            endBattle();
         }
     }
 }

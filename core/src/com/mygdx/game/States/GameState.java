@@ -37,6 +37,7 @@ public class GameState implements Screen {
 
     // attributes
     public static Player player;
+    Vector2 posReset = new Vector2();
 
     Island island;
 
@@ -46,6 +47,7 @@ public class GameState implements Screen {
     PokemonFactory pkmFactory;
     RandomUtils random = new RandomUtils();
     public static ArrayList<Character> pokemon;
+
 
     void spawnEnemy() {
 
@@ -76,6 +78,7 @@ public class GameState implements Screen {
     public GameState(final RogueMonster game) {
         this.game = game;
         player = new Player(800, 800);
+        posReset.set(player.x,player.y);
 
         island = new Island();
         camera = new OrthographicCamera();
@@ -94,6 +97,8 @@ public class GameState implements Screen {
     public void show() {
 
         gamestatus = GAME_RUNNING;
+        System.out.println(posReset.x + " " + posReset.y);
+        player.setPosition(posReset);
     }
 
     @Override
@@ -190,13 +195,17 @@ public class GameState implements Screen {
     @Override
     public void pause() {
         // TODO Auto-generated method stub
+        posReset.set(player.x,player.y);
+        System.out.println(posReset.x + " " + posReset.y);
         game.setScreen(new BattleState(game, this));
+         
 
     }
 
     @Override
     public void resume() {
         // TODO Auto-generated method stub
+        
 
     }
 
