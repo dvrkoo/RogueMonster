@@ -92,10 +92,4 @@ public class OptionBox extends Table {
         return selectorIndex;
     }
 
-    /**
-     * @return Number of options added to this OptionBox
-     */
-    public int getAmount() {
-        return options.size();
-    }
 }

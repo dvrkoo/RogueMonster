@@ -18,7 +18,7 @@ public class DialogueBox extends Table {
 
     private Label textLabel;
 
-    private enum STATE {
+    public enum STATE {
         ANIMATING,
         IDLE,
         ;
@@ -75,5 +75,9 @@ public class DialogueBox extends Table {
     @Override
     public float getPrefWidth() {
         return 200f;
+    }
+
+    public STATE getState() {
+        return state;
     }
 }

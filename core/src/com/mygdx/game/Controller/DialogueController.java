@@ -1,14 +1,13 @@
 package com.mygdx.game.Controller;
 
-import java.lang.StackWalker.Option;
-
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
-import com.mygdx.game.Dialogue.ChoiceDialogueNode;
+
 import com.mygdx.game.Dialogue.Dialogue;
 import com.mygdx.game.Dialogue.DialogueNode;
-import com.mygdx.game.Dialogue.LinearDialogueNode;
+
 import com.mygdx.game.Dialogue.DialogueTraverser;
+import com.mygdx.game.Dialogue.DialogueNode.NODE_TYPE;
 import com.mygdx.game.ui.DialogueBox;
 import com.mygdx.game.ui.OptionBox;
 
@@ -42,26 +41,15 @@ public class DialogueController extends InputAdapter {
                 return true;
             }
         }
-        if (dialogueBox.isVisible() && !dialogueBox.isFinished()) {
-            return false;
-        }
-        if (traverser != null && keycode == Keys.X) { // continue through tree
-            DialogueNode thisNode = traverser.getNode();
-
-            if (thisNode instanceof LinearDialogueNode) {
-                LinearDialogueNode node = (LinearDialogueNode) thisNode;
-                if (node.getPointers().isEmpty()) { // dead end, since no pointers
-                    traverser = null; // end dialogue
-                    dialogueBox.setVisible(false);
-                } else {
-                    progress(0); // progress through first pointer
-                }
-            }
-            if (thisNode instanceof ChoiceDialogueNode) {
-                ChoiceDialogueNode node = (ChoiceDialogueNode) thisNode;
+        if (traverser != null && keycode == Keys.X && dialogueBox.isFinished()) { // continue through tree
+            if (traverser.getType() == NODE_TYPE.END) {
+                traverser = null;
+                dialogueBox.setVisible(false);
+            } else if (traverser.getType() == NODE_TYPE.LINEAR) {
+                progress(0);
+            } else if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
                 progress(optionBox.getIndex());
             }
-
             return true;
         }
         if (dialogueBox.isVisible()) {
@@ -72,8 +60,7 @@ public class DialogueController extends InputAdapter {
 
     public void update(float delta) {
         if (dialogueBox.isFinished() && traverser != null) {
-            DialogueNode nextNode = traverser.getNode();
-            if (nextNode instanceof ChoiceDialogueNode) {
+            if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
                 optionBox.setVisible(true);
             }
         }
@@ -82,17 +69,10 @@ public class DialogueController extends InputAdapter {
     public void startDialogue(Dialogue dialogue) {
         traverser = new DialogueTraverser(dialogue);
         dialogueBox.setVisible(true);
-
-        DialogueNode nextNode = traverser.getNode();
-        if (nextNode instanceof LinearDialogueNode) {
-            LinearDialogueNode node = (LinearDialogueNode) nextNode;
-            dialogueBox.animateText(node.getText());
-        }
-        if (nextNode instanceof ChoiceDialogueNode) {
-            ChoiceDialogueNode node = (ChoiceDialogueNode) nextNode;
-            dialogueBox.animateText(node.getText());
+        dialogueBox.animateText(traverser.getText());
+        if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
             optionBox.clear();
-            for (String s : node.getLabels()) {
+            for (String s : dialogue.getNode(dialogue.getStart()).getLabels()) {
                 optionBox.addOption(s);
             }
         }
@@ -101,16 +81,10 @@ public class DialogueController extends InputAdapter {
     private void progress(int index) {
         optionBox.setVisible(false);
         DialogueNode nextNode = traverser.getNextNode(index);
-
-        if (nextNode instanceof LinearDialogueNode) {
-            LinearDialogueNode node = (LinearDialogueNode) nextNode;
-            dialogueBox.animateText(node.getText());
-        }
-        if (nextNode instanceof ChoiceDialogueNode) {
-            ChoiceDialogueNode node = (ChoiceDialogueNode) nextNode;
-            dialogueBox.animateText(node.getText());
+        dialogueBox.animateText(nextNode.getText());
+        if (nextNode.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
             optionBox.clearChoices();
-            for (String s : node.getLabels()) {
+            for (String s : nextNode.getLabels()) {
                 optionBox.addOption(s);
             }
         }

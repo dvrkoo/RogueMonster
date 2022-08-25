@@ -2,10 +2,9 @@ package com.mygdx.game.States;
 
 import java.util.ArrayList;
 
-import javax.sound.sampled.Line;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,9 +18,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Character;
@@ -30,7 +32,7 @@ import com.mygdx.game.Characters.oak;
 import com.mygdx.game.Controller.DialogueController;
 import com.mygdx.game.Dialogue.Dialogue;
 import com.mygdx.game.Dialogue.DialogueNode;
-import com.mygdx.game.Dialogue.LinearDialogueNode;
+
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.Pokemon;
@@ -38,14 +40,17 @@ import com.mygdx.game.ui.DialogueBox;
 import com.mygdx.game.ui.OptionBox;
 
 public class StartingState implements Screen {
-
+    private InputMultiplexer multiplexer;
     private DialogueController dialogueController;
     private Dialogue dialogue;
-    private DialogueBox dialogueBox;
+    public DialogueBox dialogueBox;
     private OptionBox optionBox;
+    Table root;
 
     public static final int GAME_RUNNING = 1;
     public static final int GAME_PAUSED = 0;
+
+    Stage uiStage = new Stage(new ScreenViewport());
 
     final RogueMonster game;
     public static TiledMap map;
@@ -86,14 +91,34 @@ public class StartingState implements Screen {
         camera.setToOrtho(false, 1000, 1000);
         viewport = new FitViewport(1000, 1000, camera);
 
+        initUI();
+        multiplexer = new InputMultiplexer();
         dialogueController = new DialogueController(dialogueBox, optionBox);
-
+        multiplexer.addProcessor(0, dialogueController);
         dialogue = new Dialogue();
-        // dialogueBox = new DialogueBox(RogueMonster.getSkin());
-        LinearDialogueNode node1 = new LinearDialogueNode("Hey nice to meet you !", 0);
-        dialogue.addNode(node1);
 
-        // dialogueController.startDialogue(dialogue);
+        DialogueNode node1 = new DialogueNode("Hello!\nNice to meet you.", 0);
+        DialogueNode node2 = new DialogueNode("Are you a boy or a girl?", 1);
+        DialogueNode node3 = new DialogueNode("I knew you were boy all along.", 2);
+        DialogueNode node4 = new DialogueNode("I knew you were girl all along.", 3);
+
+        node1.makeLinear(node2.getID());
+        node2.addChoice("Boy", 2);
+        node2.addChoice("Girl", 3);
+
+        dialogue.addNode(node1);
+        dialogue.addNode(node2);
+        dialogue.addNode(node3);
+        dialogue.addNode(node4);
+
+        dialogueController.startDialogue(dialogue);
+        Gdx.input.setInputProcessor(multiplexer);
+
+    }
+
+    public void update(float delta) {
+        dialogueController.update(delta);
+        uiStage.act(delta);
 
     }
 
@@ -128,6 +153,10 @@ public class StartingState implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             game.setScreen(new GameState(game));
         }
+
+        uiStage.draw();
+
+        update(delta);
 
     }
 
@@ -188,7 +217,6 @@ public class StartingState implements Screen {
             for (int y = 0; y < collisionObjectLayer.getHeight(); y++) {
                 Cell cell = collisionObjectLayer.getCell(x, y);
                 if (cell != null) {
-                    System.out.print("test");
                     Rectangle rectangle = new Rectangle();
                     rectangle.x = x * 32;
                     rectangle.y = y * 32;
@@ -197,7 +225,37 @@ public class StartingState implements Screen {
             }
         }
         rectangleArray.add(oak);
+    }
 
+    private void initUI() {
+
+        uiStage.getViewport().update(Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight(), true);
+        // uiStage.setDebugAll(true);
+
+        root = new Table();
+        root.setFillParent(true);
+        uiStage.addActor(root);
+
+        dialogueBox = new DialogueBox(RogueMonster.getSkin());
+        dialogueBox.setVisible(false);
+
+        optionBox = new OptionBox(RogueMonster.getSkin());
+        optionBox.setVisible(false);
+
+        Table dialogTable = new Table();
+        dialogTable.add(optionBox)
+                .expand()
+                .align(Align.right)
+                .space(8f)
+                .row();
+        dialogTable.add(dialogueBox)
+                .expand()
+                .align(Align.bottom)
+                .space(8f)
+                .row();
+
+        root.add(dialogTable).expand().align(Align.bottom);
     }
 
 }
