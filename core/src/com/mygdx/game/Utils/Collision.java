@@ -24,10 +24,8 @@ public class Collision {
         for (Rectangle element : Island.collisionRectangle) {
             if (pos.overlaps(element)) {
                 collision = true;
-                // notifyObservers();
             }
         }
-
         return collision;
     }
 
@@ -37,7 +35,6 @@ public class Collision {
             for (Rectangle pkmn : GameState.pokemon) {
                 if (pos.overlaps(pkmn) && pos != pkmn) {
                     collision = true;
-                    // notifyObservers();
                 }
             }
         }
@@ -49,17 +46,12 @@ public class Collision {
         for (Character pkmn : GameState.pokemon) {
             if (pos.overlaps(pkmn)) {
                 collision = true;
-                pkmn.isCollided = true;
+                pkmn.isOpponent = true;
             }
+            
+
         }
         return collision;
     }
-
-    /*
-     * @Override
-     * public void update(Object o) {
-     * //System.out.println(collision);
-     * }
-     */
 
 }

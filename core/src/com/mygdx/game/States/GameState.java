@@ -36,7 +36,7 @@ public class GameState implements Screen {
     private int gamestatus = GAME_RUNNING;
 
     // attributes
-    public static Player player;
+    public Player player;
     Vector2 posReset = new Vector2();
 
     Island island;
@@ -49,36 +49,11 @@ public class GameState implements Screen {
     public static ArrayList<Character> pokemon;
 
 
-    void spawnEnemy() {
-
-        Vector2 position = new Vector2();
-
-        for (int i = 0; i < 10; i++) {
-            pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon()));
-        }
-        for (Character iter : pokemon) {
-            Collision collision = new Collision();
-            position = random.getRandomPos(island.minMaxX, island.minMaxY);
-            iter.setPosition(position);
-            while (collision.getCollision(iter) || collision.getPkmnCollision(iter)) {
-                iter.setPosition(position);
-                position = random.getRandomPos(island.minMaxX, island.minMaxY);
-            }
-
-        }
-    }
-
-    public void drawEntities() {
-        for (Entity e : island.entities) {
-            e.draw(game.batch);
-        }
-    }
-
     // game methods
-    public GameState(final RogueMonster game) {
+    public GameState(final RogueMonster game, Player player) {
         this.game = game;
-        player = new Player(800, 800);
-        posReset.set(player.x,player.y);
+        this.player = player; 
+        posReset.set(800,800);
 
         island = new Island();
         camera = new OrthographicCamera();
@@ -88,8 +63,8 @@ public class GameState implements Screen {
         pkmFactory = new PokemonFactory();
         pokemon = new ArrayList<Character>();
 
-        player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
-        player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
+        //player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
+        //player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
         spawnEnemy();
     }
 
@@ -146,6 +121,30 @@ public class GameState implements Screen {
         }
 
     }
+    void spawnEnemy() {
+
+        Vector2 position = new Vector2();
+
+        for (int i = 0; i < 10; i++) {
+            pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon()));
+        }
+        for (Character iter : pokemon) {
+            Collision collision = new Collision();
+            position = random.getRandomPos(island.minMaxX, island.minMaxY);
+            iter.setPosition(position);
+            while (collision.getCollision(iter) || collision.getPkmnCollision(iter)) {
+                iter.setPosition(position);
+                position = random.getRandomPos(island.minMaxX, island.minMaxY);
+            }
+
+        }
+    }
+
+    public void drawEntities() {
+        for (Entity e : island.entities) {
+            e.draw(game.batch);
+        }
+    }
 
     void battle() {
         gamestatus = GAME_BATTLE;
@@ -179,9 +178,10 @@ public class GameState implements Screen {
 
     public void checkBattle() {
         for (Character character : pokemon) {
-
-            if (character.isCollided) {
+            //System.out.println(character.isOpponent);
+            if (character.isOpponent) {
                 battle();
+
             }
         }
     }

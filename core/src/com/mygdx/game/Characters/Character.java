@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.States.GameState;
 import com.mygdx.game.Utils.CharacterAnimation;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.CharacterState;
@@ -34,12 +33,14 @@ public class Character extends Rectangle {
     CharacterState state;
 
     public Vector2 pos;
+
+    
     
 
     int counter = 0;
     // TILETYPE type = TILETYPE.WATER;
     Collision collision = new Collision();
-    public boolean isCollided = false;
+    public boolean isOpponent = false;
 
     // to use this method we need to insert 1/-1/0 values
     // this method change the position of the character: up 0,1 down 0,-1 left -1,0
@@ -52,7 +53,7 @@ public class Character extends Rectangle {
         posMov.x = pos.x + x * movSpeed;
         posMov.y = pos.y + y * movSpeed;
         this.setPosition(posMov);
-        if (collision.getCollision(this)) {
+        if (collision.getCollision(this) || collision.getPkmnCollision(this)) {
             this.setPosition(pos);
             this.state = CharacterState.STANDING;
         }
@@ -160,9 +161,9 @@ public class Character extends Rectangle {
     }
 
     public void update() {
-        Vector2 poss = new Vector2();
+        /*Vector2 poss = new Vector2();
         poss.x = this.getX();
-        poss.y = this.getY();
+        poss.y = this.getY();*/
 
         if (counter == 0) {
             this.state = CharacterState.randomDirection();
@@ -173,13 +174,13 @@ public class Character extends Rectangle {
 
         pos = getDirection(this.state);
         this.movement(pos.x, pos.y, state);
-        if (collision.getPlayerCollision(GameState.player)) {
+        /*if (collision.getPlayerCollision(this)) {
             this.setPosition(poss);
             this.state = CharacterState.STANDING;
         }else if (collision.getPkmnCollision(this)) {
             this.setPosition(poss);
             this.state = CharacterState.STANDING;
-        }
+        }*/
 
     }
 

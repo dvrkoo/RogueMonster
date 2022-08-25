@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Utils.Enums.CharacterState;
-
 import com.mygdx.game.Utils.CharacterAnimation;
 
 public class Player extends Character {
+
+    boolean isGamestate = false;
+    
 
     private Character[] team;
 
@@ -32,45 +34,48 @@ public class Player extends Character {
         team = new Character[6];
     }
 
-    public void commandMovement() {
+    @Override
+    void move(float x, float y){
         Vector2 pos = new Vector2();
+        Vector2 posMov = new Vector2();
         pos.x = this.getX();
         pos.y = this.getY();
+        posMov.x = pos.x + x * movSpeed;
+        posMov.y = pos.y + y * movSpeed;
+        this.setPosition(posMov);
+        if(isGamestate){
+            if ( collision.getPlayerCollision(this) || collision.getCollision(this)) {
+                this.setPosition(pos);
+                this.state = CharacterState.STANDING;
+            }
+        }else{
+            if (collision.getMapCollisions(this)) {
+                this.setPosition(pos);
+                this.state = CharacterState.STANDING;
+            }
+        }
+           
+    } 
+
+    public void commandMovement() {
+        
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
             this.movement(0, -1, CharacterState.SOUTH);
 
-            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
-                this.setPosition(pos);
-                this.state = CharacterState.STANDING;
-            }
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {// left
             this.movement(-1, 0, CharacterState.WEST);
 
-            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
-                this.setPosition(pos);
-                this.state = CharacterState.STANDING;
-            }
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {// right
             this.movement(1, 0, CharacterState.EAST);
 
-            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
-                this.setPosition(pos);
-                this.state = CharacterState.STANDING;
-            }
+            
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {// up
             this.movement(0, 1, CharacterState.NORTH);
 
-            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
-                this.setPosition(pos);
-                this.state = CharacterState.STANDING;
-            }
+            
         } else {
             this.movement(0, 0, CharacterState.STANDING);
 
-            if (collision.getPkmnCollision(this) || collision.getMapCollisions(this)) {
-                this.setPosition(pos);
-                this.state = CharacterState.STANDING;
-            }
         }
 
     }
@@ -99,4 +104,10 @@ public class Player extends Character {
         this.team[one] = this.team[two];
         this.team[two] = tmp;
     }
+
+    //getters setters
+    public void setIsGamestate(boolean isGamestate) {
+        this.isGamestate = isGamestate;
+    }
+
 }

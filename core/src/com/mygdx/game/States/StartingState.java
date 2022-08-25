@@ -1,6 +1,7 @@
 package com.mygdx.game.States;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -22,6 +23,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
+import com.mygdx.game.Observers.ChangeSateteNotifier;
+import com.mygdx.game.Observers.Observer;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.Pokemon;
 
@@ -36,21 +39,24 @@ public class StartingState implements Screen {
     private OrthographicCamera camera;
     Viewport viewport;
     public static Player player;
-    public static ArrayList<Character> pokemon;
+    //public static ArrayList<Character> pokemon;
     float enlapsedTime;
     PokemonFactory pkmFactory;
     Collision collisions = new Collision();
     public static ArrayList<Rectangle> rectangleArray = new ArrayList<Rectangle>();
+    private List<Observer> observers = new ArrayList<>();
 
     public StartingState(final RogueMonster game) {
         this.game = game;
         player = new Player(200, 200);
 
         pkmFactory = new PokemonFactory();
-        pokemon = new ArrayList<Character>();
+        //pokemon = new ArrayList<Character>();
 
         player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
         player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
+
+        addObserver(new ChangeSateteNotifier(player));
 
     }
 
@@ -100,7 +106,8 @@ public class StartingState implements Screen {
         moveCamera();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            game.setScreen(new GameState(game));
+            updateChangeToGameState(true);
+            game.setScreen(new GameState(game, player));
         }
 
     }
@@ -168,6 +175,20 @@ public class StartingState implements Screen {
                     rectangleArray.add(rectangle);
                 }
             }
+        }
+    }
+
+    void addObserver(Observer o){
+        this.observers.add(o);
+    }
+
+    void removeObserver(Observer o){
+        this.observers.remove(o);
+    }
+
+    void updateChangeToGameState(boolean isChanged){
+        for (Observer o : this.observers) {
+            o.update(isChanged);
         }
     }
 

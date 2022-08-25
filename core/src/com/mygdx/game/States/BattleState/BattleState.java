@@ -51,7 +51,7 @@ public class BattleState implements Screen{
         this.player = oldState.getPlayer();
         this.switchScreen = new SwitchScreen(player);
         for (Character iter : GameState.pokemon) {
-            if(iter.isCollided){
+            if(iter.isOpponent){
                 opponent = iter;
                 GameState.pokemon.remove(iter);
                 break;
