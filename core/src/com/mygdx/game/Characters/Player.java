@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Utils.Enums.CharacterState;
+import com.mygdx.game.Items.Bag;
+import com.mygdx.game.Items.Item;
 import com.mygdx.game.Utils.CharacterAnimation;
 
 public class Player extends Character {
@@ -15,8 +17,10 @@ public class Player extends Character {
     
 
     private Character[] team;
+    private Bag bag = new Bag();
+    
 
-    public Player(int x, int y) {
+    public Player(final int x, final int y) {
         // init player
         this.setPosition(x, y);
         this.setSize(64, 64);
@@ -32,6 +36,9 @@ public class Player extends Character {
 
         // init team
         team = new Character[6];
+
+        
+        
     }
 
     @Override
@@ -87,12 +94,20 @@ public class Player extends Character {
                 break;
             }
         }
-
     }
 
     public void removePokemon(int i) {
         team[i] = null;
     }
+
+    public void addItem(final Item item){
+        bag.insert(item);
+    }
+    public void removeItem(final Item item){
+        bag.remove(item);
+    }
+
+   
 
     public Character getPokemon(int i) {
         return team[i];
@@ -108,6 +123,10 @@ public class Player extends Character {
     //getters setters
     public void setIsGamestate(boolean isGamestate) {
         this.isGamestate = isGamestate;
+    }
+
+    public Bag getBag() {
+        return bag;
     }
 
 }

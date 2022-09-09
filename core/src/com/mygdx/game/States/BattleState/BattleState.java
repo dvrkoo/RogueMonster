@@ -33,6 +33,7 @@ public class BattleState implements Screen{
     Texture bagTexture = new Texture("Buttons/button_bag.png");
     Vector3 touchPoint = new Vector3();
     SwitchScreen switchScreen;
+    BagScreen bagScreen;
     float enlapsedTime;
 
     Character opponent ;
@@ -50,6 +51,7 @@ public class BattleState implements Screen{
         this.oldState = oldState;
         this.player = oldState.getPlayer();
         this.switchScreen = new SwitchScreen(player);
+        this.bagScreen = new BagScreen(player);
         for (Character iter : GameState.pokemon) {
             if(iter.isOpponent){
                 opponent = iter;
@@ -111,10 +113,12 @@ public class BattleState implements Screen{
 
         standCharacter();
         //exit condition
-        if(Gdx.input.justTouched() && !switchScreen.isVisible){
-            isButtonTouched(Gdx.input.getX(), Gdx.input.getY());   
-        }else if(Gdx.input.justTouched()){
+        if(Gdx.input.justTouched() && bagScreen.isVisible){
+            chooseItem(Gdx.input.getX(), Gdx.input.getY());
+        }else if(Gdx.input.justTouched() && switchScreen.isVisible){
             changePokemon(Gdx.input.getX(), Gdx.input.getY());
+        }else if(Gdx.input.justTouched()){
+            isButtonTouched(Gdx.input.getX(), Gdx.input.getY());
         } 
         if(gamestatus == BATTLE_FINISH){
             game.setScreen(oldState);
@@ -168,7 +172,7 @@ public class BattleState implements Screen{
 
         }else if(bagButton.contains(x, y)){
             System.out.println(" ha usato bag");
-            
+            bagScreen.isVisible = true;
             //bag function to use items
 
         }else if(switchButton.contains(x, y)){
@@ -176,6 +180,18 @@ public class BattleState implements Screen{
             //aswitch pokemon function
         }
 
+    }
+
+    void chooseItem(float x, float y){
+        y = Math.abs(y - 1000);
+        
+        for (int i = 0; i < bagScreen.buttons.size(); i++) {
+            if(bagScreen.buttons.get(i).contains(x, y) && !player.getBag().getBag().isEmpty()){
+                player.getBag().getBag().get(i).get(0).useItem(player.getPokemon(0));
+                player.getBag().remove(player.getBag().getBag().get(i).get(0));
+            }
+        }
+        bagScreen.isVisible = false;
     }
 
     void changePokemon(float x, float y){
@@ -265,6 +281,9 @@ public class BattleState implements Screen{
                     game.batch.draw(switchScreen.pokemonIcon[i], switchScreen.buttons[i].x - 70, switchScreen.buttons[i].y);
                 }
             }        
+        }
+        if(bagScreen.isVisible){
+            bagScreen.drawBagScreen(game);
         }
     }
 

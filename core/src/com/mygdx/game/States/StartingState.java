@@ -19,7 +19,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
@@ -79,6 +78,9 @@ public class StartingState implements Screen {
         characters.add(oak);
 
         addObserver(new ChangeSateteNotifier(player));
+
+        player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
+        player.addPokemon(pkmFactory.getPokemon(Pokemon.MEW));
 
     }
 

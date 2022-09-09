@@ -118,10 +118,8 @@ public class Character extends Rectangle {
                     case STANDING: {
                         break;
                     }
-
                 }
                 break;
-
             }
         }
 
@@ -161,10 +159,7 @@ public class Character extends Rectangle {
     }
 
     public void update() {
-        /*Vector2 poss = new Vector2();
-        poss.x = this.getX();
-        poss.y = this.getY();*/
-
+    
         if (counter == 0) {
             this.state = CharacterState.randomDirection();
             counter = 30;
@@ -174,14 +169,6 @@ public class Character extends Rectangle {
 
         pos = getDirection(this.state);
         this.movement(pos.x, pos.y, state);
-        /*if (collision.getPlayerCollision(this)) {
-            this.setPosition(poss);
-            this.state = CharacterState.STANDING;
-        }else if (collision.getPkmnCollision(this)) {
-            this.setPosition(poss);
-            this.state = CharacterState.STANDING;
-        }*/
-
     }
 
     public void takeDamage(int damage) {

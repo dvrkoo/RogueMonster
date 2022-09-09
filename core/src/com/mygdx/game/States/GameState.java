@@ -18,12 +18,14 @@ import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Factory.PokemonFactory;
+import com.mygdx.game.Items.Item;
 import com.mygdx.game.Maps.Entity;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
 import com.mygdx.game.States.BattleState.BattleState;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.RandomUtils;
+import com.mygdx.game.Utils.Enums.ItemType;
 import com.mygdx.game.Utils.Enums.Pokemon;
 
 public class GameState implements Screen {
@@ -63,8 +65,11 @@ public class GameState implements Screen {
         pkmFactory = new PokemonFactory();
         pokemon = new ArrayList<Character>();
 
-        //player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
-        //player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
+        player.addItem(new Item(ItemType.POTION));
+        player.addItem(new Item(ItemType.HYPERPOTION));
+        player.addItem(new Item(ItemType.HYPERPOTION));
+        player.addItem(new Item(ItemType.HYPERPOTION));
+        player.addItem(new Item(ItemType.POTION));
         spawnEnemy();
     }
 

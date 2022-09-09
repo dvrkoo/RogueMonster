@@ -41,4 +41,8 @@ public class Enums {
         }
     }
 
+    public enum ItemType{
+        POTION, SUPERPOTION, HYPERPOTION, REVIVE, ATTAKX, DEFX, SPEX;//NE HO MESSI UN PO, A CASO SE POI SERVIRANNO O NO LO VEDREMO
+    }
+
 }

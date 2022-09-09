@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Characters.Player;
 
-public class SwitchScreen extends Rectangle{
+public class SwitchScreen {
     public Rectangle[] buttons = new Rectangle[6];
     public Texture buttonTexture = new Texture("Buttons/button.png");
     public TextureRegion[] pokemonIcon = new TextureRegion[6];
@@ -18,8 +18,6 @@ public class SwitchScreen extends Rectangle{
         makeButtons();
         setButtons();
         makeIcon();
-
-        //setPosition(1000, 900);
 
     }
 
