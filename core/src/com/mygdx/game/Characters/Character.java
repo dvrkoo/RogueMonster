@@ -19,6 +19,8 @@ public class Character extends Rectangle {
     int speed;
     int defense;
     int hp;
+    int actualHp;
+
     PokemonType type;
     String name;
 
@@ -173,7 +175,7 @@ public class Character extends Rectangle {
 
     public void takeDamage(int damage) {
 
-        this.hp -= damage;
+        this.actualHp -= damage;
     }
 
     // getter setter
@@ -223,6 +225,12 @@ public class Character extends Rectangle {
     }
     public void setStateBefore(CharacterState stateBefore) {
         this.stateBefore = stateBefore;
+    }
+    public int getActualHp() {
+        return actualHp;
+    }
+    public void setActualHp(int actualHp) {
+        this.actualHp = actualHp;
     }
     
 }

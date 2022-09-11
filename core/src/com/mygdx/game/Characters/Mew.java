@@ -27,6 +27,7 @@ public class Mew extends Character{
 
         //init stat
         this.hp = 13;
+        this.actualHp = this.hp;
         this.attack = 12;
         this.defense = 12;
         this.speed = 12;

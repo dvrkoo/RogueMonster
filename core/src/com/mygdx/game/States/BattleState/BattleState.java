@@ -215,39 +215,39 @@ public class BattleState implements Screen{
             //opponent damage to the pokemon on the field
             player.getPokemon(0).takeDamage(dmg);
             
-            System.out.println("O attacca P hp rimanenti:" + player.getPokemon(0).getHp());
+            System.out.println("O attacca P hp rimanenti:" + player.getPokemon(0).getActualHp());
             System.out.println(dmg);
             
 
             //the pokemon on the field attack only if it isn't dead
-            if(player.getPokemon(0).getHp() <= 0){
+            if(player.getPokemon(0).getActualHp() <= 0){
                 //logica di morte e switch di pokemon
                 System.out.println("è morto il mio");
                 player.removePokemon(0); 
                 switchScreen.isVisible = true;
             }else{
                 opponent.takeDamage(damage.getDamage(player.getPokemon(0), opponent));
-                System.out.println("P attacca O hp rimanenti:" + opponent.getHp());
+                System.out.println("P attacca O hp rimanenti:" + opponent.getActualHp());
                 
             }
-            if(opponent.getHp() <= 0){
+            if(opponent.getActualHp() <= 0){
                 //logica di fine battaglia e switch al GameState
                 System.out.print("è morto il suo");
                 endBattle();
             }
         }else{
             opponent.takeDamage(damage.getDamage(player.getPokemon(0), opponent));
-            System.out.println("P attacca O hp rimanenti:" + opponent.getHp());
+            System.out.println("P attacca O hp rimanenti:" + opponent.getActualHp());
 
-            if(opponent.getHp() <= 0){
+            if(opponent.getActualHp() <= 0){
                 //logica di fine battaglia e switch al GameState
                 System.out.print("è morto il suo");
                 endBattle();
             }else{
                 player.getPokemon(0).takeDamage(damage.getDamage(opponent, player.getPokemon(0)));
-                System.out.println("O attacca P hp rimanenti:" + player.getPokemon(0).getHp());
+                System.out.println("O attacca P hp rimanenti:" + player.getPokemon(0).getActualHp());
             }   
-             if(player.getPokemon(0).getHp() <= 0){
+             if(player.getPokemon(0).getActualHp() <= 0){
                 //logica di morte e switch di pokemon
                 System.out.println("è morto il mio");
                 player.removePokemon(0); 

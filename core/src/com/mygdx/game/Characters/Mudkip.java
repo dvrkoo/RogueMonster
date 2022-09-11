@@ -27,6 +27,7 @@ public class Mudkip extends Character{
 
         //init stat
         this.hp = 14;
+        this.actualHp = this.hp;
         this.attack = 12;
         this.defense = 13;
         this.speed = 11;

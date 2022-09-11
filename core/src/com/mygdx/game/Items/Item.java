@@ -51,15 +51,21 @@ public class Item {
     public void useItem(Character pokemon){
         switch(this.type){
             case POTION:{
-                pokemon.setHp(pokemon.getHp() + 20);
+                if(pokemon.getActualHp() + 20 <= pokemon.getHp())
+                    pokemon.setActualHp(pokemon.getActualHp() + 20);
+                else pokemon.setActualHp(pokemon.getHp());
                 break;
             }
             case SUPERPOTION:{
-                pokemon.setHp(pokemon.getHp() + 50);
+                if(pokemon.getActualHp() + 50 <= pokemon.getHp())
+                    pokemon.setActualHp(pokemon.getActualHp() + 50);
+                else pokemon.setActualHp(pokemon.getHp());
                 break;
             }
             case HYPERPOTION:{
-                pokemon.setHp(pokemon.getHp() + 100);
+                if(pokemon.getActualHp() + 100 <= pokemon.getHp())
+                    pokemon.setActualHp(pokemon.getActualHp() + 100);
+                else pokemon.setActualHp(pokemon.getHp());
                 break;
             }
             case ATTAKX:{

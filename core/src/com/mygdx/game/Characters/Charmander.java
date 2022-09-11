@@ -27,6 +27,7 @@ public class Charmander extends Character{
 
         //init stat
         this.hp = 12;
+        this.actualHp = this.hp;
         this.attack = 15;
         this.defense = 10;
         this.speed = 13;
