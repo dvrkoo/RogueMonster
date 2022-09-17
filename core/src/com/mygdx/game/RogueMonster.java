@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.Maps.Media;
 import com.mygdx.game.States.MainMenu;
 import com.mygdx.game.Utils.SkinGenerator;
@@ -21,7 +20,6 @@ public class RogueMonster extends Game {
 	public void create() {
 
 		assetManager = new AssetManager();
-		long startTime = TimeUtils.millis();
 		assetManager.load("assets/ui/uipack.atlas", TextureAtlas.class);
 		assetManager.finishLoading();
 		skin = SkinGenerator.generateSkin(assetManager);

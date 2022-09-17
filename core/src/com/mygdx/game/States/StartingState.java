@@ -43,7 +43,7 @@ import com.mygdx.game.ui.OptionBox;
 
 public class StartingState implements Screen {
     private InputMultiplexer multiplexer;
-    private DialogueController dialogueController;
+    public static DialogueController dialogueController;
     private Dialogue dialogue;
     public DialogueBox dialogueBox;
     private OptionBox optionBox;
@@ -54,7 +54,7 @@ public class StartingState implements Screen {
 
     Stage uiStage = new Stage(new ScreenViewport());
 
-    final RogueMonster game;
+    public final RogueMonster game;
     public static TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
@@ -65,8 +65,10 @@ public class StartingState implements Screen {
     PokemonFactory pkmFactory;
     Collision collisions = new Collision();
     public static ArrayList<Rectangle> rectangleArray = new ArrayList<Rectangle>();
+    public static ArrayList<Rectangle> dialogRectangles = new ArrayList<Rectangle>();
     oak oak = new oak();
     private List<Observer> observers = new ArrayList<>();
+    public static Rectangle Mudkip;
 
     public StartingState(final RogueMonster game) {
         this.game = game;
@@ -91,12 +93,17 @@ public class StartingState implements Screen {
 
         TiledMapTileLayer collisionObjectLayer = (TiledMapTileLayer) map.getLayers().get("Collisions");
         TiledMapTileLayer secondCollisionObjectLayer = (TiledMapTileLayer) map.getLayers().get("Collisions2");
+        TiledMapTileLayer starter = (TiledMapTileLayer) map.getLayers().get("pokemon1");
+        TiledMapTileLayer starter2 = (TiledMapTileLayer) map.getLayers().get("pokemon2");
+        TiledMapTileLayer starter3 = (TiledMapTileLayer) map.getLayers().get("pokemon3");
+        Mudkip = getDialogueCollisions(starter);
         getCollisionArray(collisionObjectLayer);
         getCollisionArray(secondCollisionObjectLayer);
         renderer = new OrthogonalTiledMapRenderer(map, 2);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
+
         viewport = new FitViewport(1000, 1000, camera);
 
         initUI();
@@ -105,19 +112,9 @@ public class StartingState implements Screen {
         multiplexer.addProcessor(0, dialogueController);
         dialogue = new Dialogue();
 
-        DialogueNode node1 = new DialogueNode("Hello!\nNice to meet you.", 0);
-        DialogueNode node2 = new DialogueNode("Are you a boy or a girl?", 1);
-        DialogueNode node3 = new DialogueNode("I knew you were boy all along.", 2);
-        DialogueNode node4 = new DialogueNode("I knew you were girl all along.", 3);
-
-        node1.makeLinear(node2.getID());
-        node2.addChoice("Boy", 2);
-        node2.addChoice("Girl", 3);
+        DialogueNode node1 = new DialogueNode("No time for questions\nPick a Pokemon!", 0);
 
         dialogue.addNode(node1);
-        dialogue.addNode(node2);
-        dialogue.addNode(node3);
-        dialogue.addNode(node4);
 
         dialogueController.startDialogue(dialogue);
         Gdx.input.setInputProcessor(multiplexer);
@@ -221,6 +218,20 @@ public class StartingState implements Screen {
         camera.position.lerp(pos3, .1f);
     }
 
+    public Rectangle getDialogueCollisions(TiledMapTileLayer collisionObjectLayer) {
+        Rectangle rectangle = new Rectangle();
+        for (int x = 0; x < collisionObjectLayer.getWidth(); x++) {
+            for (int y = 0; y < collisionObjectLayer.getHeight(); y++) {
+                Cell cell = collisionObjectLayer.getCell(x, y);
+                if (cell != null) {
+                    rectangle.x = x * 32;
+                    rectangle.y = y * 32;
+                }
+            }
+        }
+        return rectangle;
+    }
+
     public void getCollisionArray(TiledMapTileLayer collisionObjectLayer) {
         for (int x = 0; x < collisionObjectLayer.getWidth(); x++) {
             for (int y = 0; y < collisionObjectLayer.getHeight(); y++) {
@@ -238,8 +249,7 @@ public class StartingState implements Screen {
 
     private void initUI() {
 
-        uiStage.getViewport().update(Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight(), true);
+        uiStage.getViewport().update(700, 700, true);
         // uiStage.setDebugAll(true);
 
         root = new Table();
@@ -267,15 +277,15 @@ public class StartingState implements Screen {
         root.add(dialogTable).expand().align(Align.bottom);
     }
 
-    void addObserver(Observer o){
+    void addObserver(Observer o) {
         this.observers.add(o);
     }
 
-    void removeObserver(Observer o){
+    void removeObserver(Observer o) {
         this.observers.remove(o);
     }
 
-    void updateChangeToGameState(boolean isChanged){
+    public void updateChangeToGameState(boolean isChanged) {
         for (Observer o : this.observers) {
             o.update(isChanged);
         }

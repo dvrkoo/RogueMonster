@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="15" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="25" nextobjectid="44">
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="15" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="28" nextobjectid="44">
  <properties>
   <property name="dayPokemonChances" value=""/>
   <property name="dayPokemonLevels" value=""/>
@@ -31,12 +31,27 @@
  </layer>
  <layer id="3" name="Collisions2" class="Object" width="15" height="14">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAE2NgYGDIZCUdM7JAcCEr6RimlxwA08vEQZneUnYGhjIgLmfHVCfOxcAgAcSSXJh6QaAeqKcBiBux6JUH6lEAYkUcesl180DpPc7GwHCCDZMGAVxyA+3mT1jiBR8AqYfpxYWRzceGAUDytYZIAwAA
+   H4sIAAAAAAAAE2NgYGDIZCUdM7JAcCEr6RimlxwA08vEQZneUnYGhjIgLmfHVCfOxcAgAcSSXJh6QaAeqKcBiBux6MVnLzlgoPUeZ2NgOMGGSYMALrmBdvMnIuMFBkDqYXpxYWTzsWEAKFY2HkgDAAA=
   </data>
  </layer>
  <layer id="4" name="Collisions" class="Object" width="15" height="14">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAE2NgoAw8YoNgTXYGBi12BI0MDgDlD7IhaBh4wwbBxkD1JuwIGhmcAsqfZkPQ9ABpSHgUjAJiAABVNbHHSAMAAA==
+  </data>
+ </layer>
+ <layer id="25" name="pokemon1" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE2NgGAXUBPJcA+2CUTAQAABDFZEZSAMAAA==
+  </data>
+ </layer>
+ <layer id="26" name="pokemon2" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE2NgGAXUBgpcA+2CUUBvAACEjBOTSAMAAA==
+  </data>
+ </layer>
+ <layer id="27" name="pokemon3" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAE2NgGAW0AIpcA+2CUUBPAACObHC3SAMAAA==
   </data>
  </layer>
  <layer id="5" name="WalkBehind" width="15" height="14">
