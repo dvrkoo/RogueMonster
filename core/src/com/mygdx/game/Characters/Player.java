@@ -14,11 +14,9 @@ import com.mygdx.game.Utils.CharacterAnimation;
 public class Player extends Character {
 
     boolean isGamestate = false;
-    
 
     private Character[] team;
     private Bag bag = new Bag();
-    
 
     public Player(final int x, final int y) {
         // init player
@@ -37,12 +35,10 @@ public class Player extends Character {
         // init team
         team = new Character[6];
 
-        
-        
     }
 
     @Override
-    void move(float x, float y){
+    void move(float x, float y) {
         Vector2 pos = new Vector2();
         Vector2 posMov = new Vector2();
         pos.x = this.getX();
@@ -50,22 +46,22 @@ public class Player extends Character {
         posMov.x = pos.x + x * movSpeed;
         posMov.y = pos.y + y * movSpeed;
         this.setPosition(posMov);
-        if(isGamestate){
-            if ( collision.getPlayerCollision(this) || collision.getCollision(this)) {
+        if (isGamestate) {
+            if (collision.getPlayerCollision(this) || collision.getCollision(this)) {
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
             }
-        }else{
-            if (collision.getMapCollisions(this)) {
+        } else {
+            if (collision.getMapCollisions(this) || collision.getStarterpokemon(this)) {
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
             }
         }
-           
-    } 
+
+    }
 
     public void commandMovement() {
-        
+
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
             this.movement(0, -1, CharacterState.SOUTH);
 
@@ -75,11 +71,9 @@ public class Player extends Character {
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {// right
             this.movement(1, 0, CharacterState.EAST);
 
-            
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {// up
             this.movement(0, 1, CharacterState.NORTH);
 
-            
         } else {
             this.movement(0, 0, CharacterState.STANDING);
 
@@ -100,14 +94,13 @@ public class Player extends Character {
         team[i] = null;
     }
 
-    public void addItem(final Item item){
+    public void addItem(final Item item) {
         bag.insert(item);
     }
-    public void removeItem(final Item item){
+
+    public void removeItem(final Item item) {
         bag.remove(item);
     }
-
-   
 
     public Character getPokemon(int i) {
         return team[i];
@@ -120,7 +113,7 @@ public class Player extends Character {
         this.team[two] = tmp;
     }
 
-    //getters setters
+    // getters setters
     public void setIsGamestate(boolean isGamestate) {
         this.isGamestate = isGamestate;
     }

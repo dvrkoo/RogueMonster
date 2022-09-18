@@ -17,6 +17,14 @@ public class DialogueController extends InputAdapter {
     private DialogueBox dialogueBox;
     private OptionBox optionBox;
 
+    public boolean isNode(DialogueNode node) {
+        if (traverser.currentNode == node) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public DialogueController(DialogueBox box, OptionBox optionBox) {
         this.dialogueBox = box;
         this.optionBox = optionBox;

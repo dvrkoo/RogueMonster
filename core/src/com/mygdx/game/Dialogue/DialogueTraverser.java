@@ -10,7 +10,7 @@ import com.mygdx.game.Dialogue.DialogueNode.NODE_TYPE;
 public class DialogueTraverser {
 
 	private Dialogue dialogue;
-	private DialogueNode currentNode;
+	public DialogueNode currentNode;
 
 	public DialogueTraverser(Dialogue dialogue) {
 		this.dialogue = dialogue;
