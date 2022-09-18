@@ -2,6 +2,8 @@ package com.mygdx.game.States;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
@@ -22,7 +24,9 @@ import com.mygdx.game.Items.Item;
 import com.mygdx.game.Maps.Entity;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
+import com.mygdx.game.States.BattleState.BagScreen;
 import com.mygdx.game.States.BattleState.BattleState;
+import com.mygdx.game.States.BattleState.TeamScreen;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.RandomUtils;
 import com.mygdx.game.Utils.Enums.ItemType;
@@ -34,6 +38,7 @@ public class GameState implements Screen {
 
     public static final int GAME_RUNNING = 0;
     public static final int GAME_BATTLE = 1;
+    public static final int GAME_BAG = 2;
 
     private int gamestatus = GAME_RUNNING;
 
@@ -45,13 +50,18 @@ public class GameState implements Screen {
 
     Viewport viewport;
     OrthographicCamera camera;
+    OrthographicCamera cameraScreen;
     float enlapsedTime;
     PokemonFactory pkmFactory;
     RandomUtils random = new RandomUtils();
     public static ArrayList<Character> pokemon;
 
+    BagScreen bagScreen;
+    TeamScreen teamScreen;
+    Item choosenItem = null;
 
-    // game methods
+
+    // GameState constructor
     public GameState(final RogueMonster game, Player player) {
         this.game = game;
         this.player = player; 
@@ -60,6 +70,8 @@ public class GameState implements Screen {
         island = new Island();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
+        this.cameraScreen = new OrthographicCamera();
+        this.cameraScreen.setToOrtho(false, 1000, 1000);
         viewport = new FitViewport(1000, 1000, camera);
 
         pkmFactory = new PokemonFactory();
@@ -70,6 +82,10 @@ public class GameState implements Screen {
         player.addItem(new Item(ItemType.HYPERPOTION));
         player.addItem(new Item(ItemType.HYPERPOTION));
         player.addItem(new Item(ItemType.POTION));
+
+        this.bagScreen = new BagScreen(player);
+        this.teamScreen = new TeamScreen(player); 
+
         spawnEnemy();
     }
 
@@ -88,8 +104,10 @@ public class GameState implements Screen {
         enlapsedTime += delta;
 
         camera.update();
+        cameraScreen.update();
 
         game.batch.setProjectionMatrix(camera.combined);
+        
 
         game.batch.begin();
 
@@ -113,14 +131,45 @@ public class GameState implements Screen {
 
         shapeRenderer.end();
 
+        game.batch.setProjectionMatrix(cameraScreen.combined);
+        game.batch.begin();
+
+        drawScreen();
+
+        game.batch.end();
+
         player.commandMovement();
         moveCamera();
         checkBattle();
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            gamestatus = GAME_BAG;
+            bagScreen.isVisible = true;
+        }
+
         switch (gamestatus) {
+            case GAME_RUNNING:{
+                player.commandMovement();
+                moveCamera();
+                checkBattle();
+                for (Character iter : pokemon)
+                    iter.update();
+                break;
+            }
             case GAME_BATTLE: {
                 // draw pause screenù
-                pause();
+                posReset.set(player.x,player.y);
+                System.out.println(posReset.x + " " + posReset.y);
+                game.setScreen(new BattleState(game, this));
+                break;
+            }
+            case GAME_BAG: {
+                
+                if(Gdx.input.justTouched() && bagScreen.isVisible){
+                    choosenItem = chooseItem(Gdx.input.getX(), Gdx.input.getY());
+                }else if(Gdx.input.justTouched() && teamScreen.isVisible)
+                    choosePokemon(Gdx.input.getX(), Gdx.input.getY(), choosenItem);
+                break;
             }
             // add cases, example bag state ecc
         }
@@ -166,7 +215,7 @@ public class GameState implements Screen {
         game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
         for (Character iter : pokemon) {
             game.batch.draw(iter.getAnimation().getKeyFrame(enlapsedTime, true), iter.getX(), iter.getY());
-            iter.update();
+            
         }
 
     }
@@ -190,6 +239,53 @@ public class GameState implements Screen {
             }
         }
     }
+    void drawScreen(){
+        if(bagScreen.isVisible)
+            bagScreen.drawBagScreen(game);
+        else if(teamScreen.isVisible)
+            teamScreen.draw(game);
+        
+    }
+    Item chooseItem(float x, float y){
+        y = Math.abs(y - 1000);
+        Item itemChosen = null;
+        boolean choose = false;
+        for (int i = 0; i < bagScreen.buttons.size(); i++) {
+            if(bagScreen.buttons.get(i).contains(x, y) && !player.getBag().getBag().isEmpty()){
+                teamScreen.isVisible = true; 
+                itemChosen = player.getBag().getBag().get(i).get(0);
+                choose = true;
+            }
+        }
+        if(choose){
+            bagScreen.isVisible = false;
+        }
+        
+        return itemChosen;
+    }
+    void choosePokemon( float x, float y, Item item){
+        y = Math.abs(y - 1000);
+        boolean isChoosen = false;
+
+
+        for (int i = 0; i < teamScreen.buttons.length; i++) {
+            if(teamScreen.buttons[i].contains(x, y) && player.getPokemon(i) != null && item != null){
+                item.useItem(player.getPokemon(i));
+                for (final ArrayList<Item> iter: player.getBag().getBag()) {
+                    if(iter.get(0).getType() == item.getType())
+                        player.getBag().remove(item);
+                }
+                
+                isChoosen = true;  
+            }
+        }
+        if(isChoosen){
+            teamScreen.isVisible = false;
+            gamestatus = GAME_RUNNING;
+        }
+        
+        
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -200,9 +296,7 @@ public class GameState implements Screen {
     @Override
     public void pause() {
         // TODO Auto-generated method stub
-        posReset.set(player.x,player.y);
-        System.out.println(posReset.x + " " + posReset.y);
-        game.setScreen(new BattleState(game, this));
+        
          
 
     }

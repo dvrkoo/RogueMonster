@@ -32,7 +32,7 @@ public class BattleState implements Screen{
     Texture switchTexture = new Texture("Buttons/button_switch.png");
     Texture bagTexture = new Texture("Buttons/button_bag.png");
     Vector3 touchPoint = new Vector3();
-    SwitchScreen switchScreen;
+    TeamScreen switchScreen;
     BagScreen bagScreen;
     float enlapsedTime;
 
@@ -50,7 +50,7 @@ public class BattleState implements Screen{
         this.game = game;
         this.oldState = oldState;
         this.player = oldState.getPlayer();
-        this.switchScreen = new SwitchScreen(player);
+        this.switchScreen = new TeamScreen(player);
         this.bagScreen = new BagScreen(player);
         for (Character iter : GameState.pokemon) {
             if(iter.isOpponent){
@@ -273,14 +273,7 @@ public class BattleState implements Screen{
 
     void renderScreen(){
         if(switchScreen.isVisible){
-            for (int i = 0; i < switchScreen.buttons.length; i++) {
-                game.batch.draw(switchScreen.buttonTexture, switchScreen.buttons[i].x, switchScreen.buttons[i].y, switchScreen.buttons[i].width, switchScreen.buttons[i].height);
-            }
-            for (int i = 0; i < switchScreen.pokemonIcon.length; i++) {
-                if(player.getPokemon(i) != null){
-                    game.batch.draw(switchScreen.pokemonIcon[i], switchScreen.buttons[i].x - 70, switchScreen.buttons[i].y);
-                }
-            }        
+            switchScreen.draw(game);
         }
         if(bagScreen.isVisible){
             bagScreen.drawBagScreen(game);

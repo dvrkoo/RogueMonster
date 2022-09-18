@@ -82,8 +82,12 @@ public class Item {
             }
         }
     }
+    //getters, setters
     public String getItemName() {
         return itemName;
+    }
+    public ItemType getType() {
+        return type;
     }
 
 }
