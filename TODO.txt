@@ -3,7 +3,8 @@
 	-items e utilizzo della borsa( penso la cosa miglire sia creare una struttura datiche:
 									- contenga items
 									- gli item duplicati sono raggruppati tutti insieme e che venga registrata la quantità
-									- metodi di getItem, addItem, removeItem)
+									- metodi di getItem, addItem, removeItem): fatto per il battle state, da fare per il gamestate
+								
 
 -Mappa
 	-starter Room 

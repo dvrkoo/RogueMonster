@@ -3,9 +3,12 @@ package com.mygdx.game.States.BattleState;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.RogueMonster;
+import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Player;
+import com.mygdx.game.Items.Item;
 
-public class SwitchScreen {
+public class TeamScreen {
     public Rectangle[] buttons = new Rectangle[6];
     public Texture buttonTexture = new Texture("Buttons/button.png");
     public TextureRegion[] pokemonIcon = new TextureRegion[6];
@@ -13,7 +16,7 @@ public class SwitchScreen {
 
     Player player;
 
-    public SwitchScreen( Player player){
+    public TeamScreen( Player player){
         this.player = player;
         makeButtons();
         setButtons();
@@ -49,6 +52,21 @@ public class SwitchScreen {
             buttons[i].setPosition(900, 1000 - 64 - 160*i);
             buttons[i].height = 64;
             buttons[i].width = 64;
+        }
+    }
+
+    void useOnItem(Character pokemon, Item item){
+        item.useItem(pokemon);
+    }
+
+    public void draw(RogueMonster game){
+        for (int i = 0; i < buttons.length; i++) {
+            game.batch.draw(buttonTexture, buttons[i].x, buttons[i].y, buttons[i].width, buttons[i].height);
+        }
+        for (int i = 0; i < pokemonIcon.length; i++) {
+            if(player.getPokemon(i) != null){
+                game.batch.draw(pokemonIcon[i], buttons[i].x - 70, buttons[i].y);
+            }
         }
     }
     
