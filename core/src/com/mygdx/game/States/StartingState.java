@@ -54,7 +54,7 @@ public class StartingState implements Screen {
 
     Stage uiStage = new Stage(new ScreenViewport());
 
-    public final RogueMonster game;
+    public static RogueMonster game;
     public static TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
@@ -62,13 +62,15 @@ public class StartingState implements Screen {
     public static Player player;
     public static ArrayList<Character> characters;
     float enlapsedTime;
-    PokemonFactory pkmFactory;
+    public static PokemonFactory pkmFactory;
     Collision collisions = new Collision();
     public static ArrayList<Rectangle> rectangleArray = new ArrayList<Rectangle>();
     public static ArrayList<Rectangle> dialogRectangles = new ArrayList<Rectangle>();
     oak oak = new oak();
-    private List<Observer> observers = new ArrayList<>();
+    private static List<Observer> observers = new ArrayList<>();
     public static Rectangle Mudkip;
+    public static Rectangle Bulbasaur;
+    public static Rectangle Charmander;
 
     public StartingState(final RogueMonster game) {
         this.game = game;
@@ -80,9 +82,6 @@ public class StartingState implements Screen {
         characters.add(oak);
 
         addObserver(new ChangeSateteNotifier(player));
-
-        player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
-        player.addPokemon(pkmFactory.getPokemon(Pokemon.MEW));
 
     }
 
@@ -97,6 +96,8 @@ public class StartingState implements Screen {
         TiledMapTileLayer starter2 = (TiledMapTileLayer) map.getLayers().get("pokemon2");
         TiledMapTileLayer starter3 = (TiledMapTileLayer) map.getLayers().get("pokemon3");
         Mudkip = getDialogueCollisions(starter);
+        Charmander = getDialogueCollisions(starter2);
+        Bulbasaur = getDialogueCollisions(starter3);
         getCollisionArray(collisionObjectLayer);
         getCollisionArray(secondCollisionObjectLayer);
         renderer = new OrthogonalTiledMapRenderer(map, 2);
@@ -285,8 +286,8 @@ public class StartingState implements Screen {
         this.observers.remove(o);
     }
 
-    public void updateChangeToGameState(boolean isChanged) {
-        for (Observer o : this.observers) {
+    public static void updateChangeToGameState(boolean isChanged) {
+        for (Observer o : observers) {
             o.update(isChanged);
         }
     }

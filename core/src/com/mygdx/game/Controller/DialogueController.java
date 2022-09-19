@@ -2,12 +2,15 @@ package com.mygdx.game.Controller;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
-
+import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Dialogue.Dialogue;
 import com.mygdx.game.Dialogue.DialogueNode;
 
 import com.mygdx.game.Dialogue.DialogueTraverser;
 import com.mygdx.game.Dialogue.DialogueNode.NODE_TYPE;
+import com.mygdx.game.States.GameState;
+import com.mygdx.game.States.StartingState;
+import com.mygdx.game.Utils.Enums.Pokemon;
 import com.mygdx.game.ui.DialogueBox;
 import com.mygdx.game.ui.OptionBox;
 
@@ -16,6 +19,8 @@ public class DialogueController extends InputAdapter {
     private DialogueTraverser traverser;
     private DialogueBox dialogueBox;
     private OptionBox optionBox;
+    Boolean moove = true;
+    public static String pkmn;
 
     public boolean isNode(DialogueNode node) {
         if (traverser.currentNode == node) {
@@ -40,16 +45,24 @@ public class DialogueController extends InputAdapter {
 
     @Override
     public boolean keyUp(int keycode) {
+        System.out.print(moove);
+        if (!optionBox.isVisible()) {
+            moove = true;
+        }
         if (optionBox.isVisible()) {
             if (keycode == Keys.UP) {
                 optionBox.moveUp();
+                moove = true;
                 return true;
             } else if (keycode == Keys.DOWN) {
+                moove = false;
                 optionBox.moveDown();
                 return true;
             }
         }
+
         if (traverser != null && keycode == Keys.X && dialogueBox.isFinished()) { // continue through tree
+
             if (traverser.getType() == NODE_TYPE.END) {
                 traverser = null;
                 dialogueBox.setVisible(false);
@@ -57,6 +70,11 @@ public class DialogueController extends InputAdapter {
                 progress(0);
             } else if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
                 progress(optionBox.getIndex());
+                if (moove == true) {
+                    StartingState.updateChangeToGameState(true);
+                    addPkmn(pkmn);
+                    StartingState.game.setScreen(new GameState(StartingState.game, StartingState.player));
+                }
             }
             return true;
         }
@@ -100,5 +118,27 @@ public class DialogueController extends InputAdapter {
 
     public boolean isDialogueShowing() {
         return dialogueBox.isVisible();
+    }
+
+    void setMoove() {
+        moove = true;
+    }
+
+    public static void getPkmn(String poke) {
+        pkmn = poke;
+    }
+
+    public void addPkmn(String pkmn) {
+        switch (pkmn) {
+            case "Mudkip": {
+                StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.MUDKIP));
+            }
+            case "Charmander": {
+                StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.CHARMANDER));
+            }
+            case "Bulbasaur": {
+                StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.BULBASAUR));
+            }
+        }
     }
 }
