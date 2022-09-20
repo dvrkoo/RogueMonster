@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.Maps.Media;
+import com.mygdx.game.States.GameOver;
 import com.mygdx.game.States.MainMenu;
 import com.mygdx.game.Utils.SkinGenerator;
 
@@ -27,7 +28,7 @@ public class RogueMonster extends Game {
 		Media.load_assets();
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		this.setScreen(new MainMenu(this));
+		this.setScreen(new GameOver(this, 0));
 
 	}
 
