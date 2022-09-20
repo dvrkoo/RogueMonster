@@ -158,7 +158,7 @@ public class StartingState implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             updateChangeToGameState(true);
-            game.setScreen(new GameState(game, player));
+            game.setScreen(new GameState(game, this.player));
         }
 
         uiStage.draw();
@@ -220,6 +220,7 @@ public class StartingState implements Screen {
     }
 
     public Rectangle getDialogueCollisions(TiledMapTileLayer collisionObjectLayer) {
+
         Rectangle rectangle = new Rectangle();
         for (int x = 0; x < collisionObjectLayer.getWidth(); x++) {
             for (int y = 0; y < collisionObjectLayer.getHeight(); y++) {

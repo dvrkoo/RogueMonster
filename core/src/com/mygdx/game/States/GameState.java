@@ -35,7 +35,7 @@ import com.mygdx.game.Utils.Enums.Pokemon;
 public class GameState implements Screen {
     // game attributes
     final RogueMonster game;
-
+    public int score = 0;
     public static final int GAME_RUNNING = 0;
     public static final int GAME_BATTLE = 1;
     public static final int GAME_BAG = 2;
@@ -60,13 +60,19 @@ public class GameState implements Screen {
     TeamScreen teamScreen;
     Item choosenItem = null;
 
-
     // GameState constructor
     public GameState(final RogueMonster game, Player player) {
         this.game = game;
-        this.player = player; 
-        posReset.set(800,800);
+        this.player = player;
+        posReset.set(800, 800);
 
+        for (int i = 0; i < 6; i++) {
+            if (player.getPokemon(i) != null) {
+                System.out.print(i);
+            } else {
+                System.out.print("cazzo");
+            }
+        }
         island = new Island();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
@@ -84,9 +90,10 @@ public class GameState implements Screen {
         player.addItem(new Item(ItemType.POTION));
 
         this.bagScreen = new BagScreen(player);
-        this.teamScreen = new TeamScreen(player); 
+        this.teamScreen = new TeamScreen(player);
 
         spawnEnemy();
+
     }
 
     @Override
@@ -107,7 +114,6 @@ public class GameState implements Screen {
         cameraScreen.update();
 
         game.batch.setProjectionMatrix(camera.combined);
-        
 
         game.batch.begin();
 
@@ -141,6 +147,7 @@ public class GameState implements Screen {
         player.commandMovement();
         moveCamera();
         checkBattle();
+        checkGameOver();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             gamestatus = GAME_BAG;
@@ -148,7 +155,7 @@ public class GameState implements Screen {
         }
 
         switch (gamestatus) {
-            case GAME_RUNNING:{
+            case GAME_RUNNING: {
                 player.commandMovement();
                 moveCamera();
                 checkBattle();
@@ -158,16 +165,18 @@ public class GameState implements Screen {
             }
             case GAME_BATTLE: {
                 // draw pause screenù
-                posReset.set(player.x,player.y);
+                posReset.set(player.x, player.y);
                 System.out.println(posReset.x + " " + posReset.y);
                 game.setScreen(new BattleState(game, this));
+                score += 100;
                 break;
+
             }
             case GAME_BAG: {
-                
-                if(Gdx.input.justTouched() && bagScreen.isVisible){
+
+                if (Gdx.input.justTouched() && bagScreen.isVisible) {
                     choosenItem = chooseItem(Gdx.input.getX(), Gdx.input.getY());
-                }else if(Gdx.input.justTouched() && teamScreen.isVisible)
+                } else if (Gdx.input.justTouched() && teamScreen.isVisible)
                     choosePokemon(Gdx.input.getX(), Gdx.input.getY(), choosenItem);
                 break;
             }
@@ -175,6 +184,7 @@ public class GameState implements Screen {
         }
 
     }
+
     void spawnEnemy() {
 
         Vector2 position = new Vector2();
@@ -191,6 +201,18 @@ public class GameState implements Screen {
                 position = random.getRandomPos(island.minMaxX, island.minMaxY);
             }
 
+        }
+    }
+
+    public void checkGameOver() {
+        boolean found = false;
+        for (int i = 0; i < 6; i++) {
+            if (player.getPokemon(i) != null) {
+                found = true;
+            }
+        }
+        if (!found) {
+            game.setScreen(new GameOver(game, score));
         }
     }
 
@@ -215,7 +237,7 @@ public class GameState implements Screen {
         game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
         for (Character iter : pokemon) {
             game.batch.draw(iter.getAnimation().getKeyFrame(enlapsedTime, true), iter.getX(), iter.getY());
-            
+
         }
 
     }
@@ -232,59 +254,60 @@ public class GameState implements Screen {
 
     public void checkBattle() {
         for (Character character : pokemon) {
-            //System.out.println(character.isOpponent);
+            // System.out.println(character.isOpponent);
             if (character.isOpponent) {
                 battle();
 
             }
         }
     }
-    void drawScreen(){
-        if(bagScreen.isVisible)
+
+    void drawScreen() {
+        if (bagScreen.isVisible)
             bagScreen.drawBagScreen(game);
-        else if(teamScreen.isVisible)
+        else if (teamScreen.isVisible)
             teamScreen.draw(game);
-        
+
     }
-    Item chooseItem(float x, float y){
+
+    Item chooseItem(float x, float y) {
         y = Math.abs(y - 1000);
         Item itemChosen = null;
         boolean choose = false;
         for (int i = 0; i < bagScreen.buttons.size(); i++) {
-            if(bagScreen.buttons.get(i).contains(x, y) && !player.getBag().getBag().isEmpty()){
-                teamScreen.isVisible = true; 
+            if (bagScreen.buttons.get(i).contains(x, y) && !player.getBag().getBag().isEmpty()) {
+                teamScreen.isVisible = true;
                 itemChosen = player.getBag().getBag().get(i).get(0);
                 choose = true;
             }
         }
-        if(choose){
+        if (choose) {
             bagScreen.isVisible = false;
         }
-        
+
         return itemChosen;
     }
-    void choosePokemon( float x, float y, Item item){
+
+    void choosePokemon(float x, float y, Item item) {
         y = Math.abs(y - 1000);
         boolean isChoosen = false;
 
-
         for (int i = 0; i < teamScreen.buttons.length; i++) {
-            if(teamScreen.buttons[i].contains(x, y) && player.getPokemon(i) != null && item != null){
+            if (teamScreen.buttons[i].contains(x, y) && player.getPokemon(i) != null && item != null) {
                 item.useItem(player.getPokemon(i));
-                for (final ArrayList<Item> iter: player.getBag().getBag()) {
-                    if(iter.get(0).getType() == item.getType())
+                for (final ArrayList<Item> iter : player.getBag().getBag()) {
+                    if (iter.get(0).getType() == item.getType())
                         player.getBag().remove(item);
                 }
-                
-                isChoosen = true;  
+
+                isChoosen = true;
             }
         }
-        if(isChoosen){
+        if (isChoosen) {
             teamScreen.isVisible = false;
             gamestatus = GAME_RUNNING;
         }
-        
-        
+
     }
 
     @Override
@@ -296,15 +319,12 @@ public class GameState implements Screen {
     @Override
     public void pause() {
         // TODO Auto-generated method stub
-        
-         
 
     }
 
     @Override
     public void resume() {
         // TODO Auto-generated method stub
-        
 
     }
 

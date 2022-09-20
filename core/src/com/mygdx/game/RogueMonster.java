@@ -28,7 +28,7 @@ public class RogueMonster extends Game {
 		Media.load_assets();
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		this.setScreen(new GameOver(this, 0));
+		this.setScreen(new MainMenu(this));
 
 	}
 

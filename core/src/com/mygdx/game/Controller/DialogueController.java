@@ -72,6 +72,7 @@ public class DialogueController extends InputAdapter {
                 progress(optionBox.getIndex());
                 if (moove == true) {
                     StartingState.updateChangeToGameState(true);
+                    System.out.print(pkmn);
                     addPkmn(pkmn);
                     StartingState.game.setScreen(new GameState(StartingState.game, StartingState.player));
                 }
@@ -129,16 +130,13 @@ public class DialogueController extends InputAdapter {
     }
 
     public void addPkmn(String pkmn) {
-        switch (pkmn) {
-            case "Mudkip": {
-                StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.MUDKIP));
-            }
-            case "Charmander": {
-                StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.CHARMANDER));
-            }
-            case "Bulbasaur": {
-                StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.BULBASAUR));
-            }
+        if (pkmn == "Mudkip") {
+            StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.MUDKIP));
+        } else if (pkmn == "Charmander") {
+            StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.CHARMANDER));
+        } else if (pkmn == "Bulbasaur") {
+            StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.BULBASAUR));
         }
     }
+
 }
