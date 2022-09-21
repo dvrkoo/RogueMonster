@@ -157,6 +157,7 @@ public class StartingState implements Screen {
         moveCamera();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
             updateChangeToGameState(true);
             game.setScreen(new GameState(game, this.player));
         }
@@ -291,6 +292,51 @@ public class StartingState implements Screen {
         for (Observer o : observers) {
             o.update(isChanged);
         }
+    }
+
+    public static void addPkmn(String pkmn) {
+        if (pkmn == "Mudkip") {
+            updateChangeToGameState(true);
+            player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
+            game.setScreen(new GameState(game, player));
+        } else if (pkmn == "Charmander") {
+            updateChangeToGameState(true);
+            player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
+            game.setScreen(new GameState(game, player));
+
+        } else if (pkmn == "Bulbasaur") {
+            updateChangeToGameState(true);
+            player.addPokemon(pkmFactory.getPokemon(Pokemon.BULBASAUR));
+            game.setScreen(new GameState(game, player));
+
+        }
+    }
+
+    public static void generateDialogue(String pkmn) {
+        Dialogue dialogue = new Dialogue();
+
+        DialogueNode node1 = new DialogueNode("Are you sure you want to pick " + pkmn + "?", 0);
+        DialogueNode node2 = new DialogueNode("You won't be able to choose again", 1);
+
+        DialogueNode node3 = new DialogueNode("Good luck !", 2);
+        DialogueNode node4 = new DialogueNode("Alright then", 3);
+
+        node1.makeLinear(node2.getID());
+        node2.addChoice("Yes", 2);
+        node2.addChoice("No", 3);
+
+        dialogue.addNode(node1);
+        dialogue.addNode(node2);
+
+        dialogue.addNode(node3);
+        dialogue.addNode(node4);
+        dialogueController.pkmn = pkmn;
+        dialogueController.startDialogue(dialogue);
+
+    }
+
+    public void checkChoiche() {
+
     }
 
 }

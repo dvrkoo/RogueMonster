@@ -16,11 +16,12 @@ import com.mygdx.game.ui.OptionBox;
 
 public class DialogueController extends InputAdapter {
 
+    Boolean check;
     private DialogueTraverser traverser;
     private DialogueBox dialogueBox;
     private OptionBox optionBox;
     Boolean moove = true;
-    public static String pkmn;
+    public String pkmn;
 
     public boolean isNode(DialogueNode node) {
         if (traverser.currentNode == node) {
@@ -45,6 +46,7 @@ public class DialogueController extends InputAdapter {
 
     @Override
     public boolean keyUp(int keycode) {
+        check = false;
         System.out.print(moove);
         if (!optionBox.isVisible()) {
             moove = true;
@@ -71,10 +73,7 @@ public class DialogueController extends InputAdapter {
             } else if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
                 progress(optionBox.getIndex());
                 if (moove == true) {
-                    StartingState.updateChangeToGameState(true);
-                    System.out.print(pkmn);
-                    addPkmn(pkmn);
-                    StartingState.game.setScreen(new GameState(StartingState.game, StartingState.player));
+                    StartingState.addPkmn(pkmn);
                 }
             }
             return true;
@@ -124,19 +123,4 @@ public class DialogueController extends InputAdapter {
     void setMoove() {
         moove = true;
     }
-
-    public static void getPkmn(String poke) {
-        pkmn = poke;
-    }
-
-    public void addPkmn(String pkmn) {
-        if (pkmn == "Mudkip") {
-            StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.MUDKIP));
-        } else if (pkmn == "Charmander") {
-            StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.CHARMANDER));
-        } else if (pkmn == "Bulbasaur") {
-            StartingState.player.addPokemon(StartingState.pkmFactory.getPokemon(Pokemon.BULBASAUR));
-        }
-    }
-
 }

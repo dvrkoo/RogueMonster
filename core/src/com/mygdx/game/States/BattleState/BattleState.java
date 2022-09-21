@@ -1,6 +1,8 @@
 package com.mygdx.game.States.BattleState;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,6 +17,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Player;
+import com.mygdx.game.Observers.BattleNotifier;
+import com.mygdx.game.Observers.Observer;
 import com.mygdx.game.States.GameOver;
 import com.mygdx.game.States.GameState;
 import com.mygdx.game.Utils.Damage;
@@ -22,6 +26,8 @@ import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Characters.Character;
 
 public class BattleState implements Screen {
+    private float timeSeconds = 0f;
+    private float period = 1f;
     final RogueMonster game;
     final Screen oldState;
     OrthographicCamera camera;
@@ -42,15 +48,17 @@ public class BattleState implements Screen {
     float enlapsedTime;
 
     Character opponent;
-
-    SpriteBatch spriteBatch = new SpriteBatch();
-    BitmapFont font = new BitmapFont();
-
+    private static List<Observer> observers = new ArrayList<>();
     // status
     int BATTLE_RUNNING = 0;
     int BATTLE_FINISH = 1;
 
     int gamestatus;
+
+    BattleBox firstBattleBox = new BattleBox();
+    BattleBox secondBattleBox = new BattleBox();
+
+    String battleText = new String();
 
     public BattleState(final RogueMonster game, final GameState oldState) {
         gamestatus = 0;
@@ -67,7 +75,8 @@ public class BattleState implements Screen {
                 break;
             }
         }
-
+        addObserver(new BattleNotifier(firstBattleBox));
+        addObserver(new BattleNotifier(secondBattleBox));
         // button setup
         attackButton.setPosition(10, 10);
         switchButton.setPosition(195, 10);
@@ -110,12 +119,13 @@ public class BattleState implements Screen {
 
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+        drawText();
         drawScene();
         drawButtons();
         renderScreen();
         drawScene();
-        spriteBatch.begin();
         standCharacter();
+        game.batch.end();
         // exit condition
         if (Gdx.input.justTouched() && bagScreen.isVisible) {
             chooseItem(Gdx.input.getX(), Gdx.input.getY());
@@ -128,8 +138,7 @@ public class BattleState implements Screen {
             game.setScreen(oldState);
             dispose();
         }
-        spriteBatch.end();
-        game.batch.end();
+
     }
 
     @Override
@@ -213,11 +222,16 @@ public class BattleState implements Screen {
     }
 
     void Battle() {
+        int dmg;
+        String text = new String();
         if (opponent.getSpeed() > player.getPokemon(0).getSpeed()) {
-            int dmg = damage.getDamage(opponent, player.getPokemon(0));
+            dmg = damage.getDamage(opponent, player.getPokemon(0));
             // opponent damage to the pokemon on the field
             player.getPokemon(0).takeDamage(dmg);
-            System.out.println("O attacca P hp rimanenti:" + player.getPokemon(0).getActualHp());
+            text = opponent.getName() + " attacca " + player.getPokemon(0).getName() + " Danni : " + dmg
+                    + " hp rimanenti: "
+                    + player.getPokemon(0).getActualHp() + "\n";
+
             System.out.println(dmg);
 
             // the pokemon on the field attack only if it isn't dead
@@ -227,8 +241,12 @@ public class BattleState implements Screen {
                 player.removePokemon(0);
                 switchScreen.isVisible = true;
             } else {
-                opponent.takeDamage(damage.getDamage(player.getPokemon(0), opponent));
-                System.out.println("P attacca O hp rimanenti:" + opponent.getActualHp());
+                dmg = damage.getDamage(player.getPokemon(0), opponent);
+                opponent.takeDamage(dmg);
+                text += player.getPokemon(0).getName() + " attacca " + opponent.getName() + " Danni : " + dmg
+                        + " hp rimanenti: "
+                        + opponent.getActualHp();
+                updateGameBox(text);
 
             }
             if (opponent.getActualHp() <= 0) {
@@ -239,6 +257,9 @@ public class BattleState implements Screen {
         } else {
             opponent.takeDamage(damage.getDamage(player.getPokemon(0), opponent));
             System.out.println("P attacca O hp rimanenti:" + opponent.getActualHp());
+            text = player.getPokemon(0).getName() + " attacca " + opponent.getName() + " hp rimanenti: "
+                    + opponent.getActualHp() + "\n";
+            updateGameBox(text);
             if (opponent.getActualHp() <= 0) {
                 // logica di fine battaglia e switch al GameState
 
@@ -247,6 +268,9 @@ public class BattleState implements Screen {
             } else {
                 player.getPokemon(0).takeDamage(damage.getDamage(opponent, player.getPokemon(0)));
                 System.out.println("O attacca P hp rimanenti:" + player.getPokemon(0).getActualHp());
+                text += opponent.getName() + " attacca " + player.getPokemon(0).getName() + " hp rimanenti: "
+                        + player.getPokemon(0).getActualHp();
+                updateGameBox(text);
             }
             if (player.getPokemon(0).getActualHp() <= 0) {
                 // logica di morte e switch di pokemon
@@ -319,4 +343,27 @@ public class BattleState implements Screen {
 
         }
     }
+
+    void addObserver(Observer o) {
+        this.observers.add(o);
+    }
+
+    void removeObserver(Observer o) {
+        this.observers.remove(o);
+    }
+
+    public static void updateGameBox(String toPrint) {
+        for (Observer o : observers) {
+            o.update(toPrint);
+        }
+    }
+
+    public void drawText() {
+        if (firstBattleBox.isVisible) {
+            firstBattleBox.draw(game);
+        } else if (secondBattleBox.isVisible) {
+            secondBattleBox.draw(game);
+        }
+    }
+
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Items.Bag;
 import com.mygdx.game.Items.Item;
+import com.mygdx.game.States.StartingState;
 import com.mygdx.game.Utils.CharacterAnimation;
 
 public class Player extends Character {
@@ -52,7 +53,12 @@ public class Player extends Character {
                 this.state = CharacterState.STANDING;
             }
         } else {
-            if (collision.getMapCollisions(this) || collision.getStarterpokemon(this)) {
+            if (collision.getMapCollisions(this)) {
+                this.setPosition(pos);
+                this.state = CharacterState.STANDING;
+            }
+            if (collision.getStarterpokemon(this) != "") {
+                StartingState.generateDialogue(collision.getStarterpokemon(this));
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
             }
