@@ -31,7 +31,7 @@
  </layer>
  <layer id="3" name="Collisions2" class="Object" width="15" height="14">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAE2NgYGDIZCUdM7JAcCEr6RimlxwA08vEQZneUnYGhjIgLmfHVCfOxcAgAcSSXJh6QaAeqKcBiBux6MVnLzlgoPUeZ2NgOMGGSYMALrmBdvMnIuMFBkDqYXpxYWTzsWEAKFY2HkgDAAA=
+   H4sIAAAAAAAAE2NgYGDIZCUdM7JAcCEr6RimlxwA08vEQZneUnYGhjIgLmfHVCfOxcAgAcSSXJh6QaAeqKcBiBux6MVnLzlgoPUeZ2NgOMGGoLEBdDUD7eZPRMYLDIDUw/TiwsjmY8MAUCnmJUgDAAA=
   </data>
  </layer>
  <layer id="4" name="Collisions" class="Object" width="15" height="14">
@@ -56,7 +56,7 @@
  </layer>
  <layer id="5" name="WalkBehind" width="15" height="14">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAE2NgwA0KuCB4EwceRThABRcE7yKgN5GdgSEJiJPZSbcjG6gnB4hzsejlB9otAMSCXKSbO9zAXjYGhn1smDQhuYEEL0hMD6SqpzYAAJa6oG9IAwAA
+   H4sIAAAAAAAAE2NgwA0KuCB4EwceRThABRcE7yKgN5GdgSEJiJPZSbcjG6gnB4hzsejlB9otAMSCXKSbO9zAXjYGhn1sCJpcNfQEL0hMD6SqpzYAAIM6wupIAwAA
   </data>
  </layer>
 </map>

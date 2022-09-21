@@ -1,10 +1,14 @@
 package com.mygdx.game.States.BattleState;
 
+import java.util.BitSet;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -38,6 +42,9 @@ public class BattleState implements Screen {
     float enlapsedTime;
 
     Character opponent;
+
+    SpriteBatch spriteBatch = new SpriteBatch();
+    BitmapFont font = new BitmapFont();
 
     // status
     int BATTLE_RUNNING = 0;
@@ -107,8 +114,7 @@ public class BattleState implements Screen {
         drawButtons();
         renderScreen();
         drawScene();
-        game.batch.end();
-
+        spriteBatch.begin();
         standCharacter();
         // exit condition
         if (Gdx.input.justTouched() && bagScreen.isVisible) {
@@ -122,6 +128,8 @@ public class BattleState implements Screen {
             game.setScreen(oldState);
             dispose();
         }
+        spriteBatch.end();
+        game.batch.end();
     }
 
     @Override
@@ -207,10 +215,8 @@ public class BattleState implements Screen {
     void Battle() {
         if (opponent.getSpeed() > player.getPokemon(0).getSpeed()) {
             int dmg = damage.getDamage(opponent, player.getPokemon(0));
-
             // opponent damage to the pokemon on the field
             player.getPokemon(0).takeDamage(dmg);
-
             System.out.println("O attacca P hp rimanenti:" + player.getPokemon(0).getActualHp());
             System.out.println(dmg);
 
@@ -233,9 +239,9 @@ public class BattleState implements Screen {
         } else {
             opponent.takeDamage(damage.getDamage(player.getPokemon(0), opponent));
             System.out.println("P attacca O hp rimanenti:" + opponent.getActualHp());
-
             if (opponent.getActualHp() <= 0) {
                 // logica di fine battaglia e switch al GameState
+
                 System.out.print("è morto il suo");
                 endBattle();
             } else {
@@ -265,6 +271,7 @@ public class BattleState implements Screen {
 
     void endBattle() {
         gamestatus = BATTLE_FINISH;
+        this.dispose();
     }
 
     void renderScreen() {
@@ -308,7 +315,6 @@ public class BattleState implements Screen {
         }
         if (!found) {
             endBattle();
-            game.setScreen(new GameOver(game, 0));
             // game end loose, for now just return game state
 
         }

@@ -45,14 +45,14 @@ public class StartingState implements Screen {
     private InputMultiplexer multiplexer;
     public static DialogueController dialogueController;
     private Dialogue dialogue;
-    public DialogueBox dialogueBox;
-    private OptionBox optionBox;
-    Table root;
+    public static DialogueBox dialogueBox;
+    private static OptionBox optionBox;
+    static Table root;
 
     public static final int GAME_RUNNING = 1;
     public static final int GAME_PAUSED = 0;
 
-    Stage uiStage = new Stage(new ScreenViewport());
+    static Stage uiStage = new Stage(new ScreenViewport());
 
     public static RogueMonster game;
     public static TiledMap map;
@@ -249,7 +249,7 @@ public class StartingState implements Screen {
         rectangleArray.add(oak);
     }
 
-    private void initUI() {
+    public static void initUI() {
 
         uiStage.getViewport().update(700, 700, true);
         // uiStage.setDebugAll(true);

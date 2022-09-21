@@ -48,6 +48,7 @@ public class GameState implements Screen {
 
     Island island;
 
+    ShapeRenderer shapeRenderer = new ShapeRenderer();
     Viewport viewport;
     OrthographicCamera camera;
     OrthographicCamera cameraScreen;
@@ -106,7 +107,6 @@ public class GameState implements Screen {
 
     @Override
     public void render(float delta) {
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
         ScreenUtils.clear(0.2f, 0, 0.2f, 1);
         enlapsedTime += delta;
 
@@ -213,6 +213,7 @@ public class GameState implements Screen {
         }
         if (!found) {
             game.setScreen(new GameOver(game, score));
+            this.dispose();
         }
     }
 
@@ -336,6 +337,7 @@ public class GameState implements Screen {
 
     @Override
     public void dispose() {
+        shapeRenderer.dispose();
 
     }
 

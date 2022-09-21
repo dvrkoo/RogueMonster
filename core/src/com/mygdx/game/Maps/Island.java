@@ -27,7 +27,7 @@ public class Island {
     public Vector2 minMaxX = new Vector2();
     public Vector2 minMaxY = new Vector2();
 
-    public static Array<Rectangle> collisionRectangle = new Array<Rectangle>();
+    public static Array<Rectangle> collisionRectangle;
 
     // Arrays for mapping code to texture
     String[] aGrassLeft = {
@@ -40,6 +40,7 @@ public class Island {
     String[] aGrassTopLeft = { "000000001" };
 
     public Island() {
+        collisionRectangle = new Array<Rectangle>();
         entities.clear();
         setupTiles();
         codeTiles();
