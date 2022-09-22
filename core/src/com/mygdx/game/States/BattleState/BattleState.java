@@ -185,7 +185,6 @@ public class BattleState implements Screen {
             endBattle();
 
         } else if (bagButton.contains(x, y)) {
-            System.out.println(" ha usato bag");
             bagScreen.isVisible = true;
             // bag function to use items
 
@@ -232,12 +231,9 @@ public class BattleState implements Screen {
                     + " hp rimanenti: "
                     + player.getPokemon(0).getActualHp() + "\n";
 
-            System.out.println(dmg);
-
             // the pokemon on the field attack only if it isn't dead
             if (player.getPokemon(0).getActualHp() <= 0) {
                 // logica di morte e switch di pokemon
-                System.out.println("è morto il mio");
                 player.removePokemon(0);
                 switchScreen.isVisible = true;
             } else {
@@ -251,30 +247,26 @@ public class BattleState implements Screen {
             }
             if (opponent.getActualHp() <= 0) {
                 // logica di fine battaglia e switch al GameState
-                System.out.print("è morto il suo");
                 endBattle();
             }
         } else {
             opponent.takeDamage(damage.getDamage(player.getPokemon(0), opponent));
-            System.out.println("P attacca O hp rimanenti:" + opponent.getActualHp());
             text = player.getPokemon(0).getName() + " attacca " + opponent.getName() + " hp rimanenti: "
                     + opponent.getActualHp() + "\n";
             updateGameBox(text);
             if (opponent.getActualHp() <= 0) {
                 // logica di fine battaglia e switch al GameState
 
-                System.out.print("è morto il suo");
+                
                 endBattle();
             } else {
                 player.getPokemon(0).takeDamage(damage.getDamage(opponent, player.getPokemon(0)));
-                System.out.println("O attacca P hp rimanenti:" + player.getPokemon(0).getActualHp());
                 text += opponent.getName() + " attacca " + player.getPokemon(0).getName() + " hp rimanenti: "
                         + player.getPokemon(0).getActualHp();
                 updateGameBox(text);
             }
             if (player.getPokemon(0).getActualHp() <= 0) {
                 // logica di morte e switch di pokemon
-                System.out.println("è morto il mio");
                 player.removePokemon(0);
                 switchScreen.isVisible = true;
             }

@@ -67,13 +67,6 @@ public class GameState implements Screen {
         this.player = player;
         posReset.set(800, 800);
 
-        for (int i = 0; i < 6; i++) {
-            if (player.getPokemon(i) != null) {
-                System.out.print(i);
-            } else {
-                System.out.print("cazzo");
-            }
-        }
         island = new Island();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
@@ -101,7 +94,6 @@ public class GameState implements Screen {
     public void show() {
 
         gamestatus = GAME_RUNNING;
-        System.out.println(posReset.x + " " + posReset.y);
         player.setPosition(posReset);
     }
 
@@ -166,7 +158,6 @@ public class GameState implements Screen {
             case GAME_BATTLE: {
                 // draw pause screenù
                 posReset.set(player.x, player.y);
-                System.out.println(posReset.x + " " + posReset.y);
                 game.setScreen(new BattleState(game, this));
                 score += 100;
                 break;
@@ -255,7 +246,6 @@ public class GameState implements Screen {
 
     public void checkBattle() {
         for (Character character : pokemon) {
-            // System.out.println(character.isOpponent);
             if (character.isOpponent) {
                 battle();
 
