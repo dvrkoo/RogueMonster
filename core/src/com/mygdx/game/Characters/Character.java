@@ -14,7 +14,7 @@ import com.mygdx.game.Utils.Enums.PokemonType;
 public class Character extends Rectangle {
     // attributes
 
-    int movSpeed;
+    public int movSpeed;
     int attack;
     int speed;
     int defense;
@@ -24,20 +24,15 @@ public class Character extends Rectangle {
     PokemonType type;
     String name;
 
-
     TextureRegion region;
     Texture texture;
     CharacterAnimation anim;
     Animation<TextureRegion> animation;
     CharacterState stateBefore;
-    
 
     CharacterState state;
 
     public Vector2 pos;
-
-    
-    
 
     int counter = 0;
     // TILETYPE type = TILETYPE.WATER;
@@ -68,32 +63,32 @@ public class Character extends Rectangle {
         move(x, y);
         switch (this.state) {
             case NORTH: {
-                //this.stateBefore = state;
+                // this.stateBefore = state;
                 animation = anim.getNorthAnimation();
                 break;
 
             }
             case WEST: {
-                //this.stateBefore = state;
+                // this.stateBefore = state;
                 animation = anim.getWestAnimation();
                 break;
 
             }
             case SOUTH: {
-                //this.stateBefore = state;
+                // this.stateBefore = state;
                 animation = anim.getSouthAnimation();
                 break;
 
             }
             case EAST: {
-                //this.stateBefore = state;
+                // this.stateBefore = state;
                 animation = anim.getEastAnimation();
                 break;
 
             }
             case STANDING: {
-                //this.stateBefore = this.state;
-                //this.state = CharacterState.STANDING;
+                // this.stateBefore = this.state;
+                // this.state = CharacterState.STANDING;
                 switch (this.stateBefore) {
 
                     case NORTH: {
@@ -161,7 +156,7 @@ public class Character extends Rectangle {
     }
 
     public void update() {
-    
+
         if (counter == 0) {
             this.state = CharacterState.randomDirection();
             counter = 30;
@@ -214,23 +209,29 @@ public class Character extends Rectangle {
     public PokemonType getType() {
         return type;
     }
+
     public String getName() {
         return name;
     }
+
     public CharacterState getState() {
         return state;
     }
+
     public void setState(CharacterState state) {
         this.state = state;
     }
+
     public void setStateBefore(CharacterState stateBefore) {
         this.stateBefore = stateBefore;
     }
+
     public int getActualHp() {
         return actualHp;
     }
+
     public void setActualHp(int actualHp) {
         this.actualHp = actualHp;
     }
-    
+
 }

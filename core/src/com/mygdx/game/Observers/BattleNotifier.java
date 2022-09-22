@@ -1,7 +1,6 @@
 package com.mygdx.game.Observers;
 
 import com.mygdx.game.States.BattleState.BattleBox;
-import com.mygdx.game.States.BattleState.BattleState;
 
 public class BattleNotifier implements Observer {
 

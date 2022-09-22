@@ -15,6 +15,8 @@ public class Island {
     public Tile centreTile;
 
     // ONE CHUNK
+    public static int spawnX;
+    public int spawnY;
     public Chunk chunk;
     public ArrayList<Entity> entities = new ArrayList<Entity>();
 
@@ -89,6 +91,8 @@ public class Island {
         int maxCol = centreTileCol + rngW;
         int minCol = centreTileCol - rngW;
 
+        spawnX = centreTileRow;
+        spawnY = centreTileCol;
         // CHUNK ROW
         ArrayList<Tile> chunkRow = new ArrayList<Tile>();
 
@@ -240,7 +244,7 @@ public class Island {
         // Loop all tiles and add random trees
         for (ArrayList<Tile> row : chunk.tiles) {
             for (Tile tile : row) {
-                if (tile.isGrass()) {
+                if (tile.isGrass() && tile.pos != centreTile.pos) {
                     if (MathUtils.random(100) > 90) {
                         tile.texture = Media.tree;
                         tile.size = 40;

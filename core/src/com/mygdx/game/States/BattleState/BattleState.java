@@ -1,7 +1,6 @@
 package com.mygdx.game.States.BattleState;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -9,8 +8,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -19,15 +16,12 @@ import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Observers.BattleNotifier;
 import com.mygdx.game.Observers.Observer;
-import com.mygdx.game.States.GameOver;
 import com.mygdx.game.States.GameState;
 import com.mygdx.game.Utils.Damage;
 import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Characters.Character;
 
 public class BattleState implements Screen {
-    private float timeSeconds = 0f;
-    private float period = 1f;
     final RogueMonster game;
     final Screen oldState;
     OrthographicCamera camera;
@@ -257,7 +251,6 @@ public class BattleState implements Screen {
             if (opponent.getActualHp() <= 0) {
                 // logica di fine battaglia e switch al GameState
 
-                
                 endBattle();
             } else {
                 player.getPokemon(0).takeDamage(damage.getDamage(opponent, player.getPokemon(0)));

@@ -15,7 +15,7 @@ public class Collision {
         if (pos.overlaps(StartingState.Mudkip)) {
             pkmn = "Mudkip";
         } else if (pos.overlaps(StartingState.Charmander)) {
-            pkmn = "Charmender";
+            pkmn = "Charmander";
         } else if (pos.overlaps(StartingState.Bulbasaur)) {
             pkmn = "Bulbasaur";
         }
