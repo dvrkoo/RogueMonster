@@ -54,7 +54,8 @@ public class StartingState implements Screen {
 
     static Stage uiStage = new Stage(new ScreenViewport());
 
-    static RogueMonster game;
+    String starter;
+    public static RogueMonster game;
     public static TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
@@ -165,6 +166,15 @@ public class StartingState implements Screen {
         uiStage.draw();
 
         update(delta);
+        if (player.starter != null) {
+            System.out.print("borcatroia");
+            generateDialogue(player.starter);
+            starter = player.starter;
+            player.starter = null;
+        }
+        if (dialogueController.hasChosen == true) {
+            addPkmn(starter);
+        }
 
     }
 

@@ -7,18 +7,27 @@ import com.mygdx.game.Dialogue.DialogueNode;
 
 import com.mygdx.game.Dialogue.DialogueTraverser;
 import com.mygdx.game.Dialogue.DialogueNode.NODE_TYPE;
-import com.mygdx.game.States.StartingState;
 import com.mygdx.game.ui.DialogueBox;
 import com.mygdx.game.ui.OptionBox;
 
 public class DialogueController extends InputAdapter {
 
     Boolean check;
-    private DialogueTraverser traverser;
+    public DialogueTraverser traverser;
     private DialogueBox dialogueBox;
-    private OptionBox optionBox;
-    Boolean moove = true;
+    public OptionBox optionBox;
+    public Boolean moove = true;
     public String pkmn;
+    public Boolean hasChosen = false;
+
+    public Boolean getHasChosen() {
+        return hasChosen;
+    }
+
+    public DialogueController(DialogueBox box, OptionBox optionBox) {
+        this.dialogueBox = box;
+        this.optionBox = optionBox;
+    }
 
     public boolean isNode(DialogueNode node) {
         if (traverser.currentNode == node) {
@@ -26,11 +35,6 @@ public class DialogueController extends InputAdapter {
         } else {
             return false;
         }
-    }
-
-    public DialogueController(DialogueBox box, OptionBox optionBox) {
-        this.dialogueBox = box;
-        this.optionBox = optionBox;
     }
 
     @Override
@@ -43,6 +47,7 @@ public class DialogueController extends InputAdapter {
 
     @Override
     public boolean keyUp(int keycode) {
+        hasChosen = false;
         check = false;
         System.out.print(moove);
         if (!optionBox.isVisible()) {
@@ -70,7 +75,7 @@ public class DialogueController extends InputAdapter {
             } else if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
                 progress(optionBox.getIndex());
                 if (moove == true) {
-                    StartingState.addPkmn(pkmn);
+                    hasChosen = true;
                 }
             }
             return true;
@@ -115,6 +120,10 @@ public class DialogueController extends InputAdapter {
 
     public boolean isDialogueShowing() {
         return dialogueBox.isVisible();
+    }
+
+    public Boolean choice() {
+        return moove;
     }
 
     void setMoove() {

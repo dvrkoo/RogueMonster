@@ -63,7 +63,6 @@ public class GameState implements Screen {
     public static ArrayList<Character> pokemon;
     List<Observer> observers = new ArrayList<>();
 
-
     BagScreen bagScreen;
     TeamScreen teamScreen;
     Item choosenItem = null;
@@ -77,7 +76,7 @@ public class GameState implements Screen {
 
         island = new Island();
 
-        posReset.set(Island.spawnX * 40, island.spawnY * 40);
+        posReset.set(island.spawnX * 40, island.spawnY * 40);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
@@ -87,7 +86,7 @@ public class GameState implements Screen {
 
         pkmFactory = new PokemonFactory();
         pokemon = new ArrayList<Character>();
-        
+
         player.addItem(new Item(ItemType.POTION));
         player.addItem(new Item(ItemType.HYPERPOTION));
         player.addItem(new Item(ItemType.HYPERPOTION));
@@ -101,6 +100,7 @@ public class GameState implements Screen {
         spawnEnemy();
 
     }
+
     void addObserver(Observer o) {
         observers.add(o);
     }
@@ -121,7 +121,7 @@ public class GameState implements Screen {
             updateChangeToStartingState(false);
             player.levelCount++;
             gamestatus = GAME_SWITCH;
-            
+
         }
     }
 
@@ -225,15 +225,15 @@ public class GameState implements Screen {
     void spawnEnemy() {
 
         Vector2 position = new Vector2();
-        if(player.levelCount == 1)
+        if (player.levelCount == 1)
             for (int i = 0; i < 5; i++) {
-               pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon1()));
+                pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon1()));
             }
-        else{
+        else {
             for (int i = 0; i < 5; i++) {
                 pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon2()));
             }
-        } 
+        }
         for (Character iter : pokemon) {
             Collision collision = new Collision();
             position = random.getRandomPos(island.minMaxX, island.minMaxY);

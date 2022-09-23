@@ -13,9 +13,10 @@ import com.badlogic.gdx.utils.Array;
 public class Island {
 
     public Tile centreTile;
+    public Chunk safeZone = new Chunk(4, 4, 40);
 
     // ONE CHUNK
-    public static int spawnX;
+    public int spawnX;
     public int spawnY;
     public Chunk chunk;
     public ArrayList<Entity> entities = new ArrayList<Entity>();

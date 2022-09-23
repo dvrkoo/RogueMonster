@@ -1,11 +1,14 @@
 package com.mygdx.game.Observers;
 
+import com.mygdx.game.States.StartingState;
 import com.mygdx.game.Utils.Enums.Pokemon;
 
 public class StarterObserver implements Observer {
     Pokemon pkmn;
+    StartingState startingState;
 
-    public void Observer() {
+    public void Observer(StartingState startingState) {
+        this.startingState = startingState;
 
     }
 
