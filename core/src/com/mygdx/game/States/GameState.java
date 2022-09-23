@@ -1,6 +1,7 @@
 package com.mygdx.game.States;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -24,6 +25,8 @@ import com.mygdx.game.Items.Item;
 import com.mygdx.game.Maps.Entity;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.Maps.Tile;
+import com.mygdx.game.Observers.ChangeSateteNotifier;
+import com.mygdx.game.Observers.Observer;
 import com.mygdx.game.States.BattleState.BagScreen;
 import com.mygdx.game.States.BattleState.BattleState;
 import com.mygdx.game.States.BattleState.TeamScreen;
@@ -39,6 +42,8 @@ public class GameState implements Screen {
     public static final int GAME_RUNNING = 0;
     public static final int GAME_BATTLE = 1;
     public static final int GAME_BAG = 2;
+    public static final int GAME_OVER = 3;
+    public static final int GAME_SWITCH = 4;
 
     private int gamestatus = GAME_RUNNING;
 
@@ -56,6 +61,8 @@ public class GameState implements Screen {
     PokemonFactory pkmFactory;
     RandomUtils random = new RandomUtils();
     public static ArrayList<Character> pokemon;
+    List<Observer> observers = new ArrayList<>();
+
 
     BagScreen bagScreen;
     TeamScreen teamScreen;
@@ -80,7 +87,7 @@ public class GameState implements Screen {
 
         pkmFactory = new PokemonFactory();
         pokemon = new ArrayList<Character>();
-
+        
         player.addItem(new Item(ItemType.POTION));
         player.addItem(new Item(ItemType.HYPERPOTION));
         player.addItem(new Item(ItemType.HYPERPOTION));
@@ -89,16 +96,32 @@ public class GameState implements Screen {
         this.bagScreen = new BagScreen(player);
         this.teamScreen = new TeamScreen(player);
 
+        addObserver(new ChangeSateteNotifier(player));
+
         spawnEnemy();
 
+    }
+    void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    public void updateChangeToStartingState(boolean isChanged) {
+        for (Observer o : observers) {
+            o.update(isChanged);
+        }
     }
 
     public void newLevel() {
         if (pokemon.size() == 0) {
             player.setPosition(200, 180);
-            StartingState.updateChangeToGameState(false);
-            game.setScreen(new StartingState(game, player));
-            dispose();
+            updateChangeToStartingState(false);
+            player.levelCount++;
+            gamestatus = GAME_SWITCH;
+            
         }
     }
 
@@ -184,6 +207,16 @@ public class GameState implements Screen {
                     choosePokemon(Gdx.input.getX(), Gdx.input.getY(), choosenItem);
                 break;
             }
+            case GAME_OVER: {
+                game.setScreen(new GameOver(game, score));
+                this.dispose();
+                break;
+            }
+            case GAME_SWITCH: {
+                game.setScreen(new StartingState(game, player));
+                dispose();
+                break;
+            }
             // add cases, example bag state ecc
         }
 
@@ -192,10 +225,15 @@ public class GameState implements Screen {
     void spawnEnemy() {
 
         Vector2 position = new Vector2();
-
-        for (int i = 0; i < 5; i++) {
-            pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon()));
-        }
+        if(player.levelCount == 1)
+            for (int i = 0; i < 5; i++) {
+               pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon1()));
+            }
+        else{
+            for (int i = 0; i < 5; i++) {
+                pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon2()));
+            }
+        } 
         for (Character iter : pokemon) {
             Collision collision = new Collision();
             position = random.getRandomPos(island.minMaxX, island.minMaxY);
@@ -216,8 +254,7 @@ public class GameState implements Screen {
             }
         }
         if (!found) {
-            game.setScreen(new GameOver(game, score));
-            this.dispose();
+            gamestatus = GAME_OVER;
         }
     }
 

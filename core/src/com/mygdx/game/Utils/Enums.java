@@ -34,10 +34,13 @@ public class Enums {
         BULBASAUR, CHARMANDER, MEW, MUDKIP, PIKACHU, GRAVELER, STARAVIA, HUNTER, METANG, MARSHTOMP;
 
         private static final Random PRNG = new Random();
-        private static final Pokemon[] state = values();
-
-        public static Pokemon randomPokemon() {
-            return state[PRNG.nextInt(state.length)];
+        private static final Pokemon[] state1 = {BULBASAUR, CHARMANDER, MEW, MUDKIP, PIKACHU};
+        private static final Pokemon[] state2 = {GRAVELER, STARAVIA, HUNTER, METANG, MARSHTOMP};
+        public static Pokemon randomPokemon1() {
+            return state1[PRNG.nextInt(state1.length)];
+        }
+        public static Pokemon randomPokemon2() {
+            return state2[PRNG.nextInt(state2.length)];
         }
     }
 

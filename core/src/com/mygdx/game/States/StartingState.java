@@ -54,7 +54,7 @@ public class StartingState implements Screen {
 
     static Stage uiStage = new Stage(new ScreenViewport());
 
-    public static RogueMonster game;
+    static RogueMonster game;
     public static TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
@@ -73,7 +73,7 @@ public class StartingState implements Screen {
     public static Rectangle Charmander;
 
     public StartingState(final RogueMonster game, Player player) {
-        this.player = player;
+        StartingState.player = player;
         this.game = game;
 
         pkmFactory = new PokemonFactory();
@@ -159,7 +159,7 @@ public class StartingState implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
             updateChangeToGameState(true);
-            game.setScreen(new GameState(game, this.player));
+            game.setScreen(new GameState(game, player));
         }
 
         uiStage.draw();
@@ -281,11 +281,11 @@ public class StartingState implements Screen {
     }
 
     void addObserver(Observer o) {
-        this.observers.add(o);
+        observers.add(o);
     }
 
     void removeObserver(Observer o) {
-        this.observers.remove(o);
+        observers.remove(o);
     }
 
     public static void updateChangeToGameState(boolean isChanged) {

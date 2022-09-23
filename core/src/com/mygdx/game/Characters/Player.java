@@ -15,6 +15,7 @@ import com.mygdx.game.Utils.CharacterAnimation;
 public class Player extends Character {
 
     boolean isGamestate = false;
+    public int levelCount = 1;
 
     private Character[] team;
     private Bag bag = new Bag();
