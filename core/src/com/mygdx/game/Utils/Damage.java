@@ -6,6 +6,7 @@ import com.mygdx.game.Utils.Enums.PokemonType;
 public class Damage {
 
     float getModifier( PokemonType type, PokemonType attackType ){
+
         float modifier = 1;
         switch(type){
             case WATER:{
@@ -73,12 +74,14 @@ public class Damage {
                     modifier = 0.5f;
                 else if( attackType == PokemonType.ELECTRIC)
                     modifier = 0;
+                break;
             }
             case PSYCHIC:{
                 if( attackType == PokemonType.BUG || attackType == PokemonType.GHOST || attackType == PokemonType.DARK)
                     modifier = 2;
                 else if( attackType == PokemonType.FIGHT || attackType == PokemonType.PSYCHIC)
                     modifier = 0.5f;
+                break;
             }
             case ROCK:{
                 if( attackType == PokemonType.FIGHT || attackType == PokemonType.GROUND || attackType == PokemonType.STEEL || attackType == PokemonType.WATER || attackType == PokemonType.GRASS)
@@ -133,6 +136,7 @@ public class Damage {
                     modifier = 0.5f;
                 else if ( attackType == PokemonType.POISON )
                     modifier = 0.5f;
+                break;
             }
             case FAIRY:{
                 if( attackType == PokemonType.POISON || attackType == PokemonType.STEEL)
@@ -141,7 +145,11 @@ public class Damage {
                     modifier = 0.5f;
                 else if( attackType == PokemonType.DRAGON)
                     modifier = 0;
+                break;
             }
+            case NULL:
+                modifier = 1;
+                break;
         }
 
         return modifier;
@@ -149,7 +157,7 @@ public class Damage {
 
     public int getDamage(Character attacker, Character defender){
 
-        final int damage = (int) (((( attacker.getAttack() / defender.getDefense() ) / 50)+2) * getModifier(defender.getType(), attacker.getType()));
+        final int damage = (int) (((( attacker.getAttack() / defender.getDefense() ) / 50)+2) * getModifier(defender.getType1(), attacker.getType1()) * getModifier(defender.getType2(), attacker.getType1()));
         return damage;
     }
 

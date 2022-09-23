@@ -15,7 +15,7 @@ public class Pikachu extends Character
         
         this.setSize(64, 64);
         this.movSpeed = 2;
-        type = PokemonType.ELECTRIC;
+        type1 = PokemonType.ELECTRIC;
         
         texture = new Texture(Gdx.files.internal("pikachu.png"));
         region = new TextureRegion(texture,0,0,64,64);

@@ -15,7 +15,7 @@ public class Charmander extends Character{
         
         this.setSize(64, 64);
         this.movSpeed = 2;
-        type = PokemonType.FIRE;
+        type1 = PokemonType.FIRE;
         
         texture = new Texture(Gdx.files.internal("charmander.png"));
         region = new TextureRegion(texture,0,0,64,64);

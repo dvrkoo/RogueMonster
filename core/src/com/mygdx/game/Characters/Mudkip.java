@@ -15,7 +15,7 @@ public class Mudkip extends Character{
         
         this.setSize(64, 64);
         this.movSpeed = 2;
-        type = PokemonType.WATER;
+        type1 = PokemonType.WATER;
         
         texture = new Texture(Gdx.files.internal("mudkip.png"));
         region = new TextureRegion(texture,0,0,64,64);

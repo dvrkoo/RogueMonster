@@ -8,16 +8,17 @@ import com.mygdx.game.Utils.CharacterAnimation;
 import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Utils.Enums.PokemonType;
 
-public class Mew extends Character{
+public class Marshtomp extends Character{
     
 
-    public Mew(){
-    
+    public Marshtomp(){
+        
         this.setSize(64, 64);
         this.movSpeed = 2;
-        type1 = PokemonType.PSYCHIC;
+        type1 = PokemonType.WATER;
+        type2 = PokemonType.GROUND;
         
-        texture = new Texture(Gdx.files.internal("mew.png"));
+        texture = new Texture(Gdx.files.internal("marshtomp.png"));
         region = new TextureRegion(texture,0,0,64,64);
         animation = new Animation<TextureRegion>(1f/60f,region);
         stateBefore = CharacterState.SOUTH;
@@ -26,12 +27,13 @@ public class Mew extends Character{
         anim = new CharacterAnimation(texture);
 
         //init stat
-        this.hp = 13;
+        this.hp = 20;
         this.actualHp = this.hp;
-        this.attack = 12;
-        this.defense = 12;
-        this.speed = 12;
-        this.name = "mew";
+        this.attack = 16;
+        this.defense = 16;
+        this.speed = 13;
+        this.name = "marshtomp";
     }
+    
     
 }

@@ -17,7 +17,8 @@ public class Bulbasaur extends Character{
         
         this.setSize(64, 64);
         this.movSpeed = 2;
-        type = PokemonType.GRASS;
+        type1 = PokemonType.GRASS;
+        type2 = PokemonType.POISON;
         
         texture = new Texture(Gdx.files.internal("bulbasaur.png"));
         region = new TextureRegion(texture,0,0,64,64);

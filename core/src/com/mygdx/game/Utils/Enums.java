@@ -27,11 +27,11 @@ public class Enums {
 
     public enum PokemonType {
         WATER, GRASS, FIRE, BUG, POISON, NORMAL, FLYING, FIGHT, DARK,
-        PSYCHIC, GHOST, STEEL, GROUND, ROCK, ICE, DRAGON, FAIRY, ELECTRIC
+        PSYCHIC, GHOST, STEEL, GROUND, ROCK, ICE, DRAGON, FAIRY, ELECTRIC, NULL;
     }
 
     public enum Pokemon {
-        BULBASAUR, CHARMANDER, MEW, MUDKIP, PIKACHU;
+        BULBASAUR, CHARMANDER, MEW, MUDKIP, PIKACHU, GRAVELER, STARAVIA, HUNTER, METANG, MARSHTOMP;
 
         private static final Random PRNG = new Random();
         private static final Pokemon[] state = values();

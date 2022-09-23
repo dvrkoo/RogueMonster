@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Utils.CharacterAnimation;
 import com.mygdx.game.Utils.Collision;
 import com.mygdx.game.Utils.Enums.CharacterState;
-//import com.mygdx.game.Utils.Enums.TILETYPE;
 import com.mygdx.game.Utils.Enums.PokemonType;
 
 public class Character extends Rectangle {
@@ -21,7 +20,8 @@ public class Character extends Rectangle {
     int hp;
     int actualHp;
 
-    PokemonType type;
+    PokemonType type1;
+    PokemonType type2 = PokemonType.NULL;
     String name;
 
 
@@ -211,8 +211,11 @@ public class Character extends Rectangle {
         this.hp = hp;
     }
 
-    public PokemonType getType() {
-        return type;
+    public PokemonType getType1() {
+        return type1;
+    }
+    public PokemonType getType2() {
+        return type2;
     }
     public String getName() {
         return name;
