@@ -251,7 +251,6 @@ public class BattleState implements Screen {
             if (opponent.getActualHp() <= 0) {
                 // logica di fine battaglia e switch al GameState
 
-                
                 endBattle();
             } else {
                 player.getPokemon(0).takeDamage(damage.getDamage(opponent, player.getPokemon(0)));

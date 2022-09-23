@@ -72,9 +72,9 @@ public class StartingState implements Screen {
     public static Rectangle Bulbasaur;
     public static Rectangle Charmander;
 
-    public StartingState(final RogueMonster game) {
+    public StartingState(final RogueMonster game, Player player) {
+        this.player = player;
         this.game = game;
-        player = new Player(200, 180);
 
         pkmFactory = new PokemonFactory();
         characters = new ArrayList<Character>();

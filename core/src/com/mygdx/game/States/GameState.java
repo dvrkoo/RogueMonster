@@ -65,9 +65,13 @@ public class GameState implements Screen {
     public GameState(final RogueMonster game, Player player) {
         this.game = game;
         this.player = player;
-        posReset.set(800, 800);
+
+        player.movSpeed = 3;
 
         island = new Island();
+
+        posReset.set(Island.spawnX * 40, island.spawnY * 40);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
         this.cameraScreen = new OrthographicCamera();
@@ -82,7 +86,6 @@ public class GameState implements Screen {
         player.addItem(new Item(ItemType.HYPERPOTION));
         player.addItem(new Item(ItemType.HYPERPOTION));
         player.addItem(new Item(ItemType.POTION));
-
         this.bagScreen = new BagScreen(player);
         this.teamScreen = new TeamScreen(player);
 
@@ -90,11 +93,21 @@ public class GameState implements Screen {
 
     }
 
+    public void newLevel() {
+        if (pokemon.size() == 0) {
+            player.setPosition(200, 180);
+            StartingState.updateChangeToGameState(false);
+            game.setScreen(new StartingState(game, player));
+            dispose();
+        }
+    }
+
     @Override
     public void show() {
 
         gamestatus = GAME_RUNNING;
         player.setPosition(posReset);
+        newLevel();
     }
 
     @Override
@@ -180,7 +193,7 @@ public class GameState implements Screen {
 
         Vector2 position = new Vector2();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             pokemon.add(pkmFactory.getPokemon(Pokemon.randomPokemon()));
         }
         for (Character iter : pokemon) {

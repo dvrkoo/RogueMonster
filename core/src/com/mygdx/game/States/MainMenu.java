@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
+import com.mygdx.game.Characters.Player;
 
 public class MainMenu implements Screen {
     final RogueMonster game;
@@ -16,7 +17,6 @@ public class MainMenu implements Screen {
 
     public MainMenu(final RogueMonster game) {
         this.game = game;
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
         viewport = new ScreenViewport(camera);
@@ -40,7 +40,7 @@ public class MainMenu implements Screen {
         // change to Game state logic
         if (Gdx.input.isTouched()) {
             // game.setScreen(new GameState(game));
-            game.setScreen(new StartingState(game));
+            game.setScreen(new StartingState(game, new Player(200, 180)));
         }
 
     }

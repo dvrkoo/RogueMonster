@@ -2,15 +2,12 @@ package com.mygdx.game.Controller;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
-import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Dialogue.Dialogue;
 import com.mygdx.game.Dialogue.DialogueNode;
 
 import com.mygdx.game.Dialogue.DialogueTraverser;
 import com.mygdx.game.Dialogue.DialogueNode.NODE_TYPE;
-import com.mygdx.game.States.GameState;
 import com.mygdx.game.States.StartingState;
-import com.mygdx.game.Utils.Enums.Pokemon;
 import com.mygdx.game.ui.DialogueBox;
 import com.mygdx.game.ui.OptionBox;
 
