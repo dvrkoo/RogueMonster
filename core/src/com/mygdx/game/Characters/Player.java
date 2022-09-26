@@ -6,11 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
 import com.mygdx.game.Utils.Enums.CharacterState;
 import com.mygdx.game.Items.Bag;
 import com.mygdx.game.Items.Item;
-import com.mygdx.game.States.StartingState;
 import com.mygdx.game.Utils.CharacterAnimation;
 
 public class Player extends Character {
