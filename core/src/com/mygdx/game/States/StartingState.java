@@ -167,7 +167,6 @@ public class StartingState implements Screen {
 
         update(delta);
         if (player.starter != null) {
-            System.out.print("borcatroia");
             generateDialogue(player.starter);
             starter = player.starter;
             player.starter = null;
@@ -298,7 +297,7 @@ public class StartingState implements Screen {
         observers.remove(o);
     }
 
-    public static void updateChangeToGameState(boolean isChanged) {
+    public void updateChangeToGameState(boolean isChanged) {
         for (Observer o : observers) {
             o.update(isChanged);
         }
@@ -344,9 +343,4 @@ public class StartingState implements Screen {
         dialogueController.startDialogue(dialogue);
 
     }
-
-    public void checkChoiche() {
-
-    }
-
 }
