@@ -35,7 +35,4 @@ public class DialogueTraverser {
 		return currentNode.getType();
 	}
 
-	public void setCurrentNode(DialogueNode currentNode) {
-		this.currentNode = currentNode;
-	}
 }

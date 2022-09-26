@@ -167,7 +167,6 @@ public class StartingState implements Screen {
 
         update(delta);
         if (player.starter != null) {
-            System.out.print("borcatroia");
             generateDialogue(player.starter);
             starter = player.starter;
             player.starter = null;
@@ -298,13 +297,13 @@ public class StartingState implements Screen {
         observers.remove(o);
     }
 
-    public static void updateChangeToGameState(boolean isChanged) {
+    public void updateChangeToGameState(boolean isChanged) {
         for (Observer o : observers) {
             o.update(isChanged);
         }
     }
 
-    public static void addPkmn(String pkmn) {
+    public void addPkmn(String pkmn) {
         if (pkmn == "Mudkip") {
             updateChangeToGameState(true);
             player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
@@ -322,7 +321,7 @@ public class StartingState implements Screen {
         }
     }
 
-    public static void generateDialogue(String pkmn) {
+    public void generateDialogue(String pkmn) {
         Dialogue dialogue = new Dialogue();
 
         DialogueNode node1 = new DialogueNode("Are you sure you want to pick " + pkmn + "?", 0);
@@ -344,9 +343,4 @@ public class StartingState implements Screen {
         dialogueController.startDialogue(dialogue);
 
     }
-
-    public void checkChoiche() {
-
-    }
-
 }

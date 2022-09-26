@@ -29,14 +29,6 @@ public class DialogueController extends InputAdapter {
         this.optionBox = optionBox;
     }
 
-    public boolean isNode(DialogueNode node) {
-        if (traverser.currentNode == node) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @Override
     public boolean keyDown(int keycode) {
         if (dialogueBox.isVisible()) {

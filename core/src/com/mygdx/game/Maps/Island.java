@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 public class Island {
 
     public Tile centreTile;
-    public Chunk safeZone = new Chunk(4, 4, 40);
 
     // ONE CHUNK
     public int spawnX;
@@ -48,7 +47,9 @@ public class Island {
         setupTiles();
         codeTiles();
         addEntities();
+        generateSafeZone();
         getCollisions();
+
     }
 
     public void getCollisions() {
@@ -243,6 +244,7 @@ public class Island {
 
     private void addEntities() {
         // Loop all tiles and add random trees
+
         for (ArrayList<Tile> row : chunk.tiles) {
             for (Tile tile : row) {
                 if (tile.isGrass() && tile.pos != centreTile.pos) {
@@ -251,6 +253,21 @@ public class Island {
                         tile.size = 40;
                         tile.type = TILETYPE.TREE;
                     }
+
+                }
+            }
+
+        }
+    }
+
+    private void generateSafeZone() {
+        for (int row = 0; row < chunk.numberRows; row++) {
+            for (int col = 0; col < chunk.numberCols; col++) {
+                if (row > chunk.numberRows / 2 - 2 && row < chunk.numberRows / 2 + 2 && col > chunk.numberCols / 2 - 2
+                        && col < chunk.numberCols / 2 + 2) {
+                    chunk.getTile(row, col).texture = randomGrass();
+                    chunk.getTile(row, col).type = TILETYPE.GRASS;
+
                 }
             }
         }

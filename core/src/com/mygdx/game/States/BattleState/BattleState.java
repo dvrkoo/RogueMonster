@@ -180,11 +180,10 @@ public class BattleState implements Screen {
 
         } else if (bagButton.contains(x, y)) {
             bagScreen.isVisible = true;
-            
 
         } else if (switchButton.contains(x, y)) {
             switchScreen.isVisible = true;
-        
+
         }
 
     }
