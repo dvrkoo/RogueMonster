@@ -43,38 +43,38 @@ import com.mygdx.game.ui.OptionBox;
 
 public class StartingState implements Screen {
     private InputMultiplexer multiplexer;
-    public static DialogueController dialogueController;
+    public DialogueController dialogueController;
     private Dialogue dialogue;
-    public static DialogueBox dialogueBox;
-    private static OptionBox optionBox;
+    public DialogueBox dialogueBox;
+    private OptionBox optionBox;
     static Table root;
 
-    public static final int GAME_RUNNING = 1;
-    public static final int GAME_PAUSED = 0;
+    final int GAME_RUNNING = 1;
+    final int GAME_PAUSED = 0;
 
     static Stage uiStage = new Stage(new ScreenViewport());
 
     String starter;
-    public static RogueMonster game;
-    public static TiledMap map;
+    final RogueMonster game;
+    public TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     Viewport viewport;
-    public static Player player;
-    public static ArrayList<Character> characters;
+    public Player player;
+    public ArrayList<Character> characters;
     float enlapsedTime;
-    public static PokemonFactory pkmFactory;
+    public PokemonFactory pkmFactory;
     Collision collisions = new Collision();
     public static ArrayList<Rectangle> rectangleArray = new ArrayList<Rectangle>();
     public static ArrayList<Rectangle> dialogRectangles = new ArrayList<Rectangle>();
     oak oak = new oak();
-    private static List<Observer> observers = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
     public static Rectangle Mudkip;
     public static Rectangle Bulbasaur;
     public static Rectangle Charmander;
 
     public StartingState(final RogueMonster game, Player player) {
-        StartingState.player = player;
+        this.player = player;
         this.game = game;
 
         pkmFactory = new PokemonFactory();
@@ -259,7 +259,7 @@ public class StartingState implements Screen {
         rectangleArray.add(oak);
     }
 
-    public static void initUI() {
+    public void initUI() {
 
         uiStage.getViewport().update(700, 700, true);
         // uiStage.setDebugAll(true);

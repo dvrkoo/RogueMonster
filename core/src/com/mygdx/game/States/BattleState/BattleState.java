@@ -42,7 +42,7 @@ public class BattleState implements Screen {
     float enlapsedTime;
 
     Character opponent;
-    private static List<Observer> observers = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
     // status
     int BATTLE_RUNNING = 0;
     int BATTLE_FINISH = 1;
@@ -336,7 +336,7 @@ public class BattleState implements Screen {
         this.observers.remove(o);
     }
 
-    public static void updateGameBox(String toPrint) {
+    public void updateGameBox(String toPrint) {
         for (Observer o : observers) {
             o.update(toPrint);
         }

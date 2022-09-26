@@ -21,8 +21,9 @@ public class BagScreen {
 
     }
 
+
     void makeButtons(){
-        for (ArrayList<Item> array : player.getBag().getBag()) {
+        for (final ArrayList<Item> array : player.getBag().getBag()) {
             buttons.add(new Rectangle());
         }
             
