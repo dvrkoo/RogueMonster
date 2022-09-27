@@ -110,10 +110,9 @@ public class StartingState implements Screen {
     @Override
     public void show() {
         TmxMapLoader loader = new TmxMapLoader();
-        map = loader.load("Maps/lab2.tmx");
+        map = loader.load("Maps/spawn.tmx");
 
         TiledMapTileLayer collisionObjectLayer = (TiledMapTileLayer) map.getLayers().get("Collisions");
-        TiledMapTileLayer secondCollisionObjectLayer = (TiledMapTileLayer) map.getLayers().get("Collisions2");
         TiledMapTileLayer starter = (TiledMapTileLayer) map.getLayers().get("pokemon1");
         TiledMapTileLayer starter2 = (TiledMapTileLayer) map.getLayers().get("pokemon2");
         TiledMapTileLayer starter3 = (TiledMapTileLayer) map.getLayers().get("pokemon3");
@@ -121,9 +120,8 @@ public class StartingState implements Screen {
         Charmander = getDialogueCollisions(starter2);
         Bulbasaur = getDialogueCollisions(starter3);
         getCollisionArray(collisionObjectLayer);
-        getCollisionArray(secondCollisionObjectLayer);
-        renderer = new OrthogonalTiledMapRenderer(map, 2);
 
+        renderer = new OrthogonalTiledMapRenderer(map, 2);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
 
@@ -167,9 +165,11 @@ public class StartingState implements Screen {
         drawCharacters();
         game.batch.end();
         commandHandle();
+
         shapeRenderer.begin(ShapeType.Line);
 
-        shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(),
+                player.getHeight());
         for (Rectangle rec : rectangleArray) {
             shapeRenderer.rect(rec.getX(), rec.getY(), 35, 35);
         }

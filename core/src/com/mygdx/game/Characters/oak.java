@@ -14,8 +14,8 @@ public class oak extends Character {
         this.setSize(64, 64);
         this.movSpeed = 2;
         Vector2 pos = new Vector2();
-        pos.x = 200;
-        pos.y = 250;
+        pos.x = 150;
+        pos.y = 300;
         texture = new Texture(Gdx.files.internal("sycamore.png"));
         region = new TextureRegion(texture, 0, 0, 64, 64);
         animation = new Animation<TextureRegion>(1f / 60f, region);
