@@ -79,7 +79,7 @@ public class StartingState implements Screen {
     public static Rectangle Bulbasaur;
     public static Rectangle Charmander;
 
-    //Command Pattern invoker
+    // Command Pattern invoker
     Command bagCommand;
     Command leftCommand;
     Command rightCommand;
@@ -98,7 +98,7 @@ public class StartingState implements Screen {
 
         addObserver(new ChangeSateteNotifier(player));
 
-        //command init
+        // command init
         upCommand = new UpCommand(player);
         downCommand = new DownCommand(player);
         leftCommand = new LeftCommand(player);
@@ -132,7 +132,7 @@ public class StartingState implements Screen {
         initUI();
         multiplexer = new InputMultiplexer();
         dialogueController = new DialogueController(dialogueBox, optionBox);
-        multiplexer.addProcessor(0, dialogueController);
+
         dialogue = new Dialogue();
 
         DialogueNode node1 = new DialogueNode("No time for questions\nPick a Pokemon!", 0);

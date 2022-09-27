@@ -74,7 +74,7 @@ public class GameState implements Screen {
     TeamScreen teamScreen;
     Item choosenItem = null;
 
-    //Command Pattern invoker
+    // Command Pattern invoker
     Command bagCommand;
     Command leftCommand;
     Command rightCommand;
@@ -86,8 +86,6 @@ public class GameState implements Screen {
     public GameState(final RogueMonster game, Player player) {
         this.game = game;
         this.player = player;
-
-        player.movSpeed = 3;
 
         island = new Island();
 
@@ -112,7 +110,7 @@ public class GameState implements Screen {
 
         addObserver(new ChangeSateteNotifier(player));
 
-        //command init
+        // command init
         bagCommand = new BagCommand(bagScreen);
         upCommand = new UpCommand(player);
         downCommand = new DownCommand(player);
@@ -195,8 +193,6 @@ public class GameState implements Screen {
         game.batch.end();
 
         checkGameOver();
-
-        
 
         switch (gamestatus) {
             case GAME_RUNNING: {

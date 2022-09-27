@@ -1,7 +1,13 @@
 package com.mygdx.game.Controller;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
+import com.mygdx.game.Command.Command;
+import com.mygdx.game.Command.DialogueDownCommand;
+import com.mygdx.game.Command.DialogueSelectCommand;
+import com.mygdx.game.Command.DialogueUpCommand;
 import com.mygdx.game.Dialogue.Dialogue;
 import com.mygdx.game.Dialogue.DialogueNode;
 
@@ -10,72 +16,29 @@ import com.mygdx.game.Dialogue.DialogueNode.NODE_TYPE;
 import com.mygdx.game.ui.DialogueBox;
 import com.mygdx.game.ui.OptionBox;
 
-public class DialogueController extends InputAdapter {
+public class DialogueController {
 
-    Boolean check;
     public DialogueTraverser traverser;
-    private DialogueBox dialogueBox;
+    public DialogueBox dialogueBox;
     public OptionBox optionBox;
     public Boolean moove = true;
     public String pkmn;
     public Boolean hasChosen = false;
 
-    public Boolean getHasChosen() {
-        return hasChosen;
-    }
+    Command dialogueSelectCommand;
+    Command dialogueUpCommand;
+    Command dialogueDownCommand;
 
     public DialogueController(DialogueBox box, OptionBox optionBox) {
         this.dialogueBox = box;
         this.optionBox = optionBox;
+        dialogueSelectCommand = new DialogueSelectCommand(this);
+        dialogueUpCommand = new DialogueUpCommand(this);
+        dialogueDownCommand = new DialogueDownCommand(this);
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        if (dialogueBox.isVisible()) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        hasChosen = false;
-        check = false;
-        System.out.print(moove);
-        if (!optionBox.isVisible()) {
-            moove = true;
-        }
-        if (optionBox.isVisible()) {
-            if (keycode == Keys.UP) {
-                optionBox.moveUp();
-                moove = true;
-                return true;
-            } else if (keycode == Keys.DOWN) {
-                moove = false;
-                optionBox.moveDown();
-                return true;
-            }
-        }
-
-        if (traverser != null && keycode == Keys.X && dialogueBox.isFinished()) { // continue through tree
-
-            if (traverser.getType() == NODE_TYPE.END) {
-                traverser = null;
-                dialogueBox.setVisible(false);
-            } else if (traverser.getType() == NODE_TYPE.LINEAR) {
-                progress(0);
-            } else if (traverser.getType() == NODE_TYPE.MULTIPLE_CHOICE) {
-                progress(optionBox.getIndex());
-                if (moove == true) {
-                    hasChosen = true;
-                }
-            }
-            return true;
-        }
-        if (dialogueBox.isVisible()) {
-            return true;
-        }
-        return false;
+    public Boolean getHasChosen() {
+        return hasChosen;
     }
 
     public void update(float delta) {
@@ -84,6 +47,7 @@ public class DialogueController extends InputAdapter {
                 optionBox.setVisible(true);
             }
         }
+        commandHandle();
     }
 
     public void startDialogue(Dialogue dialogue) {
@@ -98,7 +62,7 @@ public class DialogueController extends InputAdapter {
         }
     }
 
-    private void progress(int index) {
+    public void progress(int index) {
         optionBox.setVisible(false);
         DialogueNode nextNode = traverser.getNextNode(index);
         dialogueBox.animateText(nextNode.getText());
@@ -120,5 +84,17 @@ public class DialogueController extends InputAdapter {
 
     void setMoove() {
         moove = true;
+    }
+
+    void commandHandle() {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.X)) {// down
+            dialogueSelectCommand.execute();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {// left
+            dialogueUpCommand.execute();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {// right
+            dialogueDownCommand.execute();
+        }
+
     }
 }
