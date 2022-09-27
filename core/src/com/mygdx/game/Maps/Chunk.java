@@ -3,8 +3,8 @@ package com.mygdx.game.Maps;
 import java.util.ArrayList;
 
 public class Chunk {
-    int numberRows;
-    int numberCols;
+    public int numberRows;
+    public int numberCols;
     int tileSize;
     // Tiles are split into arrays of rows
     public ArrayList<ArrayList<Tile>> tiles = new ArrayList<ArrayList<Tile>>();

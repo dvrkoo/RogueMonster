@@ -253,8 +253,16 @@ public class GameState implements Screen {
         for (Character iter : pokemon) {
             Collision collision = new Collision();
             position = random.getRandomPos(island.minMaxX, island.minMaxY);
+
             iter.setPosition(position);
-            while (collision.getCollision(iter) || collision.getPkmnCollision(iter)) {
+            while (collision.getCollision(iter) || collision.getPkmnCollision(iter)
+                    || iter.y / 40 > island.chunk.numberRows / 2 - 4 && iter.y / 40 < island.chunk.numberRows / 2 + 4
+                            && iter.x / 40 > island.chunk.numberCols / 2 - 4
+                            && iter.x / 40 < island.chunk.numberCols / 2 + 4) {
+                System.out.print(island.chunk.numberRows / 2 - 3 + "\n");
+                System.out.print(island.chunk.numberCols / 2 - 3 + "\n");
+                System.out.print(iter.y / 40 + "\n");
+                System.out.print(iter.x / 40 + "\n");
                 iter.setPosition(position);
                 position = random.getRandomPos(island.minMaxX, island.minMaxY);
             }
