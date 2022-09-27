@@ -29,6 +29,12 @@ import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Player;
 import com.mygdx.game.Characters.oak;
+import com.mygdx.game.Command.Command;
+import com.mygdx.game.Command.DownCommand;
+import com.mygdx.game.Command.LeftCommand;
+import com.mygdx.game.Command.RightCommand;
+import com.mygdx.game.Command.StandCommand;
+import com.mygdx.game.Command.UpCommand;
 import com.mygdx.game.Controller.DialogueController;
 import com.mygdx.game.Dialogue.Dialogue;
 import com.mygdx.game.Dialogue.DialogueNode;
@@ -73,6 +79,14 @@ public class StartingState implements Screen {
     public static Rectangle Bulbasaur;
     public static Rectangle Charmander;
 
+    //Command Pattern invoker
+    Command bagCommand;
+    Command leftCommand;
+    Command rightCommand;
+    Command upCommand;
+    Command downCommand;
+    Command standCommand;
+
     public StartingState(final RogueMonster game, Player player) {
         this.player = player;
         this.game = game;
@@ -83,6 +97,13 @@ public class StartingState implements Screen {
         characters.add(oak);
 
         addObserver(new ChangeSateteNotifier(player));
+
+        //command init
+        upCommand = new UpCommand(player);
+        downCommand = new DownCommand(player);
+        leftCommand = new LeftCommand(player);
+        rightCommand = new RightCommand(player);
+        standCommand = new StandCommand(player);
 
     }
 
@@ -145,7 +166,7 @@ public class StartingState implements Screen {
         game.batch.begin();
         drawCharacters();
         game.batch.end();
-        player.commandMovement();
+        commandHandle();
         shapeRenderer.begin(ShapeType.Line);
 
         shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
@@ -341,6 +362,23 @@ public class StartingState implements Screen {
         dialogue.addNode(node4);
         dialogueController.pkmn = pkmn;
         dialogueController.startDialogue(dialogue);
+
+    }
+
+    void commandHandle() {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
+            downCommand.execute();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {// left
+            leftCommand.execute();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {// right
+            rightCommand.execute();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {// up
+            upCommand.execute();
+        } else {
+            standCommand.execute();
+
+        }
 
     }
 }

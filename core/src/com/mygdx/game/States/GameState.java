@@ -20,6 +20,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Player;
+import com.mygdx.game.Command.BagCommand;
+import com.mygdx.game.Command.Command;
+import com.mygdx.game.Command.DownCommand;
+import com.mygdx.game.Command.LeftCommand;
+import com.mygdx.game.Command.RightCommand;
+import com.mygdx.game.Command.StandCommand;
+import com.mygdx.game.Command.UpCommand;
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Items.Item;
 import com.mygdx.game.Maps.Entity;
@@ -67,6 +74,14 @@ public class GameState implements Screen {
     TeamScreen teamScreen;
     Item choosenItem = null;
 
+    //Command Pattern invoker
+    Command bagCommand;
+    Command leftCommand;
+    Command rightCommand;
+    Command upCommand;
+    Command downCommand;
+    Command standCommand;
+
     // GameState constructor
     public GameState(final RogueMonster game, Player player) {
         this.game = game;
@@ -97,8 +112,15 @@ public class GameState implements Screen {
 
         addObserver(new ChangeSateteNotifier(player));
 
-        spawnEnemy();
+        //command init
+        bagCommand = new BagCommand(bagScreen);
+        upCommand = new UpCommand(player);
+        downCommand = new DownCommand(player);
+        leftCommand = new LeftCommand(player);
+        rightCommand = new RightCommand(player);
+        standCommand = new StandCommand(player);
 
+        spawnEnemy();
     }
 
     void addObserver(Observer o) {
@@ -172,19 +194,13 @@ public class GameState implements Screen {
 
         game.batch.end();
 
-        player.commandMovement();
-        moveCamera();
-        checkBattle();
         checkGameOver();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            gamestatus = GAME_BAG;
-            bagScreen.isVisible = true;
-        }
+        
 
         switch (gamestatus) {
             case GAME_RUNNING: {
-                player.commandMovement();
+                commandHandle();
                 moveCamera();
                 checkBattle();
                 for (Character iter : pokemon)
@@ -347,6 +363,26 @@ public class GameState implements Screen {
         if (isChoosen) {
             teamScreen.isVisible = false;
             gamestatus = GAME_RUNNING;
+        }
+
+    }
+
+    void commandHandle() {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {// down
+            downCommand.execute();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {// left
+            leftCommand.execute();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {// right
+            rightCommand.execute();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {// up
+            upCommand.execute();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            gamestatus = GAME_BAG;
+            bagCommand.execute();
+        } else {
+            standCommand.execute();
+
         }
 
     }
