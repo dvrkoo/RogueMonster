@@ -114,7 +114,6 @@ public class BattleState implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         drawText();
-        drawScene();
         drawButtons();
         renderScreen();
         drawScene();
@@ -221,8 +220,7 @@ public class BattleState implements Screen {
             // opponent damage to the pokemon on the field
             player.getPokemon(0).takeDamage(dmg);
             text = opponent.getName() + " attacca " + player.getPokemon(0).getName() + " Danni : " + dmg
-                    + " hp rimanenti: "
-                    + player.getPokemon(0).getActualHp() + "\n";
+                    + " " + damage.getEffective( opponent, player.getPokemon(0)) + "\n";
 
             // the pokemon on the field attack only if it isn't dead
             if (player.getPokemon(0).getActualHp() <= 0) {
@@ -233,8 +231,7 @@ public class BattleState implements Screen {
                 dmg = damage.getDamage(player.getPokemon(0), opponent);
                 opponent.takeDamage(dmg);
                 text += player.getPokemon(0).getName() + " attacca " + opponent.getName() + " Danni : " + dmg
-                        + " hp rimanenti: "
-                        + opponent.getActualHp();
+                        + " " + damage.getEffective(player.getPokemon(0), opponent);
                 updateGameBox(text);
 
             }
@@ -243,18 +240,20 @@ public class BattleState implements Screen {
                 endBattle();
             }
         } else {
-            opponent.takeDamage(damage.getDamage(player.getPokemon(0), opponent));
-            text = player.getPokemon(0).getName() + " attacca " + opponent.getName() + " hp rimanenti: "
-                    + opponent.getActualHp() + "\n";
+            dmg = damage.getDamage(player.getPokemon(0), opponent);
+            opponent.takeDamage(dmg);
+            text = player.getPokemon(0).getName() + " attacca " + opponent.getName() + " Danni : " + dmg
+                    + " " + damage.getEffective(player.getPokemon(0), opponent) + "\n";
             updateGameBox(text);
             if (opponent.getActualHp() <= 0) {
                 // logica di fine battaglia e switch al GameState
 
                 endBattle();
             } else {
-                player.getPokemon(0).takeDamage(damage.getDamage(opponent, player.getPokemon(0)));
-                text += opponent.getName() + " attacca " + player.getPokemon(0).getName() + " hp rimanenti: "
-                        + player.getPokemon(0).getActualHp();
+                dmg = damage.getDamage(opponent, player.getPokemon(0));
+                player.getPokemon(0).takeDamage(dmg);
+                text += opponent.getName() + " attacca " + player.getPokemon(0).getName() + " Danni : " + dmg
+                        + " " + damage.getEffective(opponent, player.getPokemon(0));
                 updateGameBox(text);
             }
             if (player.getPokemon(0).getActualHp() <= 0) {
@@ -308,9 +307,10 @@ public class BattleState implements Screen {
     void drawScene() {
         game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
         game.batch.draw(opponent.getAnimation().getKeyFrame(enlapsedTime, true), opponent.getX(), opponent.getY());
+        game.font.draw(game.batch, opponent.getActualHp() + " / " + opponent.getHp(), opponent.getX()+ 16, opponent.getY() + 80);
         if (player.getPokemon(0) != null) {
-            game.batch.draw(player.getPokemon(0).getAnimation().getKeyFrame(enlapsedTime, true),
-                    player.getPokemon(0).getX(), player.getPokemon(0).getY());
+            game.batch.draw(player.getPokemon(0).getAnimation().getKeyFrame(enlapsedTime, true), player.getPokemon(0).getX(), player.getPokemon(0).getY());
+            game.font.draw(game.batch, player.getPokemon(0).getActualHp() + " / " + player.getPokemon(0).getHp(), player.getPokemon(0).getX()+ 16, player.getPokemon(0).getY() + 80);
         }
     }
 

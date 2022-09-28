@@ -19,7 +19,7 @@ public class Damage {
             case NORMAL:{
                 if( attackType == PokemonType.FIGHT )
                     modifier = 2;
-                else if( attackType == PokemonType.GHOST );
+                else if( attackType == PokemonType.GHOST )
                     modifier = 0;
                 break;
             }
@@ -159,6 +159,20 @@ public class Damage {
 
         final int damage = (int) (((( attacker.getAttack() / defender.getDefense() ) / 50)+2) * getModifier(defender.getType1(), attacker.getType1()) * getModifier(defender.getType2(), attacker.getType1()));
         return damage;
+    }
+
+    public String getEffective(Character attacker, Character defender){
+
+        String effect = "";
+        float modifier = getModifier(defender.getType1(), attacker.getType1()) * getModifier(defender.getType2(), attacker.getType1());
+        if(modifier >= 2){
+            effect = "it's supereffective";
+        }else if( modifier < 1){
+            effect = "it's not very effective";
+        }else if( modifier == 0){
+            effect = "it's immune";
+        }
+        return effect;
     }
 
 }

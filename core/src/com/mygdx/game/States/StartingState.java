@@ -38,7 +38,6 @@ import com.mygdx.game.Command.UpCommand;
 import com.mygdx.game.Controller.DialogueController;
 import com.mygdx.game.Dialogue.Dialogue;
 import com.mygdx.game.Dialogue.DialogueNode;
-
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Observers.ChangeSateteNotifier;
 import com.mygdx.game.Observers.Observer;
