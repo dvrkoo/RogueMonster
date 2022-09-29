@@ -1,23 +1,28 @@
 package com.mygdx.game.Utils;
 
+import java.util.ArrayList;
+
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
 
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.States.GameState;
 import com.mygdx.game.States.StartingState;
-
+import com.mygdx.game.Utils.Enums;
+import com.mygdx.game.Utils.Enums.Pokemon;
 import com.mygdx.game.Characters.Character;
 
 public class Collision {
 
-    public String getStarterpokemon(Rectangle pos) {
-        String pkmn = "";
-        if (pos.overlaps(StartingState.Mudkip)) {
-            pkmn = "Mudkip";
-        } else if (pos.overlaps(StartingState.Charmander)) {
-            pkmn = "Charmander";
-        } else if (pos.overlaps(StartingState.Bulbasaur)) {
-            pkmn = "Bulbasaur";
+    public int getStarterpokemon(Rectangle pos) {
+        int pkmn = 0;
+        if (pos.overlaps(StartingState.starterCollision)) {
+            pkmn = 1;
+        } else if (pos.overlaps(StartingState.starterCollision2)) {
+            pkmn = 2;
+        } else if (pos.overlaps(StartingState.starterCollision3)) {
+            pkmn = 3;
         }
         return pkmn;
     }
@@ -30,6 +35,37 @@ public class Collision {
             }
         }
         return collision;
+    }
+
+    public Rectangle getDialogueCollisions(TiledMapTileLayer collisionObjectLayer) {
+
+        Rectangle rectangle = new Rectangle();
+        for (int x = 0; x < collisionObjectLayer.getWidth(); x++) {
+            for (int y = 0; y < collisionObjectLayer.getHeight(); y++) {
+                Cell cell = collisionObjectLayer.getCell(x, y);
+                if (cell != null) {
+                    rectangle.x = x * 32;
+                    rectangle.y = y * 32;
+                }
+            }
+        }
+        return rectangle;
+    }
+
+    public ArrayList<Rectangle> getStartingCollisionArray(TiledMapTileLayer collisionObjectLayer) {
+        ArrayList<Rectangle> rectangleArray = new ArrayList<Rectangle>();
+        for (int x = 0; x < collisionObjectLayer.getWidth(); x++) {
+            for (int y = 0; y < collisionObjectLayer.getHeight(); y++) {
+                Cell cell = collisionObjectLayer.getCell(x, y);
+                if (cell != null) {
+                    Rectangle rectangle = new Rectangle();
+                    rectangle.x = x * 32;
+                    rectangle.y = y * 32;
+                    rectangleArray.add(rectangle);
+                }
+            }
+        }
+        return rectangleArray;
     }
 
     public boolean getCollision(Rectangle pos) {

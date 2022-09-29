@@ -59,7 +59,8 @@ public class GameOver implements Screen {
                 Gdx.graphics.getHeight() - BANNER_HEIGHT - 15, BANNER_WIDTH, BANNER_HEIGHT);
 
         GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score: \n" + score, Color.WHITE, 0, Align.left, false);
-        GlyphLayout highScoreLayout = new GlyphLayout(scoreFont, "Highscore: \n" + score, Color.WHITE, 0, Align.left,
+        GlyphLayout highScoreLayout = new GlyphLayout(scoreFont, "Highscore: \n" + highscore, Color.WHITE, 0,
+                Align.left,
                 false);
         scoreFont.draw(game.batch, scoreLayout, Gdx.graphics.getWidth() / 2 - scoreLayout.width / 2,
                 Gdx.graphics.getHeight() - BANNER_HEIGHT - 15 * 2);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="15" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="1">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="15" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="1">
  <properties>
   <property name="dayPokemonChances" value=""/>
   <property name="dayPokemonLevels" value=""/>
@@ -19,14 +19,15 @@
  <tileset firstgid="17926" source="InteriorFloor 1.tsx"/>
  <tileset firstgid="18256" source="SinnohInteriorSet4.tsx"/>
  <tileset firstgid="18744" source="normal1.tsx"/>
+ <tileset firstgid="19768" source="Interior - Furniture.tsx"/>
  <layer id="1" name="Walkable" width="15" height="14">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACsXQxU2FQRSA0emABe5Qx0MXWAIPh0Zwd6cEGsAS4OEUg7tXwCEhIf+/ZcEkZ3En883ihvC/pycRQi999DPAIEMMM8IoY4wnom1aWQjpMRlkkkU2OeSSVxZt12PdNmsNv77v9kixH2trykOopY56GtjwZpOtn7+S7pppKY+25+YLLrnimhtuueOeBx55irXDFfbBKGOMM8EkU0wzwyxzFdE2q9I+yCGXPPIpoJAiiimhtDLa7ph32SPFPgcccsQxJ5xyFmsbq0JoIkkzLbTSRjsddNJFd1W0vTPf88AjTzzzwitvvPPBZ6ydqrYPZphljnkWWGSJZVZYrQ5/Pl95G0CxSAMAAA==
+   H4sIAAAAAAAACsXQNU6FQRSA0dkBBfpw1vHQAktw3Qju7iyBDWAJPBwWg7uvgFOQkP8PHQWTnOJO5pvihvC/pycZQi999DPAIEMMM8IoY4wno21aaQjpMRlkkkU2OSRIlUbb9Vi3zVr9j/TvJvVLW10WQg211FHPhjebbH3/1eSumZayaHtuvuCSK6654ZY77nngkadYO1xuH4wyxjgTTDLFNDPMMlcebbMq7IMcEuSSRz4FFFJEMSUV0XbHvEuKPfY54JAjjjnhlLNY21AZQiNNNNNCK22000EnXXRXRts78z0PPPLEMy+88sY7H3zG2qkq+2CGWeaYZ4FFllhmhdWq8OfzBegW9ThIAwAA
   </data>
  </layer>
  <layer id="2" name="Collisions" width="15" height="14">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACp2Syw4BMQBFr6/wLzPm0QUrwoof8R6PhLDiY+z9iPcMEsKKL3C7kJkKWm5y0rS9p2maAoBI/cczCwtYkhVZkw3Zkh0JSUT25ECOVuzJM6o2UCN10iBN0iJtEpAO6ZIe6duqq0s6837dxP0U6WYdIOfou0V2SomedEPOIwP3ws7Vie8qx8Dle7h6d8TO2FXdX5N0Z565N/dUN+8DBV/vldmp+Kp74vxs4N7Yub+4AwEMhd6dsDMVqvvtv3/aewBT1g1cSAMAAA==
+   H4sIAAAAAAAACp3SSw7BUBiG4c8q7KXVyxkwIozYiHuVhDBiMeY24t4iIYxYga8D6TlNOK0/edI2/d+maQoAIvefz6wNYENb2tGeDnSkgEI60ZkuRtxFz2iaQIva1KEu9ahPHg3IpyGNTLXVTb4Qn/sZW3mSbdECSpa+q3KnJu1FbcDrMEV7587Dit81Ono2v4etb6fcmdlqm3Xkdumk71aO2pZdoOLquzp3Gq7aXnl9S9E+ufNKtGMBTIS+nXNnIdT21//+7d4bq8JMv0gDAAA=
   </data>
  </layer>
  <layer id="9" name="pokemon2" width="15" height="14">

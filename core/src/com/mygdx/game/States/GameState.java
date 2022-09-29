@@ -171,19 +171,24 @@ public class GameState implements Screen {
 
         drawEntities();
         game.batch.end();
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.setColor(Color.BLUE);
-        shapeRenderer.begin(ShapeType.Line);
-
-        for (Rectangle collision : Island.collisionRectangle) {
-            shapeRenderer.rect(collision.getX(), collision.getY(), collision.getWidth(), collision.getHeight());
-        }
-        for (Character pkmn : pokemon) {
-            shapeRenderer.rect(pkmn.getX(), pkmn.getY(), pkmn.getWidth(), pkmn.getHeight());
-        }
-        shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-
-        shapeRenderer.end();
+        /*
+         * shapeRenderer.setProjectionMatrix(camera.combined);
+         * shapeRenderer.setColor(Color.BLUE);
+         * shapeRenderer.begin(ShapeType.Line);
+         * 
+         * for (Rectangle collision : Island.collisionRectangle) {
+         * shapeRenderer.rect(collision.getX(), collision.getY(), collision.getWidth(),
+         * collision.getHeight());
+         * }
+         * for (Character pkmn : pokemon) {
+         * shapeRenderer.rect(pkmn.getX(), pkmn.getY(), pkmn.getWidth(),
+         * pkmn.getHeight());
+         * }
+         * shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(),
+         * player.getHeight());
+         * 
+         * shapeRenderer.end();
+         */
 
         game.batch.setProjectionMatrix(cameraScreen.combined);
         game.batch.begin();

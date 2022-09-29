@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -42,6 +41,7 @@ import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Observers.ChangeSateteNotifier;
 import com.mygdx.game.Observers.Observer;
 import com.mygdx.game.Utils.Collision;
+import com.mygdx.game.Utils.Enums;
 import com.mygdx.game.Utils.Enums.Pokemon;
 import com.mygdx.game.ui.DialogueBox;
 import com.mygdx.game.ui.OptionBox;
@@ -52,14 +52,14 @@ public class StartingState implements Screen {
     private Dialogue dialogue;
     public DialogueBox dialogueBox;
     private OptionBox optionBox;
-    static Table root;
+    Table root;
 
     final int GAME_RUNNING = 1;
     final int GAME_PAUSED = 0;
 
-    static Stage uiStage = new Stage(new ScreenViewport());
+    Stage uiStage = new Stage(new ScreenViewport());
 
-    String starter;
+    Pokemon starterPokemon;
     final RogueMonster game;
     public TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -71,12 +71,15 @@ public class StartingState implements Screen {
     public PokemonFactory pkmFactory;
     Collision collisions = new Collision();
     public static ArrayList<Rectangle> rectangleArray = new ArrayList<Rectangle>();
-    public static ArrayList<Rectangle> dialogRectangles = new ArrayList<Rectangle>();
+    public ArrayList<Rectangle> dialogRectangles = new ArrayList<Rectangle>();
     oak oak = new oak();
     private List<Observer> observers = new ArrayList<>();
-    public static Rectangle Mudkip;
-    public static Rectangle Bulbasaur;
-    public static Rectangle Charmander;
+    public static Rectangle starterCollision;
+    public static Rectangle starterCollision2;
+    public static Rectangle starterCollision3;
+    public Pokemon pokemon;
+    public Pokemon pokemon2;
+    public Pokemon pokemon3;
 
     // Command Pattern invoker
     Command bagCommand;
@@ -103,6 +106,9 @@ public class StartingState implements Screen {
         leftCommand = new LeftCommand(player);
         rightCommand = new RightCommand(player);
         standCommand = new StandCommand(player);
+        pokemon = Enums.Pokemon.randomPokemon1();
+        pokemon2 = Enums.Pokemon.randomPokemon1();
+        pokemon3 = Enums.Pokemon.randomPokemon1();
 
     }
 
@@ -115,10 +121,10 @@ public class StartingState implements Screen {
         TiledMapTileLayer starter = (TiledMapTileLayer) map.getLayers().get("pokemon1");
         TiledMapTileLayer starter2 = (TiledMapTileLayer) map.getLayers().get("pokemon2");
         TiledMapTileLayer starter3 = (TiledMapTileLayer) map.getLayers().get("pokemon3");
-        Mudkip = getDialogueCollisions(starter);
-        Charmander = getDialogueCollisions(starter2);
-        Bulbasaur = getDialogueCollisions(starter3);
-        getCollisionArray(collisionObjectLayer);
+        starterCollision = collisions.getDialogueCollisions(starter);
+        starterCollision2 = collisions.getDialogueCollisions(starter2);
+        starterCollision3 = collisions.getDialogueCollisions(starter3);
+        rectangleArray = collisions.getStartingCollisionArray(collisionObjectLayer);
 
         renderer = new OrthogonalTiledMapRenderer(map, 2);
         camera = new OrthographicCamera();
@@ -165,15 +171,17 @@ public class StartingState implements Screen {
         game.batch.end();
         commandHandle();
 
-        shapeRenderer.begin(ShapeType.Line);
-
-        shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(),
-                player.getHeight());
-        for (Rectangle rec : rectangleArray) {
-            shapeRenderer.rect(rec.getX(), rec.getY(), 35, 35);
-        }
-        shapeRenderer.rect(oak.getX(), oak.getY(), oak.getWidth(), oak.getHeight());
-        shapeRenderer.end();
+        /*
+         * shapeRenderer.begin(ShapeType.Line);
+         * 
+         * shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(),
+         * player.getHeight());
+         * for (Rectangle rec : rectangleArray) {
+         * shapeRenderer.rect(rec.getX(), rec.getY(), 35, 35);
+         * }
+         * shapeRenderer.rect(oak.getX(), oak.getY(), oak.getWidth(), oak.getHeight());
+         * shapeRenderer.end();
+         */
 
         moveCamera();
 
@@ -186,13 +194,28 @@ public class StartingState implements Screen {
         uiStage.draw();
 
         update(delta);
-        if (player.starter != null) {
-            generateDialogue(player.starter);
-            starter = player.starter;
-            player.starter = null;
+        if (player.starter != 0) {
+            switch (player.starter) {
+                case 1:
+                    generateDialogue(pokemon.name());
+                    starterPokemon = pokemon;
+                    player.starter = 0;
+                    break;
+                case 2:
+                    generateDialogue(pokemon2.name());
+                    starterPokemon = pokemon2;
+                    player.starter = 0;
+                    break;
+                case 3:
+                    generateDialogue(pokemon3.name());
+                    starterPokemon = pokemon3;
+                    player.starter = 0;
+                    break;
+            }
+
         }
         if (dialogueController.hasChosen == true) {
-            addPkmn(starter);
+            addPkmn(starterPokemon);
         }
 
     }
@@ -249,36 +272,6 @@ public class StartingState implements Screen {
         camera.position.lerp(pos3, .1f);
     }
 
-    public Rectangle getDialogueCollisions(TiledMapTileLayer collisionObjectLayer) {
-
-        Rectangle rectangle = new Rectangle();
-        for (int x = 0; x < collisionObjectLayer.getWidth(); x++) {
-            for (int y = 0; y < collisionObjectLayer.getHeight(); y++) {
-                Cell cell = collisionObjectLayer.getCell(x, y);
-                if (cell != null) {
-                    rectangle.x = x * 32;
-                    rectangle.y = y * 32;
-                }
-            }
-        }
-        return rectangle;
-    }
-
-    public void getCollisionArray(TiledMapTileLayer collisionObjectLayer) {
-        for (int x = 0; x < collisionObjectLayer.getWidth(); x++) {
-            for (int y = 0; y < collisionObjectLayer.getHeight(); y++) {
-                Cell cell = collisionObjectLayer.getCell(x, y);
-                if (cell != null) {
-                    Rectangle rectangle = new Rectangle();
-                    rectangle.x = x * 32;
-                    rectangle.y = y * 32;
-                    rectangleArray.add(rectangle);
-                }
-            }
-        }
-        rectangleArray.add(oak);
-    }
-
     public void initUI() {
 
         uiStage.getViewport().update(700, 700, true);
@@ -323,22 +316,11 @@ public class StartingState implements Screen {
         }
     }
 
-    public void addPkmn(String pkmn) {
-        if (pkmn == "Mudkip") {
-            updateChangeToGameState(true);
-            player.addPokemon(pkmFactory.getPokemon(Pokemon.MUDKIP));
-            game.setScreen(new GameState(game, player));
-        } else if (pkmn == "Charmander") {
-            updateChangeToGameState(true);
-            player.addPokemon(pkmFactory.getPokemon(Pokemon.CHARMANDER));
-            game.setScreen(new GameState(game, player));
+    public void addPkmn(Pokemon pkmn) {
+        updateChangeToGameState(true);
+        player.addPokemon(pkmFactory.getPokemon(pkmn));
+        game.setScreen(new GameState(game, player));
 
-        } else if (pkmn == "Bulbasaur") {
-            updateChangeToGameState(true);
-            player.addPokemon(pkmFactory.getPokemon(Pokemon.BULBASAUR));
-            game.setScreen(new GameState(game, player));
-
-        }
     }
 
     public void generateDialogue(String pkmn) {

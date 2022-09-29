@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Utils.Enums.CharacterState;
+
 import com.mygdx.game.Items.Bag;
 import com.mygdx.game.Items.Item;
 import com.mygdx.game.Utils.CharacterAnimation;
@@ -13,7 +14,7 @@ import com.mygdx.game.Utils.CharacterAnimation;
 public class Player extends Character {
 
     boolean isGamestate = false;
-    public String starter;
+    public int starter;
     public int levelCount = 1;
     private Character[] team;
     private Bag bag = new Bag();
@@ -56,7 +57,7 @@ public class Player extends Character {
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
             }
-            if (collision.getStarterpokemon(this) != "") {
+            if (collision.getStarterpokemon(this) != 0) {
                 starter = (collision.getStarterpokemon(this));
                 this.setPosition(pos);
                 this.state = CharacterState.STANDING;
