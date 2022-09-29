@@ -26,11 +26,11 @@ public class Pikachu extends Character
         anim = new CharacterAnimation(texture);
 
         //init stat
-        this.hp = 12;
+        this.hp = 30;
         this.actualHp = this.hp;
-        this.attack = 12;
-        this.defense = 10;
-        this.speed = 16;
+        this.attack = 19;
+        this.defense = 17;
+        this.speed = 26;
         this.name = "pikachu";
     }
     

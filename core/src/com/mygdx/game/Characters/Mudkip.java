@@ -26,11 +26,11 @@ public class Mudkip extends Character{
         anim = new CharacterAnimation(texture);
 
         //init stat
-        this.hp = 14;
+        this.hp = 33;
         this.actualHp = this.hp;
-        this.attack = 12;
-        this.defense = 13;
-        this.speed = 11;
+        this.attack = 22;
+        this.defense = 18;
+        this.speed = 16;
         this.name = "mudkip";
     }
     

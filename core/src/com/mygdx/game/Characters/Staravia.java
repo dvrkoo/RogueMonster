@@ -27,11 +27,11 @@ public class Staravia extends Character{
         anim = new CharacterAnimation(texture);
 
         //init stat
-        this.hp = 16;
+        this.hp = 34;
         this.actualHp = this.hp;
-        this.attack = 17;
-        this.defense = 14;
-        this.speed = 18;
+        this.attack = 23;
+        this.defense = 17;
+        this.speed = 24;
         this.name = "staravia";
     }
     

@@ -26,11 +26,11 @@ public class Mew extends Character{
         anim = new CharacterAnimation(texture);
 
         //init stat
-        this.hp = 13;
+        this.hp = 43;
         this.actualHp = this.hp;
-        this.attack = 12;
-        this.defense = 12;
-        this.speed = 12;
+        this.attack = 28;
+        this.defense = 28;
+        this.speed = 28;
         this.name = "mew";
     }
     

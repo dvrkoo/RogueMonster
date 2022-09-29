@@ -29,11 +29,11 @@ public class Bulbasaur extends Character{
         anim = new CharacterAnimation(texture);
 
         //init stat
-        this.hp = 13;
+        this.hp = 32;
         this.actualHp = this.hp;
-        this.attack = 13;
-        this.defense = 12;
-        this.speed = 12;
+        this.attack = 21;
+        this.defense = 19;
+        this.speed = 17;
         this.name = "bulbasaur";
     }
     

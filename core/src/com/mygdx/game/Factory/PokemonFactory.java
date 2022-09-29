@@ -4,7 +4,7 @@ import com.mygdx.game.Characters.Bulbasaur;
 import com.mygdx.game.Characters.Character;
 import com.mygdx.game.Characters.Charmander;
 import com.mygdx.game.Characters.Graveler;
-import com.mygdx.game.Characters.Hunter;
+import com.mygdx.game.Characters.Haunter;
 import com.mygdx.game.Characters.Marshtomp;
 import com.mygdx.game.Characters.Metang;
 import com.mygdx.game.Characters.Mew;
@@ -56,7 +56,7 @@ public class PokemonFactory {
                 return p;
             }
             case HUNTER:{
-                p = new Hunter();
+                p = new Haunter();
                 return p;
             }
         }

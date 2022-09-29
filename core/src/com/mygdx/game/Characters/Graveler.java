@@ -27,11 +27,11 @@ public class Graveler extends Character{
         anim = new CharacterAnimation(texture);
 
         //init stat
-        this.hp = 23;
+        this.hp = 34;
         this.actualHp = this.hp;
-        this.attack = 14;
-        this.defense = 17;
-        this.speed = 10;
+        this.attack = 27;
+        this.defense = 24;
+        this.speed = 15;
         this.name = "graveler";
     }
     

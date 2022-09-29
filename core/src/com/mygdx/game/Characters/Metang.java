@@ -27,11 +27,11 @@ public class Metang extends Character{
         anim = new CharacterAnimation(texture);
 
         //init stat
-        this.hp = 22;
+        this.hp = 35;
         this.actualHp = this.hp;
-        this.attack = 17;
-        this.defense = 16;
-        this.speed = 10;
+        this.attack = 23;
+        this.defense = 26;
+        this.speed = 18;
         this.name = "metang";
     }
     

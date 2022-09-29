@@ -27,11 +27,11 @@ public class Marshtomp extends Character{
         anim = new CharacterAnimation(texture);
 
         //init stat
-        this.hp = 20;
+        this.hp = 37;
         this.actualHp = this.hp;
-        this.attack = 16;
-        this.defense = 16;
-        this.speed = 13;
+        this.attack = 25;
+        this.defense = 22;
+        this.speed = 18;
         this.name = "marshtomp";
     }
     
