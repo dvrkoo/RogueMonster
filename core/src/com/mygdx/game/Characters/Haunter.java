@@ -26,12 +26,16 @@ public class Haunter extends Character{
 
         anim = new CharacterAnimation(texture);
 
+        //init base stats
+        this.hpBase = 45;
+        this.attackBase = 115;
+        this.defenseBase = 50;
+        this.speedBase = 95;
+
         //init stat
-        this.hp = 32;
+        this.level = 10;
+        this.statCalculation();
         this.actualHp = this.hp;
-        this.attack = 31;
-        this.defense = 18;
-        this.speed = 27;
         this.name = "haunter";
     }
     

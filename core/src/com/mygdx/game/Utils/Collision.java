@@ -9,8 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Maps.Island;
 import com.mygdx.game.States.GameState;
 import com.mygdx.game.States.StartingState;
-import com.mygdx.game.Utils.Enums;
-import com.mygdx.game.Utils.Enums.Pokemon;
 import com.mygdx.game.Characters.Character;
 
 public class Collision {

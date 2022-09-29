@@ -237,6 +237,7 @@ public class BattleState implements Screen {
             }
             if (opponent.getActualHp() <= 0) {
                 // logica di fine battaglia e switch al GameState
+                player.getPokemon(0).levelUp();
                 endBattle();
             }
         } else {
@@ -247,7 +248,7 @@ public class BattleState implements Screen {
             updateGameBox(text);
             if (opponent.getActualHp() <= 0) {
                 // logica di fine battaglia e switch al GameState
-
+                player.getPokemon(0).levelUp();
                 endBattle();
             } else {
                 dmg = damage.getDamage(opponent, player.getPokemon(0));
@@ -307,10 +308,10 @@ public class BattleState implements Screen {
     void drawScene() {
         game.batch.draw(player.getAnimation().getKeyFrame(enlapsedTime, true), player.getX(), player.getY());
         game.batch.draw(opponent.getAnimation().getKeyFrame(enlapsedTime, true), opponent.getX(), opponent.getY());
-        game.font.draw(game.batch, opponent.getActualHp() + " / " + opponent.getHp(), opponent.getX()+ 16, opponent.getY() + 80);
+        game.font.draw(game.batch, "Lv: " + opponent.getLevel() + " " + opponent.getActualHp() + " / " + opponent.getHp(), opponent.getX()+ 16, opponent.getY() + 80);
         if (player.getPokemon(0) != null) {
             game.batch.draw(player.getPokemon(0).getAnimation().getKeyFrame(enlapsedTime, true), player.getPokemon(0).getX(), player.getPokemon(0).getY());
-            game.font.draw(game.batch, player.getPokemon(0).getActualHp() + " / " + player.getPokemon(0).getHp(), player.getPokemon(0).getX()+ 16, player.getPokemon(0).getY() + 80);
+            game.font.draw(game.batch,"Lv: " + player.getPokemon(0).getLevel() + " " + player.getPokemon(0).getActualHp() + " / " + player.getPokemon(0).getHp(), player.getPokemon(0).getX()+ 16, player.getPokemon(0).getY() + 80);
         }
     }
 

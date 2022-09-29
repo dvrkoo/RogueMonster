@@ -25,12 +25,16 @@ public class Mudkip extends Character{
 
         anim = new CharacterAnimation(texture);
 
+        //init base stats
+        this.hpBase = 50;
+        this.attackBase = 70;
+        this.defenseBase = 50;
+        this.speedBase = 40;
+
         //init stat
-        this.hp = 33;
+        this.level = 10;
+        this.statCalculation();
         this.actualHp = this.hp;
-        this.attack = 22;
-        this.defense = 18;
-        this.speed = 16;
         this.name = "mudkip";
     }
     

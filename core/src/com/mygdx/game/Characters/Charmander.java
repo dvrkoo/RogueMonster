@@ -25,12 +25,16 @@ public class Charmander extends Character{
 
         anim = new CharacterAnimation(texture);
 
+        //init base stats
+        this.hpBase = 39;
+        this.attackBase = 60;
+        this.defenseBase = 46;
+        this.speedBase = 65;
+
         //init stat
-        this.hp = 30;
+        this.level = 10;
+        this.statCalculation();
         this.actualHp = this.hp;
-        this.attack = 20;
-        this.defense = 17;
-        this.speed = 21;
         this.name = "charmander";
     }
     

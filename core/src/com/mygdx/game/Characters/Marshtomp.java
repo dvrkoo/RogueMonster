@@ -25,13 +25,16 @@ public class Marshtomp extends Character{
         state = CharacterState.SOUTH;
 
         anim = new CharacterAnimation(texture);
+        //init base stats
+        this.hpBase = 70;
+        this.attackBase = 85;
+        this.defenseBase = 70;
+        this.speedBase = 50;
 
         //init stat
-        this.hp = 37;
+        this.level = 10;
+        this.statCalculation();
         this.actualHp = this.hp;
-        this.attack = 25;
-        this.defense = 22;
-        this.speed = 18;
         this.name = "marshtomp";
     }
     

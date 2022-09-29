@@ -19,6 +19,14 @@ public class Character extends Rectangle {
     int defense;
     int hp;
     int actualHp;
+    int level;
+
+
+
+    int attackBase;
+    int speedBase;
+    int defenseBase;
+    int hpBase;
 
     PokemonType type1;
     PokemonType type2 = PokemonType.NULL;
@@ -173,6 +181,20 @@ public class Character extends Rectangle {
         this.actualHp -= damage;
     }
 
+    void statCalculation(){
+        this.hp = ((int)(((this.hpBase * 2)*level)/100)) + this.level + 10;
+        this.attack = ((int)(((this.attackBase * 2)*this.level)/100)) + 5;
+        this.defense = ((int)(((this.defenseBase * 2)*this.level)/100)) + 5; 
+        this.speed = ((int)(((this.speedBase * 2)*this.level)/100)) + 5;
+    }
+
+    public void levelUp(){
+        if(this.level < 100){
+            this.level++;
+        }
+        this.statCalculation();
+    }
+
     // getter setter
     public int getDefense() {
         return defense;
@@ -235,6 +257,9 @@ public class Character extends Rectangle {
 
     public void setActualHp(int actualHp) {
         this.actualHp = actualHp;
+    }
+    public int getLevel() {
+        return level;
     }
 
 }
