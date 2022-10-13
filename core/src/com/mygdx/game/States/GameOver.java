@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.RogueMonster;
+import com.mygdx.game.Characters.Player;
 
 public class GameOver implements Screen {
 
@@ -84,7 +85,7 @@ public class GameOver implements Screen {
                     && touchY > tryAgainY - tryAgainLayout.height && touchY < tryAgainY) {
                 this.dispose();
                 game.batch.end();
-                game.setScreen(new MainMenu(game));
+                game.setScreen(new GameState(game, new Player(200, 180)));
                 return;
             }
 

@@ -108,7 +108,15 @@ public class StartingState implements Screen {
         pokemon = Enums.Pokemon.randomPokemon1();
         pokemon2 = Enums.Pokemon.randomPokemon1();
         pokemon3 = Enums.Pokemon.randomPokemon1();
-
+        while (pokemon.name() == pokemon2.name()) {
+            pokemon = Enums.Pokemon.randomPokemon1();
+        }
+        while (pokemon2.name() == pokemon3.name()) {
+            pokemon = Enums.Pokemon.randomPokemon1();
+        }
+        while (pokemon.name() == pokemon3.name()) {
+            pokemon = Enums.Pokemon.randomPokemon1();
+        }
     }
 
     @Override
