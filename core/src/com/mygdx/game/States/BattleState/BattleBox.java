@@ -19,22 +19,6 @@ public class BattleBox {
         game.font.draw(game.batch, text, x, y);
     }
 
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public boolean isVisible() {
         return isVisible;
     }

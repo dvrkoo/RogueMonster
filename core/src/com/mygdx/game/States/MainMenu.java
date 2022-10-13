@@ -39,7 +39,6 @@ public class MainMenu implements Screen {
 
         // change to Game state logic
         if (Gdx.input.isTouched()) {
-            // game.setScreen(new GameState(game));
             game.setScreen(new StartingState(game, new Player(200, 180)));
         }
 

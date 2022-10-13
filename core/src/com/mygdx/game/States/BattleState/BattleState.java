@@ -172,7 +172,7 @@ public class BattleState implements Screen {
         y = Math.abs(y - 1000);
 
         if (attackButton.contains(x, y)) {
-            Battle();
+            battle();
 
         } else if (runButton.contains(x, y)) {
             endBattle();
@@ -212,7 +212,7 @@ public class BattleState implements Screen {
         }
     }
 
-    void Battle() {
+    void battle() {
         int dmg;
         String text = new String();
         if (opponent.getSpeed() > player.getPokemon(0).getSpeed()) {
@@ -337,7 +337,7 @@ public class BattleState implements Screen {
         this.observers.remove(o);
     }
 
-    public void updateGameBox(String toPrint) {
+    void updateGameBox(String toPrint) {
         for (Observer o : observers) {
             o.update(toPrint);
         }

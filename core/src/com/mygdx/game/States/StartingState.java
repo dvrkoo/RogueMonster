@@ -309,7 +309,7 @@ public class StartingState implements Screen {
         observers.remove(o);
     }
 
-    public void updateChangeToGameState(boolean isChanged) {
+    void updateChangeToGameState(boolean isChanged) {
         for (Observer o : observers) {
             o.update(isChanged);
         }

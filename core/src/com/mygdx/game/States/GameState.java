@@ -125,7 +125,7 @@ public class GameState implements Screen {
         observers.remove(o);
     }
 
-    public void updateChangeToStartingState(boolean isChanged) {
+    void updateChangeToStartingState(boolean isChanged) {
         for (Observer o : observers) {
             o.update(isChanged);
         }
