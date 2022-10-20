@@ -13,15 +13,13 @@ import com.mygdx.game.Utils.Enums.PokemonType;
 public class Character extends Rectangle {
     // attributes
 
-    public int movSpeed;
+    int movSpeed;
     int attack;
     int speed;
     int defense;
     int hp;
     int actualHp;
     int level;
-
-
 
     int attackBase;
     int speedBase;
@@ -43,7 +41,6 @@ public class Character extends Rectangle {
     public Vector2 pos;
 
     int counter = 0;
-    // TILETYPE type = TILETYPE.WATER;
     Collision collision = new Collision();
     public boolean isOpponent = false;
 

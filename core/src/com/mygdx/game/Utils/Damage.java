@@ -167,7 +167,7 @@ public class Damage {
         float modifier = getModifier(defender.getType1(), attacker.getType1()) * getModifier(defender.getType2(), attacker.getType1());
         if(modifier >= 2){
             effect = "it's supereffective";
-        }else if( modifier < 1){
+        }else if( modifier < 1 && modifier != 0){
             effect = "it's not very effective";
         }else if( modifier == 0){
             effect = "it's immune";

@@ -1,6 +1,6 @@
 package com.mygdx.game.Command;
 
-import com.mygdx.game.Controller.DialogueController;
+import com.mygdx.game.Dialogue.DialogueController;
 import com.mygdx.game.Dialogue.DialogueNode.NODE_TYPE;
 
 public class DialogueSelectCommand implements Command {

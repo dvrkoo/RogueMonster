@@ -1,6 +1,6 @@
 package com.mygdx.game.Command;
 
-import com.mygdx.game.Controller.DialogueController;
+import com.mygdx.game.Dialogue.DialogueController;
 
 public class DialogueDownCommand implements Command {
 

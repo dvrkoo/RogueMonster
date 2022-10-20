@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.RogueMonster;
 import com.mygdx.game.Characters.Character;
@@ -56,7 +55,6 @@ public class GameState implements Screen {
 
     Island island;
 
-    ShapeRenderer shapeRenderer = new ShapeRenderer();
     Viewport viewport;
     OrthographicCamera camera;
     OrthographicCamera cameraScreen;
@@ -167,25 +165,7 @@ public class GameState implements Screen {
 
         drawEntities();
         game.batch.end();
-        /*
-         * shapeRenderer.setProjectionMatrix(camera.combined);
-         * shapeRenderer.setColor(Color.BLUE);
-         * shapeRenderer.begin(ShapeType.Line);
-         * 
-         * for (Rectangle collision : Island.collisionRectangle) {
-         * shapeRenderer.rect(collision.getX(), collision.getY(), collision.getWidth(),
-         * collision.getHeight());
-         * }
-         * for (Character pkmn : pokemon) {
-         * shapeRenderer.rect(pkmn.getX(), pkmn.getY(), pkmn.getWidth(),
-         * pkmn.getHeight());
-         * }
-         * shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(),
-         * player.getHeight());
-         * 
-         * shapeRenderer.end();
-         */
-
+        
         game.batch.setProjectionMatrix(cameraScreen.combined);
         game.batch.begin();
 
@@ -418,7 +398,6 @@ public class GameState implements Screen {
 
     @Override
     public void dispose() {
-        shapeRenderer.dispose();
 
     }
 

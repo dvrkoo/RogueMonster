@@ -14,8 +14,8 @@ import com.mygdx.game.Characters.Player;
 
 public class GameOver implements Screen {
 
-    private static final int BANNER_WIDTH = 350;
-    private static final int BANNER_HEIGHT = 100;
+    private final int BANNER_WIDTH = 350;
+    private final int BANNER_HEIGHT = 100;
 
     RogueMonster game;
     int score, highscore;

@@ -11,8 +11,8 @@ public class Media {
     public static Texture grassTop, grassTopRight, grassTopLeft;
     public static Texture water01, water02, water03, water04;
     public static Texture cliff, water;
-   // Entity
-   public static Texture tree;
+    // Entity
+    public static Texture tree;
 
     public static void load_assets() {
         // HERO

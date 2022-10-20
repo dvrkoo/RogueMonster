@@ -1,13 +1,10 @@
-package com.mygdx.game.Controller;
+package com.mygdx.game.Dialogue;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.Command.Command;
 import com.mygdx.game.Command.DialogueDownCommand;
 import com.mygdx.game.Command.DialogueSelectCommand;
 import com.mygdx.game.Command.DialogueUpCommand;
-import com.mygdx.game.Dialogue.Dialogue;
-import com.mygdx.game.Dialogue.DialogueNode;
-import com.mygdx.game.Dialogue.DialogueTraverser;
 import com.mygdx.game.Dialogue.DialogueNode.NODE_TYPE;
 import com.mygdx.game.ui.DialogueBox;
 import com.mygdx.game.ui.OptionBox;

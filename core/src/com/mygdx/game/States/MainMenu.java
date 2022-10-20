@@ -62,11 +62,8 @@ public class MainMenu implements Screen {
                 this.dispose();
                 Gdx.app.exit();
             }
-
             if (play.contains(x, y)) {
-
                 game.setScreen(new StartingState(game, new Player(200, 180)));
-
             }
         }
 

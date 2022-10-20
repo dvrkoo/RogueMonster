@@ -33,8 +33,8 @@ import com.mygdx.game.Command.LeftCommand;
 import com.mygdx.game.Command.RightCommand;
 import com.mygdx.game.Command.StandCommand;
 import com.mygdx.game.Command.UpCommand;
-import com.mygdx.game.Controller.DialogueController;
 import com.mygdx.game.Dialogue.Dialogue;
+import com.mygdx.game.Dialogue.DialogueController;
 import com.mygdx.game.Dialogue.DialogueNode;
 import com.mygdx.game.Factory.PokemonFactory;
 import com.mygdx.game.Observers.ChangeSateteNotifier;
@@ -81,7 +81,6 @@ public class StartingState implements Screen {
     public Pokemon pokemon3;
 
     // Command Pattern invoker
-    Command bagCommand;
     Command leftCommand;
     Command rightCommand;
     Command upCommand;
@@ -177,18 +176,6 @@ public class StartingState implements Screen {
         drawCharacters();
         game.batch.end();
         commandHandle();
-
-        /*
-         * shapeRenderer.begin(ShapeType.Line);
-         * 
-         * shapeRenderer.rect(player.getX(), player.getY(), player.getWidth(),
-         * player.getHeight());
-         * for (Rectangle rec : rectangleArray) {
-         * shapeRenderer.rect(rec.getX(), rec.getY(), 35, 35);
-         * }
-         * shapeRenderer.rect(oak.getX(), oak.getY(), oak.getWidth(), oak.getHeight());
-         * shapeRenderer.end();
-         */
 
         moveCamera();
 
