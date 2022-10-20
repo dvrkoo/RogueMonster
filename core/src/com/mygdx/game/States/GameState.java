@@ -165,7 +165,7 @@ public class GameState implements Screen {
 
         drawEntities();
         game.batch.end();
-        
+
         game.batch.setProjectionMatrix(cameraScreen.combined);
         game.batch.begin();
 

@@ -111,7 +111,7 @@ public class StartingState implements Screen {
             pokemon = Enums.Pokemon.randomPokemon1();
         }
         while (pokemon2.name() == pokemon3.name()) {
-            pokemon = Enums.Pokemon.randomPokemon1();
+            pokemon2 = Enums.Pokemon.randomPokemon1();
         }
         while (pokemon.name() == pokemon3.name()) {
             pokemon = Enums.Pokemon.randomPokemon1();
@@ -131,7 +131,7 @@ public class StartingState implements Screen {
         starterCollision2 = collisions.getDialogueCollisions(starter2);
         starterCollision3 = collisions.getDialogueCollisions(starter3);
         rectangleArray = collisions.getStartingCollisionArray(collisionObjectLayer);
-
+        rectangleArray.add(oak);
         renderer = new OrthogonalTiledMapRenderer(map, 2);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
