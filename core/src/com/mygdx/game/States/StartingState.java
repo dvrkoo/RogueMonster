@@ -104,18 +104,8 @@ public class StartingState implements Screen {
         leftCommand = new LeftCommand(player);
         rightCommand = new RightCommand(player);
         standCommand = new StandCommand(player);
-        pokemon = Enums.Pokemon.randomPokemon1();
-        pokemon2 = Enums.Pokemon.randomPokemon1();
-        pokemon3 = Enums.Pokemon.randomPokemon1();
-        while (pokemon.name() == pokemon2.name()) {
-            pokemon = Enums.Pokemon.randomPokemon1();
-        }
-        while (pokemon2.name() == pokemon3.name()) {
-            pokemon2 = Enums.Pokemon.randomPokemon1();
-        }
-        while (pokemon.name() == pokemon3.name()) {
-            pokemon = Enums.Pokemon.randomPokemon1();
-        }
+        setStarters();
+
     }
 
     @Override
@@ -123,15 +113,7 @@ public class StartingState implements Screen {
         TmxMapLoader loader = new TmxMapLoader();
         map = loader.load("Maps/spawn.tmx");
 
-        TiledMapTileLayer collisionObjectLayer = (TiledMapTileLayer) map.getLayers().get("Collisions");
-        TiledMapTileLayer starter = (TiledMapTileLayer) map.getLayers().get("pokemon1");
-        TiledMapTileLayer starter2 = (TiledMapTileLayer) map.getLayers().get("pokemon2");
-        TiledMapTileLayer starter3 = (TiledMapTileLayer) map.getLayers().get("pokemon3");
-        starterCollision = collisions.getDialogueCollisions(starter);
-        starterCollision2 = collisions.getDialogueCollisions(starter2);
-        starterCollision3 = collisions.getDialogueCollisions(starter3);
-        rectangleArray = collisions.getStartingCollisionArray(collisionObjectLayer);
-        rectangleArray.add(oak);
+        collisionHelper();
         renderer = new OrthogonalTiledMapRenderer(map, 2);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1000, 1000);
@@ -355,6 +337,32 @@ public class StartingState implements Screen {
             standCommand.execute();
 
         }
+    }
 
+    public void collisionHelper() {
+        TiledMapTileLayer collisionObjectLayer = (TiledMapTileLayer) map.getLayers().get("Collisions");
+        TiledMapTileLayer starter = (TiledMapTileLayer) map.getLayers().get("pokemon1");
+        TiledMapTileLayer starter2 = (TiledMapTileLayer) map.getLayers().get("pokemon2");
+        TiledMapTileLayer starter3 = (TiledMapTileLayer) map.getLayers().get("pokemon3");
+        starterCollision = collisions.getDialogueCollisions(starter);
+        starterCollision2 = collisions.getDialogueCollisions(starter2);
+        starterCollision3 = collisions.getDialogueCollisions(starter3);
+        rectangleArray = collisions.getStartingCollisionArray(collisionObjectLayer);
+        rectangleArray.add(oak);
+    }
+
+    public void setStarters() {
+        pokemon = Enums.Pokemon.randomPokemon1();
+        pokemon2 = Enums.Pokemon.randomPokemon1();
+        pokemon3 = Enums.Pokemon.randomPokemon1();
+        while (pokemon.name() == pokemon2.name()) {
+            pokemon = Enums.Pokemon.randomPokemon1();
+        }
+        while (pokemon2.name() == pokemon3.name()) {
+            pokemon2 = Enums.Pokemon.randomPokemon1();
+        }
+        while (pokemon.name() == pokemon3.name()) {
+            pokemon = Enums.Pokemon.randomPokemon1();
+        }
     }
 }

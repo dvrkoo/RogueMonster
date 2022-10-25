@@ -49,7 +49,6 @@ public class Island {
         addEntities();
         generateSafeZone();
         getCollisions();
-
     }
 
     public void getCollisions() {
