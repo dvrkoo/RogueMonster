@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="15" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="1">
+ <properties>
+  <property name="dayPokemonChances" value=""/>
+  <property name="dayPokemonLevels" value=""/>
+  <property name="fishPokemonChances" value=""/>
+  <property name="fishPokemonLevels" value=""/>
+  <property name="isCave" value="false"/>
+  <property name="nightPokemonChances" value=""/>
+  <property name="nightPokemonLevels" value=""/>
+  <property name="waterPokemonChances" value=""/>
+  <property name="waterPokemonLevels" value=""/>
+  <property name="wildProbability" value="0"/>
+  <property name="xOffsetModifier" value="0"/>
+  <property name="yOffsetModifier" value="0"/>
+ </properties>
+ <tileset firstgid="1" source="Sinnoh Interiors.tsx"/>
+ <tileset firstgid="17826" source="InteriorObjects1.tsx"/>
+ <tileset firstgid="17926" source="InteriorFloor 1.tsx"/>
+ <tileset firstgid="18256" source="SinnohInteriorSet4.tsx"/>
+ <tileset firstgid="18744" source="normal1.tsx"/>
+ <tileset firstgid="19768" source="Interior - Furniture.tsx"/>
+ <layer id="1" name="Walkable" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACsXQNU6FQRSA0dkBBfpw1vHQAktw3Qju7iyBDWAJPBwWg7uvgFOQkP8PHQWTnOJO5pvihvC/pycZQi999DPAIEMMM8IoY4wno21aaQjpMRlkkkU2OSRIlUbb9Vi3zVr9j/TvJvVLW10WQg211FHPhjebbH3/1eSumZayaHtuvuCSK6654ZY77nngkadYO1xuH4wyxjgTTDLFNDPMMlcebbMq7IMcEuSSRz4FFFJEMSUV0XbHvEuKPfY54JAjjjnhlLNY21AZQiNNNNNCK22000EnXXRXRts78z0PPPLEMy+88sY7H3zG2qkq+2CGWeaYZ4FFllhmhdWq8OfzBegW9ThIAwAA
+  </data>
+ </layer>
+ <layer id="2" name="Collisions" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACp3SSw7BUBiG4c8q7KXVyxkwIozYiHuVhDBiMeY24t4iIYxYga8D6TlNOK0/edI2/d+maQoAIvefz6wNYENb2tGeDnSkgEI60ZkuRtxFz2iaQIva1KEu9ahPHg3IpyGNTLXVTb4Qn/sZW3mSbdECSpa+q3KnJu1FbcDrMEV7587Dit81Ono2v4etb6fcmdlqm3Xkdumk71aO2pZdoOLquzp3Gq7aXnl9S9E+ufNKtGMBTIS+nXNnIdT21//+7d4bq8JMv0gDAAA=
+  </data>
+ </layer>
+ <layer id="9" name="pokemon2" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAXIQNBmoF0wCoYiAADXSPAlSAMAAA==
+  </data>
+ </layer>
+ <layer id="8" name="pokemon1" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAUwIGAz0C4YBUMVAABRt2tzSAMAAA==
+  </data>
+ </layer>
+ <layer id="11" name="pokemon3" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAXoQMhmoF0wCoYaAACfqRIhSAMAAA==
+  </data>
+ </layer>
+ <layer id="7" name="pokeballs" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAUwMNcTgUfBKCAFAACPDGYcSAMAAA==
+  </data>
+ </layer>
+ <layer id="3" name="Walkbehind" width="15" height="14">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWjYBRQCgAhUXGlSAMAAA==
+  </data>
+ </layer>
+</map>
