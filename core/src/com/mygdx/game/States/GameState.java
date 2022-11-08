@@ -85,12 +85,6 @@ public class GameState implements Screen {
 
         posReset.set(island.spawnX * 40, island.spawnY * 40);
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1000, 1000);
-        this.cameraScreen = new OrthographicCamera();
-        this.cameraScreen.setToOrtho(false, 1000, 1000);
-        viewport = new FitViewport(1000, 1000, camera);
-
         pkmFactory = new PokemonFactory();
         pokemon = new ArrayList<Character>();
 
@@ -141,6 +135,11 @@ public class GameState implements Screen {
 
     @Override
     public void show() {
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 1000, 1000);
+        this.cameraScreen = new OrthographicCamera();
+        this.cameraScreen.setToOrtho(false, 1000, 1000);
+        viewport = new FitViewport(1000, 1000, camera);
 
         gamestatus = GAME_RUNNING;
         player.setPosition(posReset);
@@ -174,7 +173,11 @@ public class GameState implements Screen {
         game.batch.end();
 
         checkGameOver();
+        update(delta);
 
+    }
+
+    void update(float delta) {
         switch (gamestatus) {
             case GAME_RUNNING: {
                 commandHandle();
@@ -185,7 +188,6 @@ public class GameState implements Screen {
                 break;
             }
             case GAME_BATTLE: {
-                // draw pause screenù
                 posReset.set(player.x, player.y);
                 game.setScreen(new BattleState(game, this));
                 score += 100;
@@ -193,7 +195,6 @@ public class GameState implements Screen {
 
             }
             case GAME_BAG: {
-
                 if (Gdx.input.justTouched() && bagScreen.isVisible) {
                     choosenItem = chooseItem(Gdx.input.getX(), Gdx.input.getY());
                 } else if (Gdx.input.justTouched() && teamScreen.isVisible)
@@ -210,9 +211,7 @@ public class GameState implements Screen {
                 dispose();
                 break;
             }
-            // add cases, example bag state ecc
         }
-
     }
 
     void spawnEnemy() {
@@ -236,10 +235,6 @@ public class GameState implements Screen {
                     || iter.y / 40 > island.chunk.numberRows / 2 - 4 && iter.y / 40 < island.chunk.numberRows / 2 + 4
                             && iter.x / 40 > island.chunk.numberCols / 2 - 4
                             && iter.x / 40 < island.chunk.numberCols / 2 + 4) {
-                System.out.print(island.chunk.numberRows / 2 - 3 + "\n");
-                System.out.print(island.chunk.numberCols / 2 - 3 + "\n");
-                System.out.print(iter.y / 40 + "\n");
-                System.out.print(iter.x / 40 + "\n");
                 iter.setPosition(position);
                 position = random.getRandomPos(island.minMaxX, island.minMaxY);
             }
