@@ -45,6 +45,9 @@ dependencies {
 
 implementation 'junit:junit:4.13.1'
 }
+test{
+    useJUnitPlatform()
+}
 
 
 dist.dependsOn classes

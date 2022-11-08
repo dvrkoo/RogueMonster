@@ -11,8 +11,9 @@ import com.mygdx.game.Items.Bag;
 import com.mygdx.game.Items.Item;
 import com.mygdx.game.Utils.CharacterAnimation;
 
-public class Player extends Character {
 
+
+public class Player extends Character {
     boolean isGamestate = false;
     public int starter;
     public int levelCount = 1;
