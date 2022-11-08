@@ -41,26 +41,19 @@ class PlayerTest {
     void addItem() {
         player.addItem(new Item(Enums.ItemType.POTION));
         assertEquals(player.getBag().getBag().get(0).get(0).getItemName(), "potion");
-
     }
 
     @Test
     void removeItem() {
-    }
-
-    @Test
-    void getPokemon() {
+        player.removeItem(player.getBag().getBag().get(0).get(0));
+        assertNull(player.getBag().getBag().get(0).get(0));
     }
 
     @Test
     void swapPokemon() {
-    }
-
-    @Test
-    void setIsGamestate() {
-    }
-
-    @Test
-    void getBag() {
+        player.addPokemon(new Mudkip());
+        player.addPokemon(new Charmander());
+        player.swapPokemon(0,1);
+        assertEquals(player.getPokemon(0).getName(), "charmander");
     }
 }
