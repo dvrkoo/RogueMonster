@@ -17,11 +17,14 @@ class BagTest {
 
     @Test
     void remove() {
+        bag.insert(new Item(Enums.ItemType.POTION));
         bag.remove(bag.bag.get(0).get(0));
-        assertNull(bag.bag.get(0));
+        assertTrue(bag.bag.isEmpty());
     }
 
     @Test
     void getBag() {
+        bag.insert(new Item(Enums.ItemType.POTION));
+        assertEquals(bag.getBag().get(0).get(0).getItemName(), "Potion");
     }
 }

@@ -33,6 +33,7 @@ class PlayerTest {
 
     @Test
     void removePokemon() {
+        player.addPokemon(mudkip);
         player.removePokemon(0);
         assertNull(player.getPokemon(0));
     }
@@ -45,6 +46,7 @@ class PlayerTest {
 
     @Test
     void removeItem() {
+        player.addItem(new Item(Enums.ItemType.POTION));
         player.removeItem(player.getBag().getBag().get(0).get(0));
         assertNull(player.getBag().getBag().get(0).get(0));
     }
